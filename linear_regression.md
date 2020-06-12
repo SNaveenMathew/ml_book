@@ -36,4 +36,4 @@ Normal equations are obtained by setting the partial derivative of likelihood wi
 
 Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - X\hat{W}$, using $\frac{\partial e^Te}{\partial W} = 2 \frac{\partial e}{\partial W} e$ and substituting $\frac{\partial e}{\partial W} = X^T$, we get:
 
-$$ 2 * X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W} \implies \hat{W} = (X^TX)^{-1}X^Ty$$
+$$ 2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W} \implies \hat{W} = (X^TX)^{-1}X^Ty$$
