@@ -4,7 +4,7 @@
 
 Linear regression model is used to predict a continuous outcome using a set of features. The model is defined as follows:
 
-\\(Y = XW + \\epsilon\\)
+$$Y = XW + \epsilon$$
 
 For the given sample $(X, y)$ from a non-random (fixed) design we need to estimate the weights $\hat{W}$. The standard way for estimating W is using ordinary least squares (OLS). In this section we will examine OLS as a special case of MLE.
 
@@ -30,10 +30,14 @@ $$\hat{W} = argmax_W log(L(e; W)) = argmax_W \sum_{i=1}^{N}(- e^{(i)})^2 = argmi
 
 Normal equations are obtained by setting the partial derivative of likelihood with respect to W to zero. Since logarithm is a monotonous transformation and likelihood function lies in the domain of logarithm, we can obtain the normal equations by setting the partial derivative of log-likelihood with respect to W to zero.
 
-\begin{equation}
-\frac{\partial log(L(e; W))}{\partial W} = 0 \implies \bigg[\frac{\partial}{\partial W} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{W = \hat{W}} = 0
-\end{equation}
+$$\frac{\partial log(L(e; W))}{\partial W} = 0 \implies \bigg[\frac{\partial}{\partial W} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{W = \hat{W}} = 0$$
 
 Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - X\hat{W}$, using $\frac{\partial e^Te}{\partial W} = 2 \frac{\partial e}{\partial W} e$ and substituting $\frac{\partial e}{\partial W} = X^T$, we get:
 
 $$ 2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W} \implies \hat{W} = (X^TX)^{-1}X^Ty$$
+
+#### 2.1.2.1.1. Solving 'simple linear regression'
+
+Simple linear regression is a special case of linear regression in which the number of independent variables is one.
+
+#### 2.1.2.1.x. Hierarchy rule
