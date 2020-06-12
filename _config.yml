@@ -15,3 +15,5 @@ github_username: SNaveenMathew
 
 # Build settings
 markdown: kramdown
+
+theme: jekyll-theme-minimal
