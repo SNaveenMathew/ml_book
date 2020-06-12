@@ -32,7 +32,7 @@ Normal equations are obtained by setting the partial derivative of likelihood wi
 
 $$\frac{\partial log(L(e; W))}{\partial W} = 0 \implies \bigg[\frac{\partial}{\partial W} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{W = \hat{W}} = 0$$
 
-Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - X\hat{W}$, using $\frac{\partial e^Te}{\partial W} = 2 \frac{\partial e}{\partial W} e$ and substituting $\frac{\partial e}{\partial W} = X^T$, we get:
+Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - XW$, using $\frac{\partial e^Te}{\partial W} = 2 \frac{\partial e^T}{\partial W} e$ and substituting $\frac{\partial e^T}{\partial W} = -X^T$, we get:
 
 $$ 2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W} \implies \hat{W} = (X^TX)^{-1}X^Ty$$
 
@@ -40,4 +40,15 @@ $$ 2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^T
 
 Simple linear regression is a special case of linear regression in which the number of independent variables is one.
 
+#### 2.1.2.1.2. Solving linear regression with two independent variables
+
+#### 2.1.2.1.3. Writing a general case solver
+
+#### 2.1.2.1.4. Computational complexity
+
+https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations
+
 #### 2.1.2.1.x. Hierarchy rule
+
+### 2.1.2.2. Expanding the normal equation
+
