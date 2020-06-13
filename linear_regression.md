@@ -95,6 +95,8 @@ In this section we will try to write code to solve equation 2.1.2.1.2. The prima
 
 [C++ code for inverting a matrix](data/invert_matrix.cpp)
 
+[C++ code for multiplying two matrices](data/multiply_matrices.cpp)
+
 #### 2.1.2.1.x. Hierarchy rule
 
 ### 2.1.2.2. Computational complexity
