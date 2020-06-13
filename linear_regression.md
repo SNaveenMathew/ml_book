@@ -34,7 +34,9 @@ $$\frac{\partial log(L(e; W))}{\partial W} = 0 \implies \bigg[\frac{\partial}{\p
 
 Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - XW$, using $\frac{\partial e^Te}{\partial W} = 2 \frac{\partial e^T}{\partial W} e$ and substituting $\frac{\partial e^T}{\partial W} = -X^T$ into equation 2.1.2.1.1, we get:
 
-$$ -2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W} \implies \hat{W} = (X^TX)^{-1}X^Ty \tag{2.1.2.1.2}$$
+$$ -2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W}$$
+
+$$\implies \hat{W} = (X^TX)^{-1}X^Ty \tag{2.1.2.1.2}$$
 
 #### 2.1.2.1.1. Solving 'simple linear regression'
 
@@ -58,7 +60,9 @@ $$\implies \sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} = \hat{W_1} \sum_{i=1}^{N_{t
 
 Substituting equation 2.1.2.1.1.3 in equation 2.1.2.1.1.5:
 
-$$\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} = \hat{W_1} [\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2] + N_{train}\bar{x_1}\bar{y} \implies \hat{W_1}  = \frac{\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} - N_{train}\bar{x_1}\bar{y}}{\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2} \tag{2.1.2.1.1.6}$$
+$$\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} = \hat{W_1} [\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2] + N_{train}\bar{x_1}\bar{y}$$
+
+$$\implies \hat{W_1}  = \frac{\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} - N_{train}\bar{x_1}\bar{y}}{\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2} \tag{2.1.2.1.1.6}$$
 
 Substituting equation 2.1.2.1.1.6 in 2.1.2.1.1.3:
 
