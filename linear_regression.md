@@ -93,7 +93,7 @@ $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[s
 
 In this section we will try to write code to solve equation 2.1.2.1.2. The primary focus of this section is to invert $X^TX$. For this purpose we will use row/column reduction, also called Gauss-Jordan elimination or simply Gaussian elimination. We start from the property that for a square matrix $A$ that is invertible (assumed), we have $A^{-1}A = I$. In this property we will rearrange terms in the rows of $A$ to finally arrive at another property given by $A^{-1}I = A^{-1}$.
 
-[Code](data/invert_matrix.cpp)
+[C++ Code for inverting a matrix](data/invert_matrix.cpp)
 
 #### 2.1.2.1.x. Hierarchy rule
 
