@@ -20,6 +20,8 @@ This book almost surely *will not* provide elegant solutions to real life proble
 
 ![](data/box_quote.jpg)
 
+Industry needs people who can get the job done using libraries because the number of open business problems is very larger that fundamentals can take a back seat. This book will avoid such an approach and focus on the details.
+
 ## Golden rules
 
 There are few golden rules that appear across topics in this book:

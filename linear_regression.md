@@ -101,7 +101,76 @@ In this section we will try to write code to solve equation 2.1.2.1.2. The prima
 
 ### 2.1.2.2. Computational complexity
 
-https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations#Matrix_algebra
+Wikipedia defines [computational complexity](https://en.wikipedia.org/wiki/Computational_complexity) of an algorithm as the amount of resources required to run it. Computational complexity of matrix operations can be found in [this article](https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations#Matrix_algebra). But how is this calculated?
+
+#### 2.1.2.2.1. Matrix multiplication
+
+Consider two matrices $A_{n \times m}$ and $B_{m \times p}$. The product $C_{n \times p} = AB$ can be computed using the [matrix multiplication code](data/multiply_matrices.cpp). Looking at the loops used in the code (corresponding code block is shown below this paragraph) we find that the total number of operations is of the order $n \times m \times p$. Therefore the complexity (order) of matrix multiplication is $O(nmp)$.
+
+<pre><code>NumericMatrix matrixMultiply(NumericMatrix A, NumericMatrix B) {
+  ...
+  for(i = 0; i < A.nrow(); i++) {
+    for(j = 0; j < B.ncol(); j++) {
+      for(k = 0; k < A.ncol(); k++) {
+        C(i, j) += A(i, k) * B(k, j);
+      }
+    }
+  }
+  ...
+  return(C);
+}
+</code></pre>
+
+#### 2.1.2.2.1. Matrix inversion
+
+Consider a square matrix $A_{n \times n}$. The inverse $A^{-1}_{n \times n}$ can be computed using the [matrix inversion code](data/invert_matrix.cpp). Looking at the loops used in the code (corresponding code block is shown below this paragraph) we find that the total number of operations is of the order $n \times n \times n$. Therefore the complexity (order) of matrix inversion is $O(n^3)$.
+
+<pre><code>NumericMatrix invertMatrix(NumericMatrix x) {
+  ...
+  for(i = 0; i < x.nrow(); i++) {
+    ...
+    for(j = 0; j < x.nrow(); j++) {
+      if(j != i) {
+        row_num = x(j, i);
+        for(k = 0; k < x.nrow(); k++) {
+          x(j, k) -= (row_num * x(i, k));
+          inv_x(j, k) -= (row_num * inv_x(i, k));
+        }
+      }
+    }
+  }
+  ...
+  return(inv_x);
+}
+</code></pre>
+
+#### 2.1.2.2.3. Linear regression
+
+Substituting $X: N_{train} \times (p + 1)$, $X^T: (p + 1) \times N_{train}$, $y: N_{train} \times 1$ in equation 2.1.2.1.2, we get the following computations:
+
+- $X^TX: O(N_{train}(p + 1)^2)$
+- $(X^TX)^{-1}: O((p + 1)^3)$
+
+Now there are 2 choices for computation:
+
+Choice 1:
+
+- $[(X^TX)^{-1}X^T]: O(N_{train}(p + 1)^2)$
+- $[(X^TX)^{-1}X^T]y: O(N_{train}(p + 1))$
+
+Choice 2:
+
+- $[X^Ty]: O(N_{train}(p + 1))$
+- $(X^TX)^{-1}[X^Ty]: O((p + 1)^2)$
+
+Addding the total number of computations, we have the computational complexity of the choices as:
+
+- Choice 1: $O(2N_{train}(p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$
+- Choice 2: $O(N_{train}(p + 1)^2 + (p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$
+
+Comparing the choices we understand that for $N > 1$, $p > 0$ choice 2 is always more optimal. The result of this exercise could have been presented as a trivial case. The process of finding the total number of computations is the same in complex models such as support vector machines, neural networks, etc. For a linear regression model the choice is straight forward, but for a more complex model the choice may depend on other factors, for example: a) is $p > N_{train}$, b) hyperparameters such as the number of neurons in each layer, c) choice of kernel, etc. Customizing the *solver* may be the difference between training a neural network for years and arriving at the same solution for the same network in minutes. It is simply not enough for data scientists to use `from sklearn.linear_model import LinearRegression`, `lr = LinearRegression()`, and `lr.fit(X_train, y_train)` in Python or `model <- lm(y ~ x, data = train)` in R.
+
+Of course, `sklearn` (Python) and `stats` (R) don't use normal equations because it is computationally expensive. They use methods that find an approximate solution and have much lower computational complexity.
 
 ## 2.1.3. Simple linear regression and some physics: an analogy
 
