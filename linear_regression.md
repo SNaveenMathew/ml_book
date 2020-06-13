@@ -91,11 +91,15 @@ $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[s
 
 #### 2.1.2.1.2. Writing a general case solver
 
-In this section we will try to write code to solve equation 2.1.2.1.2. The primary focus of this section is to invert $X^TX$. For this purpose we will use row/column reduction, also called Gauss-Jordan elimination or simply Gaussian elimination. We start from the property that for a square matrix $A$ that is invertible (assumed), we have $A^{-1}A = I$. In this property we will rearrange terms in the rows of $A$ to finally arrive at another property given by $A^{-1}I = A^{-1}$.
+In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m} = [A_{i, j}]_{i = 1, 2, ..., n; j = 1, 2, ..., m}$ and $B_{m \times p} = [B_{j, k}]_{j = 1, 2, ..., m; k = 1, 2, ..., p}$, the product is given by $C_{n \times p} = [C_{i, k}]_{i = 1, 2, ..., n; k = 1, 2, ..., p}$ where $C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code can be found below:
+
+[C++ code for multiplying two matrices](data/multiply_matrices.cpp)
+
+The next objective is to invert a matrix. For this purpose we will use row/column reduction, also called Gauss-Jordan elimination or simply Gaussian elimination. We start from the property that for a square matrix $A$ that is invertible (assumed), we have $A^{-1}A = I$. In this property we will rearrange terms in the rows of $A$ to finally arrive at another property given by $A^{-1}I = A^{-1}$.
 
 [C++ code for inverting a matrix](data/invert_matrix.cpp)
 
-[C++ code for multiplying two matrices](data/multiply_matrices.cpp)
+The code for finding analytical solution for linear regression can be found in section 2.1.2.2.3. The reader is recommended to go through section 2.1.2.2 to understand the reason for not providing the code here.
 
 #### 2.1.2.1.x. Hierarchy rule
 
@@ -168,7 +172,13 @@ Addding the total number of computations, we have the computational complexity o
 - Choice 1: $O(2N_{train}(p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$
 - Choice 2: $O(N_{train}(p + 1)^2 + (p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$
 
-Comparing the choices we understand that for $N > 1$, $p > 0$ choice 2 is always more optimal. The result of this exercise could have been presented as a trivial case. The process of finding the total number of computations is the same in complex models such as support vector machines, neural networks, etc. For a linear regression model the choice is straight forward, but for a more complex model the choice may depend on other factors, for example: a) is $p > N_{train}$, b) hyperparameters such as the number of neurons in each layer, c) choice of kernel, etc. Customizing the *solver* may be the difference between training a neural network for years and arriving at the same solution for the same network in minutes. It is simply not enough for data scientists to use `from sklearn.linear_model import LinearRegression`, `lr = LinearRegression()`, and `lr.fit(X_train, y_train)` in Python or `model <- lm(y ~ x, data = train)` in R.
+Comparing the choices we understand that for $N > 1$, $p > 0$ choice 2 is always more optimal. The exercise of finding computational complexity was performed to show that computational linear algebra is not just about mathematics. Careful choices need to be made to design efficient solutions to simple models. The need for performing such an analysis is more evident in more complex models.
+
+[Header file with matrix operations as functions](data/linreg.h)
+
+[C++ code for analytically solving linear regression](data/linreg_analytical.cpp)
+
+The process of finding the total number of computations is the same in complex models such as support vector machines, neural networks, etc. For a linear regression model the choice is straight forward, but for a more complex model the choice may depend on other factors, for example: a) is $p > N_{train}$, b) hyperparameters such as the number of neurons in each layer, c) choice of kernel, etc. Customizing the *solver* may be the difference between training a neural network for years and arriving at the same solution for the same network in minutes. It is simply not enough for data scientists to use `from sklearn.linear_model import LinearRegression`, `lr = LinearRegression()`, and `lr.fit(X_train, y_train)` in Python or `model <- lm(y ~ x, data = train)` in R.
 
 Of course, `sklearn` (Python) and `stats` (R) don't use normal equations because it is computationally expensive. They use methods that find an approximate solution and have much lower computational complexity.
 
