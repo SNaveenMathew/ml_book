@@ -188,16 +188,16 @@ From equation 2.1.2.1.1.3 we know that a simple linear regression line always pa
 
 Let us imagine the following:
 
-1. The instantaneous estimated line is a one dimensional beam of uniform density that is hinged at $\bar{x_1}$ and is free to rotate in $x_1, y$ plane
-2. The instantaneous residue $r^{(i)}$ is the equivalent of a force. Magnitude of the residue and its sign determine the magnitude of the force and direction respectively, $F^{(i)} \propto r^{(i)}$
-3. The $i^{th}$ force act a locations with respect to the hinge given by $x_1^{(i)}-\bar{x_1}$. Therefore, it is possible to define the individual torque caused by the $i^{th}$ force as $\tau^{(i)} = (x_1^{(i)} - \bar{x_1})r_{(i)}$ (anticlockwise direction is positive)
+1. The instantaneous estimated line is a one dimensional beam of uniform mass density that is hinged at $\bar{x_1}$ and is free to rotate in $x_1, y$ plane
+2. The instantaneous residue $e^{(i)}$ is the equivalent of a force. Magnitude of the residue and its sign determine the magnitude of the force and direction respectively, $F^{(i)} \propto e^{(i)}$
+3. The $i^{th}$ force act a locations with respect to the hinge given by $x_1^{(i)} - \bar{x_1}$. Therefore, it is possible to define the individual torque caused by the $i^{th}$ force as $\tau^{(i)} = (x_1^{(i)} - \bar{x_1})e_{(i)}$ (anticlockwise direction is positive)
 4. Moment of inertia is given by $I \propto (max(x_1) - min(x_1))^2$
 
-Let us start with $w_0 = 0$, therefore we have $r^{(i)} = y^{(i)}-\bar{y}$. The net force and net torque on the 'beam' are given by:
+Let us start with $w_0 = 0$, therefore we have $e^{(i)} = y^{(i)} - \bar{y}$. At the initial position the net force and net torque on the 'beam' are given by:
 
-$$F = \sum_{i = 1}^{N_{train}} r^{(i)} = \sum_{i = 1}^{N_{train}} (y^{(i)}-\bar{y}) = \sum_{i = 1}^{N_{train}} y^{(i)} - N_{train}\bar{y} = 0$$
+$$F(w_1 = 0) = \sum_{i = 1}^{N_{train}} e^{(i)}(w_1 = 0) = \sum_{i = 1}^{N_{train}} (y^{(i)}-\bar{y}) = \sum_{i = 1}^{N_{train}} y^{(i)} - N_{train}\bar{y} = 0$$
 
-$$\tau \propto \sum_{i = 1}^{N_{train}} (x_1^{(i)} - \bar{x_1})r^{(i)}$$
+$$\tau \propto \sum_{i = 1}^{N_{train}} (x_1^{(i)} - \bar{x_1})e^{(i)}$$
 
 Now let us use the net force and net torque to simulate the motion of the system for a period of time starting from $w_1 = 0$:
 
