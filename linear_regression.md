@@ -184,3 +184,27 @@ Of course, `sklearn` (Python) and `stats` (R) don't use normal equations because
 
 ## 2.1.3. Simple linear regression and some physics: an analogy
 
+From equation 2.1.2.1.1.3 we know that a simple linear regression line always passes through $(\bar{x_1}, \bar{y})$. This is not surprising because if we don't have predictors our best guess for the outcome is $\hat{y} = \bar{y}$ (OLS solution for for $p = 0$, also the maximum likelihood estimate on the sample for the model $Y = f(1) + \epsilon$ where $\epsilon \sim_{iid} N(0, \sigma^2)$, f is a linear function, and $f(1)$ does not depend on $X$). Let us assume that we don't know the OLS solution and try to understand it by studying the behavior of different 'lines' that pass through $(\bar{x_1}, \bar{y})$. This system is parameterized by the instantaneous slope $w_{1}$, the instantaneous intercept $w_0$ gets adjusted automatically on determining $w_{1}$
+
+Let us imagine the following:
+
+1. The instantaneous estimated line is a one dimensional beam of uniform density that is hinged at $\bar{x_1}$ and is free to rotate in $x_1, y$ plane
+2. The instantaneous residue $r^{(i)}$ is the equivalent of a force. Magnitude of the residue and its sign determine the magnitude of the force and direction respectively, $F^{(i)} \propto r^{(i)}$
+3. The $i^{th}$ force act a locations with respect to the hinge given by $x_1^{(i)}-\bar{x_1}$. Therefore, it is possible to define the individual torque caused by the $i^{th}$ force as $\tau^{(i)} = (x_1^{(i)} - \bar{x_1})r_{(i)}$ (anticlockwise direction is positive)
+4. Moment of inertia is given by $I \propto (max(x_1) - min(x_1))^2$
+
+Let us start with $w_0 = 0$, therefore we have $r^{(i)} = y^{(i)}-\bar{y}$. The net force and net torque on the 'beam' are given by:
+
+$$F = \sum_{i = 1}^{N_{train}} r^{(i)} = \sum_{i = 1}^{N_{train}} (y^{(i)}-\bar{y}) = \sum_{i = 1}^{N_{train}} y^{(i)} - N_{train}\bar{y} = 0$$
+
+$$\tau \propto \sum_{i = 1}^{N_{train}} (x_1^{(i)} - \bar{x_1})r^{(i)}$$
+
+Now let us use the net force and net torque to simulate the motion of the system for a period of time starting from $w_1 = 0$:
+
+![](data/physics_anim.gif)
+
+[Code to generate plot](data/linreg_physics.R)
+
+We observe that the net force on the beam is always zero. For the initial position the net torque is in anticlockwise direction, which forces the slope of the line to increase. The beam gains angular momentum in anticlockwise, but the net torque keeps decreasing, reaches zero and changes direction. This leads to decrease in angular momentum in anticlockwise. After some time the angular momentum is zero, and the net torque is in clockwise direction. This forces the bean to rotate in clockwise direction. The motion continues till the initial position. The dynamics look similar to a pendulum where the total energy is conserved.
+
+We also observe that the beam is in *stable equilibrium* about a specific position. From equation 2.1.2.1.1.4 we can infer that for the OLS estimate the net torque (first moment) about the origin is zero. By subtracting zero ($\bigg[\bar{x_1}\sum_{i=1}^{N_{train}}e^{(i)}\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}}$ = $\bigg[\sum_{i=1}^{N_{train}}\bar{x_1}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}}$) from equation 2.1.2.1.1.4 we observe that the net torque (first moment) about $\bar{x_1}$ is zero. Therefore, the regression estimate is a position of zero net force and zero torque - the position of stable equilibrium for the imaginary system.

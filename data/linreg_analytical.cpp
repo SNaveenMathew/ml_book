@@ -17,7 +17,8 @@ NumericMatrix linreg(NumericMatrix x, NumericMatrix y) {
 set.seed(1)
 n_train <- 100
 x <- 1:n_train
-res <- rnorm(n = length(x), mean = 0, sd = 0.1)
+error_sd <- 0.5
+res <- rnorm(n = length(x), mean = 0, sd = error_sd)
 w_0 <- 0
 w_1 <- 2
 y <- w_0 + w_1 * x + res
