@@ -89,7 +89,7 @@ So how did we know the exact term $\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^
 
 $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[sd(x_1)]^2} = cor(y, x_1)\frac{sd(y)}{sd(x)}$$
 
-#### 2.1.2.1.2. Writing a general case solver
+#### 2.1.2.1.2. Writing a solver for linear regression
 
 In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m} = [A_{i, j}]_{i = 1, 2, ..., n; j = 1, 2, ..., m}$ and $B_{m \times p} = [B_{j, k}]_{j = 1, 2, ..., m; k = 1, 2, ..., p}$, the product is given by $C_{n \times p} = [C_{i, k}]_{i = 1, 2, ..., n; k = 1, 2, ..., p}$ where $C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code can be found below:
 
@@ -148,7 +148,7 @@ Consider a square matrix $A_{n \times n}$. The inverse $A^{-1}_{n \times n}$ can
 }
 </code></pre>
 
-#### 2.1.2.2.3. Linear regression
+#### 2.1.2.2.3. Ordinary least squares (linear) regression
 
 Substituting $X: N_{train} \times (p + 1)$, $X^T: (p + 1) \times N_{train}$, $y: N_{train} \times 1$ in equation 2.1.2.1.2, we get the following computations:
 
