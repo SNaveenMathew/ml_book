@@ -91,7 +91,7 @@ $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[s
 
 #### 2.1.2.1.2. Writing a solver for linear regression
 
-In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m} = [A_{i, j}]_{i = 1, 2, ..., n; j = 1, 2, ..., m}, B_{m \times p} = [B_{j, k}]_{j = 1, 2, ..., m; k = 1, 2, ..., p}$, the product is given by $C_{n \times p} = [C_{i, k}]_{i = 1, 2, ..., n; k = 1, 2, ..., p}$ where $C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code for computing product of two matrices can be found below:
+In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m}, B_{m \times p}$, the product is given by $C_{n \times p} = AB \implies C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code for computing product of two matrices can be found below:
 
 [C++ code for multiplying two matrices](data/multiply_matrices.cpp)
 
