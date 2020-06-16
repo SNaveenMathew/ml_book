@@ -4,7 +4,7 @@
 
 This book is **intended** for readers who have at least a basic understanding of topics in linear algebra such as vector spaces, eigen values, eigen vectors, matrix inverse and generalized / pseudo inverse. The flow of the book is motivated by my personal journey - from an engineer (2008 - Present) to a statistician (2015 - Present) to an scientist (2020 - Present). However, this is not a unique trait - every book, if seen with a detective's eye, is the culmination of one or more personal journeys. To add to this, the book will have questions for which I don't have answers. Therefore, this book may be a futile effort towards compiling a coherent data science story. It may end up as an *unstructured* collection of blog posts.
 
-(Updated on 06/16/2020): The planned content has a lot in common with [Mathematics for Machine Learning](https://mml-book.github.io/) book by Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong. The planned content also has a lot in common [Regression Diagnostics](https://us.sagepub.com/en-us/nam/book/regression-diagnostics) by John Fox. The difference is that the content tries to establish a connection between basic mathematical statistics and topics in machine/deep learning.
+(Updated on 06/16/2020): The planned content has a lot in common with [Mathematics for Machine Learning](https://mml-book.github.io/) book by Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong. The planned content also has a lot in common [Regression Diagnostics](https://us.sagepub.com/en-us/nam/book/regression-diagnostics) by John Fox. The difference is that this book tries to establish a connection between basic mathematical statistics and topics in machine/deep learning.
 
 ## Who should not read this book
 
