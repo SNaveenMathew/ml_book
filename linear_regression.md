@@ -93,11 +93,11 @@ $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[s
 
 In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m}, B_{m \times p}$, the product is given by $C_{n \times p} = AB \implies C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code for computing product of two matrices can be found below:
 
-[C++ code for multiplying two matrices](data/multiply_matrices.cpp)
+[C++ code for multiplying two matrices](data/multiply_matrices.cpp) **Bias alert: writing this just to prove that I can write C++ code for matrix multiplication**
 
 The next objective is to invert a matrix. For this purpose we will use row/column reduction, also called Gauss-Jordan elimination or simply Gaussian elimination. We start from the property that for a square matrix $A$ that is invertible (assumed), we have $A^{-1}A = I$. In this property we will rearrange terms in the rows of $A$ to finally arrive at another property given by $A^{-1}I = A^{-1}$.
 
-[C++ code for inverting a matrix](data/invert_matrix.cpp)
+[C++ code for inverting a matrix](data/invert_matrix.cpp) **Bias alert: writing this just to prove that I can write C++ code for matrix inversion**
 
 The code for finding analytical solution for linear regression can be found in section 2.1.2.2.3. The reader is recommended to go through section 2.1.2.2 to understand the reason for not providing the code here.
 
@@ -176,7 +176,7 @@ Comparing the choices we understand that for $N > 1$, $p > 0$ choice 2 is always
 
 [Header file with matrix operations as functions](data/linreg.h)
 
-[C++ code for analytically solving linear regression](data/linreg_analytical.cpp)
+[C++ code for analytically solving linear regression](data/linreg_analytical.cpp) **Bias alert: writing this just to prove that I can write C++ code for solving normal equations**
 
 The process of finding the total number of computations is the same in complex models such as support vector machines, neural networks, etc. For a linear regression model the choice is straight forward, but for a more complex model the choice may depend on other factors, for example: a) is $p > N_{train}$, b) hyperparameters such as the number of neurons in each layer, c) choice of kernel, etc. Customizing the *solver* may be the difference between training a neural network for years and arriving at the same solution for the same network in minutes. It is simply not enough for data scientists to use `from sklearn.linear_model import LinearRegression`, `lr = LinearRegression()`, and `lr.fit(X_train, y_train)` in Python or `model <- lm(y ~ x, data = train)` in R.
 
