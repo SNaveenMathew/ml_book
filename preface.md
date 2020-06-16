@@ -6,6 +6,8 @@ This book is **intended** for readers who have at least a basic understanding of
 
 (Updated on 06/16/2020): The planned content has a lot in common with [Mathematics for Machine Learning](https://mml-book.github.io/) book by Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong. The planned content also has a lot in common [Regression Diagnostics](https://us.sagepub.com/en-us/nam/book/regression-diagnostics) by John Fox. The difference is that this book tries to establish a connection between basic mathematical statistics and topics in machine/deep learning.
 
+**Note from the author:** Science is a journey. Writing a book is a different type of journey. As recently as 2018 I started understanding the journey of the author when I read a book. It's my turn to share my journey. Not everyone will relate to it - that's ok. I expect a dropout rate of almost 100%. The intent of this book *may be* to appeal to a small number of people who are interested in connecting their line of work with data science, similar to how I connected to data science from aircraft engineering (especially computational fluid dynamics).
+
 ## Who should not read this book
 
 This book is **not intended** for people who have no background in data storage / retrieval, computing, linear algebra, statistics or machine learning and want a 1-hour summary of topics that will make them the '*best data scientist in the world*'. This book does not intersect with **Kaggle** competitions because they were not a part of my journey.
