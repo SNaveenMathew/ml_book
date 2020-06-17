@@ -19,41 +19,50 @@ library(ggplot2)
 library(latex2exp)
 library(gganimate)
 
+# This simulation was run on a server with high RAM
+# Ideal: Reduce n_iterations by a factor of 10 and increase dt by a factor of 10
 bar_y <- mean(y)
 bar_x1 <- mean(x1)
-theta_inst <- 0
-omega_inst <- 0
-w_1 <- tan(theta_inst)
+theta_inst_prev <- 0
+omega_inst_prev <- 0
+w_1 <- tan(theta_inst_prev)
 w_0 <- bar_y - w_1 * bar_x1
 control_inertia <- 12
-dt <- 0.001
+dt <- 0.0001
 I_total <- (max(df$x1) - min(df$x1))^3/control_inertia
 plots <- list()
 rows <- nrow(df)
-n_iterations <- 10000
+n_iterations <- 50000
 df_time <- data.frame(matrix(0, nrow = n_iterations * rows, ncol = 6))
 colnames(df_time) <- c("x1", "y", "predicted", "residuals", "pred_y_inst", "time")
 
 for(i in 1:n_iterations) {
-  df$pred_y_inst <- w_0 + w_1 * x1
+  df$pred_y_inst <- w_0 + w_1 * df$x1
   df$residuals <- df$y - df$pred_y_inst
   df$time <- i
   df_time[(rows * (i - 1) + 1):(rows * i), ] <- df
   force <- round(sum(df$residuals), 4)
   torque <- sum((df$x1 - bar_x1) * df$residuals)
-  if(i %% 100 == 0)
+  if(i %% 1000 == 0)
     print(c(i = i, force = force))
   
-  alpha <- torque/I_total
-  omega_inst <- omega_inst + alpha * dt
-  # Very rough model, assuming constant alpha throughout
-  theta_inst <- theta_inst + omega_inst * dt
-  w_1 <- tan(theta_inst)
+  alpha_next <- torque/I_total
+  if(i == 1) {
+    alpha_prev <- alpha_next
+  }
+  # Using mid-point estimate for $\alpha$ within interval dt
+  omega_inst_next <- omega_inst_prev + 0.5 * (alpha_prev + alpha_next) * dt
+  # Using mid-point estimate for $\Omega$ within interval dt
+  theta_inst_next <- theta_inst_prev + 0.5 * (omega_inst_next + omega_inst_prev) * dt
+  w_1 <- tan(theta_inst_next)
   w_0 <- bar_y - w_1 * bar_x1
+  omega_inst_prev <- omega_inst_next
+  theta_inst_prev <- theta_inst_next
+  alpha_prev <- alpha_next
 }
 
-ggplot(df_time, aes(x = x1, y = y)) + transition_time(time) +
+p <- ggplot(df_time, aes(x = x1, y = y)) + transition_time(time) +
   geom_segment(aes(xend = x1, yend = pred_y_inst), alpha = .2) +
   labs(title = 'Iteration: {frame_time}', x = TeX("$x_1$"), y = 'y') +
   geom_point() + ggplot2::xlim(range(x1))
-anim_save("physics_anim.gif")
+anim_save(filename = "physics_anim.gif", animation = p)
