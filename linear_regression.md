@@ -186,6 +186,8 @@ Of course, `sklearn` (Python) and `stats` (R) don't use normal equations because
 
 ## 2.1.3. Simple linear regression and some physics: an analogy
 
+## 2.1.3.1. An analogy
+
 From equation 2.1.2.1.1.3 we know that a simple linear regression line always passes through $(\bar{x_1}, \bar{y})$. This is not surprising because if we don't have predictors our best guess for the outcome is $\hat{y} = \bar{y}$ (OLS solution for for $p = 0$, also the maximum likelihood estimate on the sample for the model $Y = f(1) + \epsilon$ where $\epsilon \sim_{iid} N(0, \sigma^2)$, f is a linear function, and $f(1)$ does not depend on $X$). Let us assume that we don't know the OLS solution and try to understand it by studying the behavior of different 'lines' that pass through $(\bar{x_1}, \bar{y})$. This system is parameterized by the instantaneous slope $w_{1}$, the instantaneous intercept $w_0$ gets adjusted automatically on determining $w_{1}$
 
 Let us imagine the following:
@@ -221,6 +223,20 @@ From equation 2.1.2.1.1.4 we can infer that for the OLS estimate the net torque 
 
 For OLS linear regression we can understand the normal equations as a system of equations that have zero net moment. Setting the zero-th moment to zero gives the first equation, which suggests that the sum of the residues should be equal to zero. Setting the first moment to zero gives the second equation, which suggests that residue is independent of the independent variables. This result will also be discussed in a later section about the geometric interpretation of linear regression.
 
+## 2.1.3.2. Computational complexity of the above analogy
+
+We note that we have fixed $p=1$ for the purposed of visualization. Let us generalize it to an arbitrary number $p$ again for finding the computational complexity. In each iteration we did the following number of computations:
+
+- $pred\_y\_inst: N_{train} + N_{train} p$
+- $residuals: N_{train}$
+- $force: N_{train}$
+- $torque: N_{train} p$
+- $\frac{\partial^2 \theta}{\partial t^2}: p$
+- $\frac{\partial \theta}{\partial t}: p$
+- $\theta: p$
+- $w{updated}: p + 1$
+- $w_0^{updated}: N_{train} + N_{train} p$
+
 ## 2.1.4. Extending the ideas from physics: gradient descent
 
-We noted that the computational complexity of solving the normal equations grows with the
+We noted that the computational complexity of solving the normal equations is $O(N_{train}(p + 1)^2 + (p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$. Looking back at the previous section we found a way to oscillate around the solution with a much lower computational complexity of $O(4 N_{train} + 3 N_{train} p + 4 p + 1)$ because $p$ is typically large enough to offset the effect of constant terms in the order of complexity.
