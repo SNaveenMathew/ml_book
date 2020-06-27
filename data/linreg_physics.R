@@ -4,9 +4,9 @@ n_train <- 100
 x1 <- 1:n_train
 error_sd <- 10
 res <- rnorm(n = length(x1), mean = 0, sd = error_sd)
-w_0 <- 0
-w_1 <- 2
-y <- w_0 + w_1 * x1 + res
+W_0 <- 0
+W_1 <- 2
+y <- W_0 + W_1 * x1 + res
 df <- data.frame(x1 = x1, y = y)
 
 # Fitting the model
