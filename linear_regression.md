@@ -46,7 +46,7 @@ $$Y = X_1 W_1 + W_0 + \epsilon; y = x_1 \hat{W_1} + \hat{W_0} + e$$
 
 For the sample, we can expand the system equation in terms of individual equations given by: $y^{(i)} = x_1^{(i)} \hat{W_1} + \hat{W_0} + e^{(i)}$. Let us write this as a function of weights to solve for $(\hat{W_0}, \hat{W_1}$ that give the OLS solution. We have: $e^{(i)}(w_0, w_1) = (y^{(i)} - x_1^{(i)} w_1 - w_0)$. The OLS loss is given by: $L(w_0, w_1) = \sum_{i=1}^{N_{train}}[e^{(i)}(w_0, w_1)]^2$ with the solution given by $(\hat{W_0}, \hat{W_1}) = \argmin \limits_{(w_0, w_1)} L(w_0, w_1) = \argmin \limits_{(w_0, w_1)} \sum_{i=1}^{N_{train}} [y^{(i)} - x_1^{(i)} w_1 - w_0]^2$. Using the same approach as normal equations, we set the partial derivative of $L(w_0, w_1)$ with respect to $w_0$ and $w_1$ to 0.
 
-$$\bigg[\frac{\partial L(w_0, w_1)}{\partial w_0}\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = \bigg[-2\sum_{i=1}^{N_{train}}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = 0$$
+$$\bigg[\frac{\partial L(w_0, w_1)}{\partial w_0}\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = \bigg[-2\sum_{i=1}^{N_{train}}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = 0 \tag{2.1.2.1.1.0}$$
 
 $$\implies \sum_{i=1}^{N_{train}} e^{(i)} = N_{train} \bar{e} = 0 \tag{2.1.2.1.1.1}$$
 
@@ -221,22 +221,56 @@ We also observe that the beam is in *stable equilibrium* about a specific positi
 
 From equation 2.1.2.1.1.4 we can infer that for the OLS estimate the net torque (first moment) about the origin is zero. By subtracting $0 = \bigg[\sum_{i=1}^{N_{train}}\bar{x_1}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}}$ from equation 2.1.2.1.1.4 we observe that the net torque (first moment) about $\bar{x_1}$ is zero. Therefore, the regression estimate is a position of zero net force and zero torque - the position of stable equilibrium for the imaginary system. For the special case where $\hat\theta \approx 0$ the diagram resembles the behavior of **gradient descent** in which the rate of change of *momentum* is determined by the (negative) gradient. Regular gradient descent does this differently - rate of change of *position* is determined by the (negative) gradient. The learning rate can be considered as inverse of inertia. We will discuss this in more detail in section 2.1.4.
 
-For OLS linear regression we can understand the normal equations as a system of equations that have zero net moment. Setting the zero-th moment to zero gives the first equation, which suggests that the sum of the residues should be equal to zero. Setting the first moment to zero gives the second equation, which suggests that residue is independent of the independent variables. This result will also be discussed in a later section about the geometric interpretation of linear regression.
+For OLS linear regression we can understand the normal equations as a system of equations that have zero net moment. Setting the zero-th moment to zero gives the first equation, which suggests that the sum of the residues should be equal to zero. Setting the first moment to zero gives the second equation, which suggests that residue is independent of the independent variables. This result will also be discussed in a later section <> about the geometric interpretation of linear regression.
 
 ## 2.1.3.2. Computational complexity of the above analogy
 
 We note that we have fixed $p=1$ for the purposed of visualization. Let us generalize it to an arbitrary number $p$ again for finding the computational complexity. In each iteration we did the following number of computations:
 
-- $pred\_y\_inst: N_{train} + N_{train} p$
-- $residuals: N_{train}$
-- $force: N_{train}$
-- $torque: N_{train} p$
-- $\frac{\partial^2 \theta}{\partial t^2}: p$
-- $\frac{\partial \theta}{\partial t}: p$
-- $\theta: p$
-- $w{updated}: p + 1$
-- $w_0^{updated}: N_{train} + N_{train} p$
+- $pred\_y\_inst(t): N_{train} + N_{train} p$
+- $residuals(t): N_{train}$
+- $force(t): N_{train}$
+- $torque(t): N_{train} p$
+- $\frac{\partial^2 \theta}{\partial t^2}(t): p$
+- $\frac{\partial \theta}{\partial t}(t): p$
+- $\theta(t): p$
+- $w_1(t + 1): p + 1$
+- $w_0(t + 1): N_{train} + N_{train} p$
 
 ## 2.1.4. Extending the ideas from physics: gradient descent
 
-We noted that the computational complexity of solving the normal equations is $O(N_{train}(p + 1)^2 + (p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$. Looking back at the previous section we found a way to oscillate around the solution with a much lower computational complexity of $O(4 N_{train} + 3 N_{train} p + 4 p + 1)$ because $p$ is typically large enough to offset the effect of constant terms in the order of complexity.
+We noted that the computational complexity of solving the normal equations is $O(N_{train}(p + 1)^2 + (p + 1)^2 + (p + 1)^3 + N_{train}(p + 1))$. Looking back at the previous section we found a way to oscillate around the solution with a much lower computational complexity of $O(4 N_{train} + 3 N_{train} p + 4 p + 1)$ per iteration because $p$ is typically large enough to offset the effect of constant terms in the order of complexity. Performing small number of such iterations to get closer to the solution that has zero net moment is almost always a better choice compared to solving the normal equations.
+
+Gradient descent is a popular algorithm for parameter estimation. It differs from the physics analogy in section 2.1.3.1. in a subtle way: consider the gradient as a direct indicator of rate of change of weight (angle in the analogy because $w_1 \approx \theta$):
+
+$$w(t + 1) := w(t) - \alpha \bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}$$
+
+Here $\alpha$ is called the learning rate. It determines how quickly (number of iterations) we can reach a solution that is close to the OLS estimate. However, setting it to a high value can have an undesirable effect on the learning. Let us understand simple linear regression through mathematics.
+
+## 2.1.4.1. Convergence of gradient descent for simple linear regression
+
+For this section let us assume that the covariance matrix is invertible. In other words $x_1 \neq c$ for some real valued constant c.
+
+$$L(w(t)) = \bigg(y - w_0(t) - w_1(t) x_1\bigg)^T\bigg(y - w_0(t) - w_1(t) x_1\bigg)$$
+
+$$L(w(t + 1)) = \bigg[y - \bigg(w_0(t) - \alpha \bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)}\bigg) - \bigg(w_1(t) - \alpha \bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_1 = w_1(t)}\bigg)x_1 \bigg]^T \bigg[y - \bigg(w_0(t) - \alpha \bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)}\bigg) - \bigg(w_1(t) - \alpha \bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_1 = w_1(t)}\bigg)x_1 \bigg]$$
+
+$$\implies L(w(t + 1)) = \bigg[y - w_0(t) - w_1(t)x_1 + \alpha \bigg(\bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1 \bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_1 = w_1(t)}\bigg)\bigg]^T \bigg[y - w_0(t) - w_1(t)x_1 + \alpha \bigg(\bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1 \bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_1 = w_1(t)}\bigg)\bigg]$$
+
+$$\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - w_0 - x_1 w_1\bigg)^T \bigg(\bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1\bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_0 = w_0(t)} \bigg) + \alpha \bigg( \bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1\bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_0 = w_0(t)} \bigg)^T \bigg(y - w_0 - x_1 w_1\bigg) + \alpha^2 \bigg( \bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1\bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_0 = w_0(t)} \bigg)^T \bigg( \bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1\bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_0 = w_0(t)} \bigg) \tag{2.1.4.1.1}$$
+
+In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $L(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now let us assume that the learning rate $\alpha > 0$ is small and the gradients are small enough that the step size is not large, i.e. $w(t+1)$ will be in the neighborhood of $w(t)$. We also assume that the fourth term tends to 0 for small arbitrarily chosen $\alpha$. We get:
+
+$$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - x_1 w_1 - w_0\bigg)^T \bigg(\bigg[\frac{\partial L}{\partial w_0}\bigg]_{w_0 = w_0(t)} + x_1\bigg[\frac{\partial L}{\partial w_1}\bigg]_{w_0 = w_0(t)} \bigg) \tag{2.1.4.1.2}$$
+
+Substituting equations 2.1.2.1.1.0 and 2.1.2.1.1.4 in equation 2.1.4.1.2 we get:
+
+$$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - x_1 w_1 - w_0\bigg)^T \bigg(-2(y - x_1 w_1 - w_0) -2x_1x_1^T(y - x_1 w_1 - w_0) \bigg)$$
+
+$$\implies L(w(t + 1)) = L(w(t)) - 4\alpha \bigg(y - x_1 w_1 - w_0\bigg)^T \bigg(y - x_1 w_1 - w_0\bigg) - 4\alpha \bigg(y - x_1 w_1 - w_0\bigg)^Tx_1 x_1^T\bigg(y - x_1 w_1 - w_0\bigg)$$
+
+In the last term if we denote $A = x_1^T(y - x_1 w_1 - w_0)$, we have $A^T = \bigg[x_1^T\bigg(y - x_1 w_1 - w_0\bigg)\bigg]^T = \bigg(y - x_1 w_1 - w_0\bigg)^T\bigg[x_1^T\bigg]^T = \bigg(y - x_1 w_1 - w_0\bigg)^Tx_1$. Also, $dim(A) = 1 \times 1 \implies dim(A^T) = 1 \times 1; dim(A^TA) = 1 \times 1$
+
+$$\implies L(w(t + 1)) = L(w(t)) - 4\alpha \bigg|\bigg|y - x_1 w_1 - w_0\bigg|\bigg|_2^2 - 4 \alpha \bigg|x_1^T\bigg(y - x_1 w_1 - w_0\bigg)\bigg|^2 \le L(w(t))$$
+
+Therefore, for a sufficiently small $\alpha$ we observe that $L(w(t))$ is a non-increasing function. Also, $L(w(t))$ is lower bounded by 0. Therefore, gradient descent theoretically converges to the global minima for OLS simple linear regression. The same can be proved for OLS multiple linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the covariance matrix will be discused in section <>.
