@@ -285,7 +285,7 @@ $$\implies L(w(t + 1)) = L(w(t)) - 4 \alpha \bigg|\bigg|X^T\bigg(y - Xw(t)\bigg)
 
 Therefore, for a sufficiently small $\alpha$ we observe that $L(w(t))$ is a non-increasing function. Also, $L(w(t))$ is lower bounded by 0 because it is a 2-norm. Therefore, gradient descent theoretically converges to at least a local minima for OLS linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the covariance matrix will be discused in section <>.
 
-**Additional note:** We observe that $\frac{\partial L}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero.
+**Additional note:** We observe that $\frac{\partial L}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
 
 # 2.1.4.2. Writing a solver for linear regression using gradient descent
 
