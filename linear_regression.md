@@ -263,9 +263,7 @@ In equation 2.1.4.1.1 we observe that the second and third term are transpose of
 
 - $\alpha > 0$ is small and the gradients are small enough that the step size is not large, i.e. $w(t+1)$ will be in the neighborhood of $w(t)$
 
-- $\implies \alpha^2 \lVert X [ \frac{\partial L}{\partial w} ]_{w = w(t)}\rVert _2^2 \to 0$
-
-- We assume this condition is met $\forall w(t) \in R^{p + 1}$, $X \in R^{N_{train} \times (p + 1)}$
+- $\implies \alpha^2 \lVert X [ \frac{\partial L}{\partial w} ]_{w = w(t)}\rVert _2^2 \to 0$. We assume this condition is met $\forall w(t) \in R^{p + 1}$, $X \in R^{N_{train} \times (p + 1)}$
 
 $$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
 
