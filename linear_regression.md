@@ -277,7 +277,7 @@ Sequentially transforming the above equation, we get:
 
 - $A = X^T\bigg(y - Xw(t)\bigg) \implies A^T = \bigg[X^T \bigg(y - Xw(t)\bigg)\bigg]^T = \bigg(y - Xw(t)\bigg)^T\bigg[X^T\bigg]^T = \bigg(y - Xw(t)\bigg)^TX$
 
-- $dim(A) = p \times 1 \implies dim(A^T) = 1 \times p dim(A^TA) = 1 \times 1 A^TA = \lVert A \rVert_2^2$
+- $dim(A) = p \times 1 \implies dim(A^T) = 1 \times p; dim(A^TA) = 1 \times 1; A^TA = \lVert A \rVert_2^2$
 
 $$\implies L(w(t + 1)) = L(w(t)) - 4 \alpha \bigg|\bigg|X^T\bigg(y - Xw(t)\bigg)\bigg|\bigg|_2^2 \le L(w(t))$$
 
