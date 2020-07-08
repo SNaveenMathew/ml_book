@@ -263,6 +263,8 @@ In equation 2.1.4.1.1 we observe that the second and third term are transpose of
 
 - $\alpha > 0$ is small and the gradients are small enough that the step size is not large, i.e. $w(t+1)$ will be in the neighborhood of $w(t)$
 
+Re-writing the assumption in different terms:
+
 - $\implies \alpha^2 \bigg|\bigg|X \bigg[ \frac{\partial L}{\partial w} \bigg]_{w = w(t)}\bigg|\bigg|_2^2 \to 0 \forall w(t) \in R^{p + 1}, X \in R^{N_{train} \times (p + 1)}$
 
 $$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
@@ -276,6 +278,8 @@ $$\implies L(w(t + 1)) = L(w(t)) - 4\alpha \bigg(y - Xw(t)\bigg)^T X X^T \bigg(y
 Sequentially transforming the above equation, we get:
 
 - $A = X^T\bigg(y - Xw(t)\bigg) \implies A^T = \bigg[X^T \bigg(y - Xw(t)\bigg)\bigg]^T = \bigg(y - Xw(t)\bigg)^T\bigg[X^T\bigg]^T = \bigg(y - Xw(t)\bigg)^TX$
+
+Dimension checking:
 
 - $dim(A) = p \times 1 \implies dim(A^T) = 1 \times p; dim(A^TA) = 1 \times 1; A^TA = \bigg|\bigg| A \bigg|\bigg|_2^2$
 
