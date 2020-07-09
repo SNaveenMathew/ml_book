@@ -289,4 +289,6 @@ Therefore, for a sufficiently small $\alpha$ we observe that $L(w(t))$ is a non-
 
 # 2.1.4.2. Writing a solver for linear regression using gradient descent
 
+From the above analysis we understand that pre-computing the residues and reusing them for calculation of gradient and loss can reduce the amount of computation. The total computational complexity per iteration is $O(4N_{train}(p+1) + 6(p+1))$ (not the most optimal because explicit computation of transpose can be avoided by writing a function to directly compute $X^Te$). For a small number of iterations this is a tremendous improvement over the normal equations approach!
 
+[C++ code for multiplying two matrices](data/linreg_GD.cpp) **Bias alert: writing this just to prove that I can write C++ code for gradient descent**
