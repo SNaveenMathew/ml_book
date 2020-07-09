@@ -247,7 +247,7 @@ $$w(t + 1) := w(t) - \alpha \bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}
 
 Here $\alpha$ is called the learning rate. It determines how quickly (number of iterations) we can reach a solution that is close to the OLS estimate. However, setting it to a high value can have an undesirable effect on the learning. Let us understand simple linear regression through mathematics.
 
-## 2.1.4.1. Convergence of gradient descent for linear regression
+### 2.1.4.1. Convergence of gradient descent for linear regression
 
 For this section let us assume that the covariance matrix is invertible. In other words $(X^TX)^{-1}$ exists.
 
@@ -287,7 +287,7 @@ Therefore, for a sufficiently small $\alpha$ we observe that $L(w(t))$ is a non-
 
 **Additional note:** We observe that $\frac{\partial L}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
 
-# 2.1.4.2. Writing a solver for linear regression using gradient descent
+### 2.1.4.2. Writing a solver for linear regression using gradient descent
 
 From the above analysis we understand that pre-computing the residues and reusing them for calculation of gradient and loss can reduce the amount of computation. The total computational complexity per iteration is $O(4N_{train}(p+1) + 6(p+1))$ (not the most optimal because explicit computation of transpose can be avoided by writing a function to directly compute $X^Te$). For a small number of iterations this is a tremendous improvement over the normal equations approach!
 
