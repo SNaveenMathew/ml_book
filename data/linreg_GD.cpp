@@ -84,11 +84,13 @@ y <- w_0 + w_1 * x + res
 
 x1 <- cbind(1, x)
 y1 <- matrix(y, nrow = length(y), ncol = 1)
-# solve(t(x1) %*% x1) %*% (t(x1) %*% y1)
+# Normal equations
+solve(t(x1) %*% x1) %*% (t(x1) %*% y1)
+# Gradient descent
 linreg_GD(x = x1, y = y1)
 
 # Compare with lm function
-# model <- lm(y ~ x)
-# model$coefficients
+model <- lm(y ~ x)
+model$coefficients
 
 */
