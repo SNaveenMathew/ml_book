@@ -41,15 +41,15 @@ NumericMatrix get_resid(NumericMatrix y, NumericMatrix yhat) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix linreg_GD(NumericMatrix x, NumericMatrix y, int max_iter = 100,
+NumericMatrix linreg_GD(NumericMatrix x, NumericMatrix y, int max_iter = 1000,
                         double lr = 1e-6, double loss_tol = 1e-6) {
   NumericMatrix w(x.ncol(), 1), grad(x.ncol(), 1), w_next(x.ncol(), 1), e(y.nrow(), 1), yhat(y.nrow(), 1);
   std::default_random_engine generator;
-  std::normal_distribution<double> distribution(0.0, 1.0);
+  std::normal_distribution<double> distribution(0.0, 0.02);
   double tol = 1, loss_p, loss_n;
   int iter = 0, j = 0;
   for(j = 0; j < w.nrow(); j++) {
-    w(j, 0) = 0;
+    w(j, 0) = distribution(generator);
   }
   while(iter < max_iter && tol > loss_tol) {
     yhat = matrixMultiply(x, w);
