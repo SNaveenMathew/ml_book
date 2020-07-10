@@ -258,8 +258,8 @@ $$L(w(t + 1)) = \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial L}{\partial 
 $$\implies L(w(t + 1)) = \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]^T \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]$$
 
 $$\begin{eqnarray}
-\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) + \nonumber \\
-\alpha^2 \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
+\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) \nonumber \\
++ \alpha^2 \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
 \end{eqnarray}$$
 
 In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $L(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation 2.1.4.1.1:
@@ -312,22 +312,29 @@ $$L(w(1)) = y^Ty + w(1)^Tx^Txw(1) - 2w(1)^Tx^Ty$$
 
 $$L(w(2)) = y^Ty + w(2)^Tx^Txw(2) - 2w(2)^Tx^Ty$$
 
-$$L(w(3)) = \bigg(\alpha + (1-\alpha)\bigg)^2y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Tx\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^T\bigg(\alpha y + (1 - \alpha) y \bigg)$$
+$$L(w(3)) = y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Tx\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Ty$$
 
 $$\begin{eqnarray}
-\implies L(w(3)) = y^Ty\bigg( \alpha^2 + (1-\alpha)^2 + 2\alpha(1-\alpha) \bigg) +\alpha^2 w(1)^T x^Txw(1) - 2 \alpha^2w(1)^Tx^Ty +\nonumber \\
-(1-\alpha)^2 w(2)^T x^Txw(2) -2(1-\alpha)^2w(2)^Tx^Ty +\nonumber \\
-\alpha(1-\alpha) w(2)^Tx^Txw(1) + \alpha(1-\alpha)w(1)^Tx^Txw(2) - 2\alpha(1-\alpha)w(1)^Tx^Ty - 2\alpha(1-\alpha)w(2)^Tx^Ty \tag{2.1.4.3.2}
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = y^Ty +\alpha^2 w(1)^T x^Txw(1) - 2 \alpha w(1)^Tx^Ty - 2(1-\alpha)w(2)^Ty \nonumber \\
++ (1-\alpha)^2 w(2)^T x^Txw(2) +
+\alpha(1-\alpha) w(2)^Tx^Txw(1) + \alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\ -\alpha\bigg( y^Ty  + w(1)^Tx^Txw(1) - 2w(1)^Tx^Ty \bigg) - (1 - \alpha) \bigg( y^Ty + w(2)^Tx^Txw(2) - 2w(2)^Tx^Ty \bigg) \tag{2.1.4.3.2}
 \end{eqnarray}$$
 
-In equation 2.1.4.3.2 we observe that terms (1, 2, 3), (1, 4, 5) can be combined in the form of $L(w_1), L(w_2)$ repectivetly. Terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
-
-$$\implies L(w(3)) = \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg(y^Ty + w(2)^Tx^Txw(1) - w(1)^Tx^Ty - w(2)^Tx^Ty\bigg) \tag{2.1.4.3.3}$$
-
-Let us observe the last term in equation 2.1.4.3.3, specifically the term within the parantheses: the second last term, being a scalar, can also be written as $(w(1)^Tx^Ty)^T = y^Txw(1)$
+In equation 2.1.4.3.2 we observe terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
 
 $$\begin{eqnarray}
-\implies L(w(3)) = \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg(y^Ty-w(2)^Tx^Ty - y^Txw(1)+w(2)^Tx^Txw(1) \bigg) \nonumber \\
-=\alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg((y-xw(2))^Ty -(y-xw(2))^Txw(1)\bigg) \nonumber \\
-= \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)(y-xw(2))^T(y-xw(1))
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = \alpha^2 w(1)^Tx^Txw(1) + (1-\alpha)^2 w(2)^Tx^Txw(2) + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\
+- \alpha w_1^Tx^Txw_1 - (1-\alpha) w_2^Tx^Txw_2 \nonumber \\
+= (\alpha^2-\alpha)w(1)^Tx^Txw(1) + ((1-\alpha)^2-(1-\alpha))w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\
+= -\alpha(1-\alpha)w(1)^Tx^Txw(1) -\alpha(1-\alpha)w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \tag{2.1.4.3.3}
 \end{eqnarray}$$
+
+In equation 2.1.4.3.3 we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^Tx^Txw(2) + \alpha(1-\alpha)w(2)^Tx^Txw(1)$
+
+$$\begin{eqnarray}
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = -\alpha(1-\alpha)\bigg[w(1)^Tx^T\bigg(x(w(1)-w(2))\bigg) - w(2)^Tx^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
+= -\alpha(1-\alpha)\bigg[ \bigg(x(w(1)-w(2))\bigg)^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
+= -\alpha(1-\alpha)\bigg\lVert x(w(1)-w(2)) \bigg\rVert_2^2 \tag{2.1.4.3.4}
+\end{eqnarray}$$
+
+We know that $\alpha(1-\alpha) \in (0,1) \forall \alpha \in (0,1)$. Therefore, the resulting term is always non-positive. From normal equations it is known that the solution is unique for an invertible covariance matrix. Therefore, for $w(1) \neq w(2)$ such that $w(1) \in R^{(p+1)\times 1}, w(2) \in R^{(p+1)\times 1}$ we have $L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) \le 0$ where $w(3)$ is a convex combination of $w(1), w(2)$, and equality is attained only when $w(1) = w(2)$. Therefore, the OLS linear regression loss function is convex (For $z(3) \in (z(1), z(2))$ such that $w(3) = \alpha w(1) + (1-\alpha)w(2), \alpha \in (0,1)$, if we have $f(w(3)) < \alpha f(w(1)) + (1-\alpha)f(w(2))$ then $f$ is a convex function)
