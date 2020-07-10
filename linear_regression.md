@@ -323,8 +323,8 @@ $$\begin{eqnarray}
 In equation 2.1.4.3.2 we observe terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
 
 $$\begin{eqnarray}
-\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = \alpha^2 w(1)^Tx^Txw(1) + (1-\alpha)^2 w(2)^Tx^Txw(2) + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\
-- \alpha w_1^Tx^Txw_1 - (1-\alpha) w_2^Tx^Txw_2 \nonumber \\
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = \alpha^2 w(1)^Tx^Txw(1) + (1-\alpha)^2 w(2)^Tx^Txw(2) \nonumber \\
++ 2\alpha(1-\alpha)w(1)^Tx^Txw(2) - \alpha w_1^Tx^Txw_1 - (1-\alpha) w_2^Tx^Txw_2 \nonumber \\
 = (\alpha^2-\alpha)w(1)^Tx^Txw(1) + ((1-\alpha)^2-(1-\alpha))w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\
 = -\alpha(1-\alpha)w(1)^Tx^Txw(1) -\alpha(1-\alpha)w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \tag{2.1.4.3.3}
 \end{eqnarray}$$
@@ -332,7 +332,8 @@ $$\begin{eqnarray}
 In equation 2.1.4.3.3 we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^Tx^Txw(2) + \alpha(1-\alpha)w(2)^Tx^Txw(1)$
 
 $$\begin{eqnarray}
-\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = -\alpha(1-\alpha)\bigg[w(1)^Tx^T\bigg(x(w(1)-w(2))\bigg) - w(2)^Tx^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) \nonumber \\
+= -\alpha(1-\alpha)\bigg[w(1)^Tx^T\bigg(x(w(1)-w(2))\bigg) - w(2)^Tx^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
 = -\alpha(1-\alpha)\bigg[ \bigg(x(w(1)-w(2))\bigg)^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
 = -\alpha(1-\alpha)\bigg\lVert x(w(1)-w(2)) \bigg\rVert_2^2 \tag{2.1.4.3.4}
 \end{eqnarray}$$
