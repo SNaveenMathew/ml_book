@@ -257,7 +257,10 @@ $$L(w(t + 1)) = \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial L}{\partial 
 
 $$\implies L(w(t + 1)) = \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]^T \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]$$
 
-$$\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) + \alpha^2 \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}$$
+$$\begin{eqnarray}
+\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) + \nonumber \\
+\alpha^2 \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
+\end{eqnarray}$$
 
 In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $L(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation 2.1.4.1.1:
 
@@ -293,6 +296,38 @@ From the above analysis we understand that pre-computing the residues and reusin
 
 [C++ code for multiplying two matrices](data/linreg_GD.cpp) **Bias alert: writing this just to prove that I can write C++ code for gradient descent**
 
-### 2.1.4.3. Nature of loss function
+### 2.1.4.3. Nature of OLS regression loss function
 
-Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a simple linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = XW + \hat{e}$
+Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = x\hat{W} + \hat{e}$. For simplicity let us use the result from equation 2.1.2.1.1.3 is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{x}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(x^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
+
+$$L(w) = (y - xw)^T (y - xw) = y^Ty - y^T xw - (xw)^Ty + (xw)^T xw \tag{2.1.4.3.1}$$
+
+In equation 2.1.4.3.1 the second and third term are scalar and are transpose of each other, and are therefore equal
+
+$$\implies L(w) = y^Ty + w^Tx^Txw - 2w^Tx^Ty$$
+
+Let us sample two arbitrary points $w(1), w(2)$ (not related to iterations 1 and 2 of gradient descent). Any point $w(3)$ between $w(1)$ and $w(2)$ can be written as a convex combination $w(3) = \alpha w(1) + (1-\alpha) w(2); \alpha \in (0, 1)$
+
+$$L(w(1)) = y^Ty + w(1)^Tx^Txw(1) - 2w(1)^Tx^Ty$$
+
+$$L(w(2)) = y^Ty + w(2)^Tx^Txw(2) - 2w(2)^Tx^Ty$$
+
+$$L(w(3)) = \bigg(\alpha + (1-\alpha)\bigg)^2y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Tx\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^T\bigg(\alpha y + (1 - \alpha) y \bigg)$$
+
+$$\begin{eqnarray}
+\implies L(w(3)) = y^Ty\bigg( \alpha^2 + (1-\alpha)^2 + 2\alpha(1-\alpha) \bigg) +\alpha^2 w(1)^T x^Txw(1) - 2 \alpha^2w(1)^Tx^Ty +\nonumber \\
+(1-\alpha)^2 w(2)^T x^Txw(2) -2(1-\alpha)^2w(2)^Tx^Ty +\nonumber \\
+\alpha(1-\alpha) w(2)^Tx^Txw(1) + \alpha(1-\alpha)w(1)^Tx^Txw(2) - 2\alpha(1-\alpha)w(1)^Tx^Ty - 2\alpha(1-\alpha)w(2)^Tx^Ty \tag{2.1.4.3.2}
+\end{eqnarray}$$
+
+In equation 2.1.4.3.2 we observe that terms (1, 2, 3), (1, 4, 5) can be combined in the form of $L(w_1), L(w_2)$ repectivetly. Terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
+
+$$\implies L(w(3)) = \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg(y^Ty + w(2)^Tx^Txw(1) - w(1)^Tx^Ty - w(2)^Tx^Ty\bigg) \tag{2.1.4.3.3}$$
+
+Let us observe the last term in equation 2.1.4.3.3, specifically the term within the parantheses: the second last term, being a scalar, can also be written as $(w(1)^Tx^Ty)^T = y^Txw(1)$
+
+$$\begin{eqnarray}
+\implies L(w(3)) = \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg(y^Ty-w(2)^Tx^Ty - y^Txw(1)+w(2)^Tx^Txw(1) \bigg) \nonumber \\
+=\alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)\bigg((y-xw(2))^Ty -(y-xw(2))^Txw(1)\bigg) \nonumber \\
+= \alpha^2 L(w(1)) + (1-\alpha)^2L(w(2)) + 2\alpha(1-\alpha)(y-xw(2))^T(y-xw(1))
+\end{eqnarray}$$
