@@ -231,7 +231,7 @@ For OLS linear regression we can understand the normal equations as a system of 
 
 We note that we have fixed $p=1$ for the purposed of visualization. Let us generalize it to an arbitrary number $p$ again for finding the computational complexity. In each iteration we did the following number of computations:
 
-- $pred\_y\_inst(t)$: $N_{train} + N_{train} p$
+- pred_y_inst(t): $N_{train} + N_{train} p$
 - $residuals(t): N_{train}$
 - $force(t): N_{train}$
 - $torque(t): N_{train} p$
