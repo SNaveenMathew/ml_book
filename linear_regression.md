@@ -18,7 +18,7 @@ $$L(e; w) = \prod_{i=1}^{N} \bigg[\frac{1}{\sqrt{2 \pi \sigma^2}} exp\bigg(-\fra
 
 We would like to maximize the likelihood by varying $w$. Since logarithm is a monotonous function of input and likelihood is non-negative (matches the domain of logarithm), the optima (maxima) of $log(L(e; w))$ and the optima (maxima) of $L(e; w)$ are attained at the same point given by $\hat{W}$. We can write the log-likelihood as:
 
-$$log(L(e; w)) = \sum_{i = 1}^{N}\bigg[\frac{1}{\sqrt{2 \pi \sigma^2}} \bigg] + \sum_{i = 1}^{N}\bigg[ \frac{- (e^{(i)})^2}{2 \sigma^2}\bigg]$$
+$$l(e; w) = log(L(e; w)) = \sum_{i = 1}^{N}\bigg[\frac{1}{\sqrt{2 \pi \sigma^2}} \bigg] + \sum_{i = 1}^{N}\bigg[ \frac{- (e^{(i)})^2}{2 \sigma^2}\bigg]$$
 
 Since $\sigma^2$ is constant, the only term that involves $w$ in $log(L(e; w))$ is the second term. Therefore, we have OLS as a special case of MLE as shown in equation $2.1.1.1$ below:
 
@@ -32,7 +32,7 @@ Normal equations are obtained by setting the partial derivative of likelihood wi
 
 $$\frac{\partial log(L(e; w))}{\partial w} = 0 \implies \bigg[\frac{\partial}{\partial w} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{w = \hat{W}} = 0 \tag{2.1.2.1.1.a}$$
 
-Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - Xw$, using $\frac{\partial e^Te}{\partial w} = 2 e^T \frac{\partial e}{\partial w} $ and substituting $\frac{\partial e}{\partial w} = -X$ into equation 2.1.2.1.1.a, we get:
+Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - Xw$, using $\frac{\partial e^Te}{\partial w} = 2 e^T \frac{\partial e}{\partial w} $ and substituting $\frac{\partial e}{\partial w} = -X$ into equation $2.1.2.1.1.a$, we get:
 
 $$ -2 (y - X\hat{W})^T X = 0\tag{2.1.2.1.1.b}$$
 
@@ -58,19 +58,19 @@ $$\implies \frac{1}{N_{train}}\sum_{i=1}^{N_{train}}y^{(i)} = \bar{\hat{y}} = \b
 
 $$\implies \hat{W_0} = \bar{y} - \hat{W_1}\bar{x_1} \tag{2.1.2.1.1.3}$$
 
-From equation 2.1.2.1.1.1 we infer that the average total residue is equal to zero, or on an average the model does not have a bias. It is because of this property that in deep learning courses we refer to the intercept as the 'bias term'. From equation 2.1.2.1.1.2 we infer that the regression line always passes through the $(\bar{x_1}, \bar{y})$. This is a surprising result and will be used in an analogy in section 2.1.3. Let us continue with the solution:
+From equation $2.1.2.1.1.1$ we infer that the average total residue is equal to zero, or on an average the model does not have a bias. It is because of this property that in deep learning courses we refer to the intercept as the 'bias term'. From equation $2.1.2.1.1.2$ we infer that the regression line always passes through the $(\bar{x_1}, \bar{y})$. This is a surprising result and will be used in an analogy in section 2.1.3. Let us continue with the solution:
 
 $$\bigg[\frac{\partial L(w_0, w_1)}{\partial w_1}\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = \bigg[-2\sum_{i=1}^{N_{train}}x_1^{(i)}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}} = 0 \tag{2.1.2.1.1.4}$$
 
 $$\implies \sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} = \hat{W_1} \sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 + N_{train} \hat{W_0}\bar{x_1} \tag{2.1.2.1.1.5}$$
 
-Substituting equation 2.1.2.1.1.3 in equation 2.1.2.1.1.5:
+Substituting equation $2.1.2.1.1.3$ in equation $2.1.2.1.1.5$:
 
 $$\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} = \hat{W_1} [\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2] + N_{train}\bar{x_1}\bar{y}$$
 
 $$\implies \hat{W_1}  = \frac{\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} - N_{train}\bar{x_1}\bar{y}}{\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2} \tag{2.1.2.1.1.6}$$
 
-Substituting equation 2.1.2.1.1.6 in 2.1.2.1.1.3:
+Substituting equation $2.1.2.1.1.6$ in equation $2.1.2.1.1.3$:
 
 $$\hat{W_0} = \bar{y} - \frac{\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} - N_{train}\bar{x_1}\bar{y}}{\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2}\bar{x_1} = \frac{\bar{y}\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2\bar{y} - \bar{x_1}\sum_{i=1}^{N_{train}} x_1^{(i)} y^{(i)} + N_{train}[\bar{x_1}]^2\bar{y}}{\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - N_{train}[\bar{x_1}]^2}$$
 
@@ -78,7 +78,7 @@ $$\implies \hat{W_0} = \frac{\bar{y}\sum_{i=1}^{N_{train}} [x_1^{(i)}]^2 - \bar{
 
 We succeeded in deriving the solution in the hard way. Let's try an easier way:
 
-Substituting equation 2.1.2.1.1.3 in the estimation equation:
+Substituting equation $2.1.2.1.1.3$ in the estimation equation:
 
 $$\hat{y^{(i)}} = \bar{y} + \hat{W_1}(x_1^{(i)} - \bar{x_1}) + \hat{e^{(i)}}$$
 
@@ -89,13 +89,13 @@ $$\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1}) = \sum_{i=1}^{N_
 $$\implies \hat{W_1} = 
 \frac{\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})}{\sum_{i=1}^{N_{train}}(x_1^{(i)} - \bar{x_1})^2} \tag{2.1.2.1.1.8}$$
 
-So how did we know the exact term $\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})$? Like most differential equations, without knowing the exact function to substitute, how do we arrive at the solution? Let's examine the term closely: $\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})$. Doesn't this term look familiar? Let's divide it by $N_{train} - 1$: $\frac{\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})}{N_{train} - 1}$. Does it look farmiliar now? Yes, the denominator is $N_{train} - 1$ times the sample covariance. Now guess what the denominator is. Correct, it is $N_{train} - 1$ times the sample variance of $x_1$. Therefore, equation 2.1.2.1.1.8 can be rewritten as:
+So how did we know the exact term $\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})$? Like most differential equations, without knowing the exact function to substitute, how do we arrive at the solution? Let's examine the term closely: $\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})$. Doesn't this term look familiar? Let's divide it by $N_{train} - 1$: $\frac{\sum_{i=1}^{N_{train}} (y^{(i)}-\bar{y})(x_1^{(i)}-\bar{x_1})}{N_{train} - 1}$. Does it look farmiliar now? Yes, the denominator is $N_{train} - 1$ times the sample covariance. Now guess what the denominator is. Correct, it is $N_{train} - 1$ times the sample variance of $x_1$. Therefore, equation $2.1.2.1.1.8$ can be rewritten as:
 
 $$\hat{W_1} = \frac{cov(y, x_1)}{var(x_1)} = \frac{cor(y, x_1) sd(y) sd(x_1)}{[sd(x_1)]^2} = cor(y, x_1)\frac{sd(y)}{sd(x)}$$
 
 #### 2.1.2.1.2. Writing a solver for linear regression
 
-In this section we will try to write code to solve equation 2.1.2.1.2. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m}, B_{m \times p}$, the product is given by $C_{n \times p} = AB \implies C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code for computing product of two matrices can be found below:
+In this section we will try to write code to solve equation $2.1.2.1.2$. The first step in building a solver is to write code to multiply two matrices. We use the property that for matrices $A_{n \times m}, B_{m \times p}$, the product is given by $C_{n \times p} = AB \implies C_{i, k} = \sum_{j = 1}^{m} A_{i, j} * B_{j, k}$. The code for computing product of two matrices can be found below:
 
 [C++ code for multiplying two matrices](data/multiply_matrices.cpp) **Bias alert: writing this just to prove that I can write C++ code for matrix multiplication**
 
@@ -107,7 +107,7 @@ The code for finding analytical solution for linear regression can be found in s
 
 #### 2.1.2.1.3. Hierarchy rule
 
-We noticed that the intercept term is always included in a linear regression model. Some may argue that the intercept is not required, and a simple linear regression model given by $Y = \beta X$ is sufficient. The hierarcy rule states that when a higher order term is used in an explanatory model, all the lower order terms that were used to generate the higher order term should be included in the model. This rule also applies to models that include higher order interactions. Therefore, when the number of variables is larger than 0, we always include the lower order term: $x^0 = 1$, which is the intercept. As seen in equation 2.1.2.1.1.1 the intercept also adjusts for the residual bias, thereby making the mean of the residues (which is an estimate for the expected value of the error) to zero. This is one of the reasons for calling it the 'bias term'.
+We noticed that the intercept term is always included in a linear regression model. Some may argue that the intercept is not required, and a simple linear regression model given by $Y = \beta X$ is sufficient. The hierarcy rule states that when a higher order term is used in an explanatory model, all the lower order terms that were used to generate the higher order term should be included in the model. This rule also applies to models that include higher order interactions. Therefore, when the number of variables is larger than 0, we always include the lower order term: $x^0 = 1$, which is the intercept. As seen in equation $2.1.2.1.1.1$ the intercept also adjusts for the residual bias, thereby making the mean of the residues (which is an estimate for the expected value of the error) to zero. This is one of the reasons for calling it the 'bias term'.
 
 ### 2.1.2.2. Computational complexity
 
@@ -156,7 +156,7 @@ Consider a square matrix $A_{n \times n}$. The inverse $A^{-1}_{n \times n}$ can
 
 #### 2.1.2.2.3. Ordinary least squares (linear) regression
 
-Substituting $X: N_{train} \times (p + 1)$, $X^T: (p + 1) \times N_{train}$, $y: N_{train} \times 1$ in equation 2.1.2.1.2, we get the following computations:
+Substituting $X: N_{train} \times (p + 1)$, $X^T: (p + 1) \times N_{train}$, $y: N_{train} \times 1$ in equation $2.1.2.1.2$, we get the following computations:
 
 - $X^TX: O(N_{train}(p + 1)^2)$
 - $(X^TX)^{-1}: O((p + 1)^3)$
@@ -192,7 +192,7 @@ Of course, `sklearn` (Python) and `stats` (R) don't use normal equations because
 
 ## 2.1.3.1. An analogy
 
-From equation 2.1.2.1.1.3 we know that a simple linear regression line always passes through $(\bar{x_1}, \bar{y})$. This is not surprising because if we don't have predictors our best guess for the outcome is $\hat{y} = \bar{y}$ (OLS solution for for $p = 0$, also the maximum likelihood estimate on the sample for the model $Y = f(1) + \epsilon$ where $\epsilon \sim_{iid} N(0, \sigma^2)$, f is a linear function, and $f(1)$ does not depend on $X$). Let us assume that we don't know the OLS solution and try to understand it by studying the behavior of different 'lines' that pass through $(\bar{x_1}, \bar{y})$. This system is parameterized by the instantaneous slope $w_{1}$, the instantaneous intercept $w_0$ gets adjusted automatically on determining $w_{1}$
+From equation $2.1.2.1.1.3$ we know that a simple linear regression line always passes through $(\bar{x_1}, \bar{y})$. This is not surprising because if we don't have predictors our best guess for the outcome is $\hat{y} = \bar{y}$ (OLS solution for for $p = 0$, also the maximum likelihood estimate on the sample for the model $Y = f(1) + \epsilon$ where $\epsilon \sim_{iid} N(0, \sigma^2)$, f is a linear function, and $f(1)$ does not depend on $X$). Let us assume that we don't know the OLS solution and try to understand it by studying the behavior of different 'lines' that pass through $(\bar{x_1}, \bar{y})$. This system is parameterized by the instantaneous slope $w_{1}$, the instantaneous intercept $w_0$ gets adjusted automatically on determining $w_{1}$
 
 Let us imagine the following:
 
@@ -223,7 +223,7 @@ We also observe that the beam is in *stable equilibrium* about a specific positi
 
 *A close examination of how the above system works:* If $\hat\theta \to 0$, and the maximum perturbation is small, we have $tan(\theta) = w_1 \to \theta$ for any instantaneous value of $\theta$. Note that we are not concerned about $w_0$ because $w_0$ is automatically determined as we constrained the line to pass through $(\bar{x}, \bar{y})$. Therefore, we have $\frac{\partial \sum_{i=1}^{N}(e^{i})^2}{\partial w_1} \to \frac{\partial \sum_{i=1}^{N}(e^{i})^2}{\partial \theta}$. In short, manipulating $\theta$ is equivalent to manipulating $w_1 \to \theta$ directly. This is not true in the previous case because for large values we have $tan(\theta) >> \theta$
 
-From equation 2.1.2.1.1.4 we can infer that for the OLS estimate the net torque (first moment) about the origin is zero. By subtracting $0 = \bigg[\sum_{i=1}^{N_{train}}\bar{x_1}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}}$ from equation 2.1.2.1.1.4 we observe that the net torque (first moment) about $\bar{x_1}$ is zero. Therefore, the regression estimate is a position of zero net force and zero torque - the position of stable equilibrium for the imaginary system. For the special case where $\hat\theta \to 0$ the diagram resembles the behavior of **gradient descent** in which the rate of change of *momentum* is determined by the (negative) gradient. Regular gradient descent does this differently - rate of change of *position* is determined by the (negative) gradient. The learning rate can be considered as inverse of inertia. We will discuss this in more detail in section 2.1.4.
+From equation $2.1.2.1.1.4$ we can infer that for the OLS estimate the net torque (first moment) about the origin is zero. By subtracting $0 = \bigg[\sum_{i=1}^{N_{train}}\bar{x_1}(y^{(i)} - x_1^{(i)} w_1 - w_0)\bigg]_{w_1 = \hat{W_1}, w_0 = \hat{W_0}}$ from equation $2.1.2.1.1.4$ we observe that the net torque (first moment) about $\bar{x_1}$ is zero. Therefore, the regression estimate is a position of zero net force and zero torque - the position of stable equilibrium for the imaginary system. For the special case where $\hat\theta \to 0$ the diagram resembles the behavior of **gradient descent** in which the rate of change of *momentum* is determined by the (negative) gradient. Regular gradient descent does this differently - rate of change of *position* is determined by the (negative) gradient. The learning rate can be considered as inverse of inertia. We will discuss this in more detail in section 2.1.4.
 
 For OLS linear regression we can understand the normal equations as a system of equations that have zero net moment. Setting the zero-th moment to zero gives the first equation, which suggests that the sum of the residues should be equal to zero. Setting the first moment to zero gives the second equation, which suggests that residue is independent of the independent variables. This result will also be discussed in a later section <> about the geometric interpretation of linear regression.
 
@@ -266,7 +266,7 @@ $$\begin{eqnarray}
 + \alpha^2 \bigg(X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
 \end{eqnarray}$$
 
-In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $l(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation 2.1.4.1.1:
+In equation $2.1.4.1.1$ we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $l(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation $2.1.4.1.1$:
 
 - $\alpha > 0$ is small and the gradients are small enough that the step size is not large, i.e. $w(t+1)$ will be in the neighborhood of $w(t)$
 
@@ -276,7 +276,7 @@ In equation 2.1.4.1.1 we observe that the second and third term are transpose of
 
 $$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
 
-Substituting equations 2.1.2.1.1.c in equation 2.1.4.1.2 we get:
+Substituting equation $2.1.2.1.1.c$ in equation $2.1.4.1.2$ we get:
 
 $$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X \bigg(-2X^T\bigg(y - Xw(t)\bigg) \bigg)$$
 
@@ -302,11 +302,11 @@ From the above analysis we understand that pre-computing the residues and reusin
 
 ### 2.1.4.3. Nature of OLS regression loss function
 
-Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation 2.1.2.1.1.3 is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
+Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation $2.1.2.1.1.3$ is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
 
 $$l(w) = (y - Xw)^T (y - Xw) = y^Ty - y^T Xw - (Xw)^Ty + (Xw)^T Xw \tag{2.1.4.3.1}$$
 
-In equation 2.1.4.3.1 the second and third term are scalar and are transpose of each other, and are therefore equal
+In equation $2.1.4.3.1$ the second and third term are scalar and are transpose of each other, and are therefore equal
 
 $$\implies l(w) = y^Ty + w^TX^TXw - 2w^TX^Ty$$
 
@@ -324,7 +324,7 @@ $$\begin{eqnarray}
 \alpha(1-\alpha) w(2)^TX^TXw(1) + \alpha(1-\alpha)w(1)^TX^TXw(2) \nonumber \\ -\alpha\bigg( y^Ty  + w(1)^TX^TXw(1) - 2w(1)^TX^Ty \bigg) - (1 - \alpha) \bigg( y^Ty + w(2)^TX^TXw(2) - 2w(2)^TX^Ty \bigg) \tag{2.1.4.3.2}
 \end{eqnarray}$$
 
-In equation 2.1.4.3.2 we observe terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
+In equation $2.1.4.3.2$ we observe terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
 
 $$\begin{eqnarray}
 \implies l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) = \alpha^2 w(1)^TX^TXw(1) + (1-\alpha)^2 w(2)^TX^TXw(2) \nonumber \\
@@ -333,7 +333,7 @@ $$\begin{eqnarray}
 = -\alpha(1-\alpha)w(1)^TX^TXw(1) -\alpha(1-\alpha)w_2^TX^TXw_2 + 2\alpha(1-\alpha)w(1)^TX^TXw(2) \tag{2.1.4.3.3}
 \end{eqnarray}$$
 
-In equation 2.1.4.3.3 we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^TX^TXw(2) + \alpha(1-\alpha)w(2)^TX^TXw(1)$
+In equation $2.1.4.3.3$ we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^TX^TXw(2) + \alpha(1-\alpha)w(2)^TX^TXw(1)$
 
 $$\begin{eqnarray}
 \implies l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) \nonumber \\
@@ -346,6 +346,6 @@ We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefor
 
 Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OlS linear regression estimation on a data set with invertible covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
 
-For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$ we know that $\bigg[\frac{\partial^2 f}{\partial w^2}\bigg]_{w=\hat{w}} > 0$. Differentiating equation 2.1.2.1.1.b with respect to $W^T$ we get:
+For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$ we know that $\bigg[\frac{\partial^2 f}{\partial w^2}\bigg]_{w=\hat{w}} > 0$. Differentiating equation $2.1.2.1.1.b$ with respect to $W^T$ we get:
 
 $$\frac{\partial^2 l}{\partial W\partial W^T} = 2 X^T X$$
