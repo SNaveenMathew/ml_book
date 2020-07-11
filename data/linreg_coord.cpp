@@ -17,13 +17,13 @@ NumericMatrix grad_W(NumericMatrix x, NumericMatrix e) {
 // Can probably do better!
 NumericMatrix get_mat_without_column(NumericMatrix x, int col_num) {
   NumericMatrix result(x.nrow(), x.ncol()-1);
-  int j = 0, x_col = 0, i = 0;
-  while(j < result.ncol()) {
+  int k = 0, x_col = 0, i = 0;
+  while(k < result.ncol()) {
     if(x_col != col_num) {
       for(i=0; i<x.nrow(); i++) {
-        result(i, j) = x(x_col, j);
+        result(i, k) = x(i, x_col);
       }
-      j++;
+      k++;
     }
     x_col++;
   }
@@ -103,36 +103,37 @@ NumericMatrix get_resid(NumericMatrix y, NumericMatrix yhat) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix linreg_coord(NumericMatrix x, NumericMatrix y, int max_iter = 1,
+NumericMatrix linreg_coord(NumericMatrix x, NumericMatrix y, int max_iter = 100,
                            double gamma = 1, double loss_tol = 1e-6) {
-  NumericMatrix w(x.ncol(), 1), grad(x.ncol(), 1), w_next(x.ncol(), 1), e(y.nrow(), 1), yhat(y.nrow(), 1), hessian(x.ncol(), x.ncol()),  inv_hessian(x.ncol(), x.ncol()), inv_hessian_jacobian(x.ncol(), 1), x_j(x.nrow(), 1), x_jT(1, x.nrow()), x_jTyhat(1, 1), remaining_x(x.nrow(), x.ncol()-1), remaining_w(x.ncol()-1, 1);
+  NumericMatrix w(x.ncol(), 1), w_next(x.ncol(), 1), e(y.nrow(), 1), yhat(y.nrow(), 1), x_j(x.nrow(), 1), x_jT(1, x.nrow()), x_jTe(1, 1), remaining_x(x.nrow(), x.ncol()-1), remaining_w(x.ncol()-1, 1);
+  NumericVector sum_sq_x(x.ncol());
   double sum_sq_x_j;
-  hessian = get_hessian(x);
-  inv_hessian = invertMatrix(hessian); // constant throughout
   std::default_random_engine generator;
   std::normal_distribution<double> distribution(0.0, 0.0);
   double tol = 1, loss_p, loss_n;
   int iter = 0, j = 0;
   for(j = 0; j < w.nrow(); j++) {
     w(j, 0) = distribution(generator);
-    w_next(j, 0) = distribution(generator);
+    x_j = get_mat_column(x, j);
+    sum_sq_x(j) = sum_squares(x_j);
   }
   while(iter < max_iter && tol > loss_tol) {
     yhat = matrixMultiply(x, w);
     e = get_resid(y, yhat);
     loss_p = get_loss(e);
+    w_next = w;
     for(j = 0; j < w_next.nrow(); j++) {
       remaining_x = get_mat_without_column(x, j);
       remaining_w = get_vec_without_row(w_next, j);
-      yhat = matrixMultiply(x, w_next);
+      yhat = matrixMultiply(remaining_x, remaining_w);
+      e = get_resid(y, yhat);
       x_j = get_mat_column(x, j);
-      x_jT = transpose(x_j);
-      x_jTyhat = matrixMultiply(x_jT, yhat);
-      sum_sq_x_j = sum_squares(x_j); //Same as matrixMultiply(x_jT, x_j)(0, 0);
-      w_next(j, 0) = x_jTyhat(0, 0)/sum_sq_x_j;
+      x_jT = transpose(x_j); // Can be precomputed and indexed, but whatever!
+      x_jTe = matrixMultiply(x_jT, e);
+      sum_sq_x_j = sum_sq_x(j); //Same as matrixMultiply(x_jT, x_j)(0, 0);
+      w_next(j, 0) = x_jTe(0, 0)/sum_sq_x_j;
     }
-    // printf("%lf", w_next(0, 0));
-    
+
     yhat = matrixMultiply(x, w_next);
     e = get_resid(y, yhat);
     loss_n = get_loss(e);
@@ -142,9 +143,9 @@ NumericMatrix linreg_coord(NumericMatrix x, NumericMatrix y, int max_iter = 1,
     iter++;
   }
   if(iter < max_iter) {
-    printf("Coordinate descent converged in %d iterations for relative loss tolerance = %lf", iter, loss_tol);
+    printf("Coordinate descent converged in %d iterations for relative loss tolerance = %lf\n", iter, loss_tol);
   } else {
-    printf("Coordinate descent did not converge in %d iterations for relative loss tolerance = %lf", max_iter, loss_tol);
+    printf("Coordinate descent did not converge in %d iterations for relative loss tolerance = %lf\n", max_iter, loss_tol);
   }
   return(w);
 }
@@ -163,7 +164,7 @@ x1 <- cbind(1, x)
 y1 <- matrix(y, nrow = length(y), ncol = 1)
 # Normal equations
 solve(t(x1) %*% x1) %*% (t(x1) %*% y1)
-# Newton's method
+# Coordinate descent
 linreg_coord(x = x1, y = y1)
 
 # Compare with lm function
