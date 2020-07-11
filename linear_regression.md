@@ -346,11 +346,11 @@ We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefor
 
 Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OlS linear regression estimation on a data set with invertible covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
 
-### 2.1.4.4. Issues with gradient descent
+### 2.1.5. Issues with gradient descent
 
-Learning rate is a hyperparatmer in linear regression solved using gradient descent. Choosing a suitable learning rate ($\alpha$) for gradient descent is not trivial, which is a major drawback of gradient descent. A very high learning rate will lead to divergence of weights. A very low learning rate will lead to slow convergence. It is important to note that the choice of learning rate also depends on the scale of the data set (derivative depends on $X, y$). Standard steps are followed to fix these issues: both $X$ and $y$ are standardized to have $mean=0$ and $variance=1$ (a.k.a. [batch normalization](https://en.wikipedia.org/wiki/Batch_normalization)). Also, modern packages for machine learning and deep learning such as [scikit-learn](https://scikit-learn.org/stable/), [Tensorflow](https://www.tensorflow.org/), [PyTorch](https://pytorch.org/), etc. have standard set of learning rates and allow user defined learning rate schedulers to alleviate this problem. However, standard recipes still don't solve all problems.
+Learning rate is a hyperparameter in linear regression solved using gradient descent. Choosing a suitable learning rate ($\alpha$) for gradient descent is not trivial, which is a major drawback of gradient descent. A very high learning rate will lead to divergence of weights. A very low learning rate will lead to slow convergence. It is important to note that the choice of learning rate also depends on the scale of the data set (derivative depends on $X, y$). Standard steps are followed to fix these issues: both $X$ and $y$ are standardized to have $mean=0$ and $variance=1$ (a.k.a. [batch normalization](https://en.wikipedia.org/wiki/Batch_normalization)). Also, modern packages for machine learning and deep learning such as [scikit-learn](https://scikit-learn.org/stable/), [Tensorflow](https://www.tensorflow.org/), [PyTorch](https://pytorch.org/), etc. have standard set of learning rates and allow user defined learning rate schedulers to alleviate this problem. However, standard recipes still don't solve all problems.
 
-### 2.1.4.5. Extensions: Newton's method
+### 2.1.5.1. Extensions: Newton's method
 
 For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$ we know that $\bigg[\frac{\partial^2 f}{\partial w^2}\bigg]_{w=\hat{w}} > 0$. Differentiating equation $2.1.2.1.1.b$ with respect to $W^T$ we get:
 
@@ -370,7 +370,7 @@ We observe that the convergence is independent of the scale of $X$ (inverse Hess
 
 [C++ code for solving linear regression using Newton's method](data/linreg_Newton.cpp) **Bias alert: writing this just to prove that I can write C++ code for Newton's method**
 
-### 2.1.4.6. Extensions: Coordinate descent
+### 2.1.5.2. Extensions: Coordinate descent
 
 Let us assume that the design matrix is orthogonal. Therefore, the covariance matrix will be a diagonal matrix.
 
@@ -392,4 +392,6 @@ H^{-1}(w)_j^{(i)} =
 \end{cases}
 \end{equation}$$
 
-Assuming all the independent variables have variance, Newton's update ($\gamma = 1$) given by: $w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$ is equivalent to taking scaled steps individually along each of the weight axes. This is similar to profile likelihood approach for parameter estimation, where the parameters that are not important are profiled out. Specifically, this resembles a scenario in profile likelihood where the parameters are independent - similar to mean and variance of a normal distribution. This suggests that the loss function can be projected along each of the weight axes and minimization can be done along each weight axis independently without considering the effects of change in another weight. In the ideal scenario described above where the covariance matrix is a diagonal matrix, coordinate descent will converge after a single sweep of projected optimization along each of weight axes.
+Assuming all the independent variables have variance, Newton's update ($\gamma = 1$) given by: $w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$ is equivalent to taking scaled steps individually along each of the weight axes. This is similar to profile likelihood approach for parameter estimation, where the parameters that are not important are profiled out. Specifically, this resembles a scenario in profile likelihood where the parameters are independent - similar to mean and variance of a normal distribution. This suggests that the loss function can be projected along each of the weight axes and minimization can be done along each weight axis independently without considering the effects of change in another weight. The overall solution is obtained by concatenating the optimal solution along each individual weight axis. In the ideal scenario described above where the covariance matrix is a diagonal matrix, coordinate descent will converge after a single sweep of projected optimization along each of weight axes.
+
+[C++ code for solving linear regression using coordinate descent](data/linreg_coord.cpp) **Bias alert: writing this just to prove that I can write C++ code for coordinate descent**
