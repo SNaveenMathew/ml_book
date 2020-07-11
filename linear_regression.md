@@ -362,7 +362,7 @@ If the Hessian is denoted by $H(w)$ and Jacobian is denoted by $J(w)$, then the 
 
 $$w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$$
 
-Adding Wolfe's condition ([refer this](https://en.wikipedia.org/wiki/Wolfe_conditions)) the update is given by:
+Adding a step size parameter to satisfy Wolfe's condition ([refer this](https://en.wikipedia.org/wiki/Wolfe_conditions)) the update is given by:
 
 $$w(t+1) = w(t) - \gamma \bigg(H(w(t))\bigg)^{-1}J(w(t)); \gamma \in (0, 1]$$
 
