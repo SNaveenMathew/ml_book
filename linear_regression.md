@@ -34,7 +34,11 @@ $$\frac{\partial log(L(e; w))}{\partial w} = 0 \implies \bigg[\frac{\partial}{\p
 
 Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - Xw$, using $\frac{\partial e^Te}{\partial w} = 2 \frac{\partial e^T}{\partial w} e$ and substituting $\frac{\partial e^T}{\partial w} = -X^T$ into equation 2.1.2.1.1.a, we get:
 
-$$ -2 X^T (y - X\hat{W}) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W}\tag{2.1.2.1.1.b}$$
+$$ -2 (y - X\hat{W})^T X = 0$$
+
+Equating transpose of LHS and RHS:
+
+$$X^T(y-XW) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W}\tag{2.1.2.1.1.b}$$
 
 $$\implies \hat{W} = (X^TX)^{-1}X^Ty \tag{2.1.2.1.2}$$
 
@@ -298,44 +302,48 @@ From the above analysis we understand that pre-computing the residues and reusin
 
 ### 2.1.4.3. Nature of OLS regression loss function
 
-Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = x\hat{W} + \hat{e}$. For simplicity let us use the result from equation 2.1.2.1.1.3 is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{x}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(x^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
+Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation 2.1.2.1.1.3 is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
 
-$$L(w) = (y - xw)^T (y - xw) = y^Ty - y^T xw - (xw)^Ty + (xw)^T xw \tag{2.1.4.3.1}$$
+$$L(w) = (y - Xw)^T (y - Xw) = y^Ty - y^T Xw - (Xw)^Ty + (Xw)^T Xw \tag{2.1.4.3.1}$$
 
 In equation 2.1.4.3.1 the second and third term are scalar and are transpose of each other, and are therefore equal
 
-$$\implies L(w) = y^Ty + w^Tx^Txw - 2w^Tx^Ty$$
+$$\implies L(w) = y^Ty + w^TX^TXw - 2w^TX^Ty$$
 
 Let us sample two arbitrary points $w(1), w(2)$ (not related to iterations 1 and 2 of gradient descent). Any point $w(3)$ between $w(1)$ and $w(2)$ can be written as a convex combination $w(3) = \alpha w(1) + (1-\alpha) w(2); \alpha \in (0, 1)$
 
-$$L(w(1)) = y^Ty + w(1)^Tx^Txw(1) - 2w(1)^Tx^Ty$$
+$$L(w(1)) = y^Ty + w(1)^TX^TXw(1) - 2w(1)^TX^Ty$$
 
-$$L(w(2)) = y^Ty + w(2)^Tx^Txw(2) - 2w(2)^Tx^Ty$$
+$$L(w(2)) = y^Ty + w(2)^TX^TXw(2) - 2w(2)^TX^Ty$$
 
-$$L(w(3)) = y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Tx\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^Tx^Ty$$
+$$L(w(3)) = y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^TX^TX\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^TX^Ty$$
 
 $$\begin{eqnarray}
-\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = y^Ty +\alpha^2 w(1)^T x^Txw(1) - 2 \alpha w(1)^Tx^Ty - 2(1-\alpha)w(2)^Ty \nonumber \\
-+ (1-\alpha)^2 w(2)^T x^Txw(2) +
-\alpha(1-\alpha) w(2)^Tx^Txw(1) + \alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\ -\alpha\bigg( y^Ty  + w(1)^Tx^Txw(1) - 2w(1)^Tx^Ty \bigg) - (1 - \alpha) \bigg( y^Ty + w(2)^Tx^Txw(2) - 2w(2)^Tx^Ty \bigg) \tag{2.1.4.3.2}
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = y^Ty +\alpha^2 w(1)^T X^TXw(1) - 2 \alpha w(1)^TX^Ty - 2(1-\alpha)w(2)^Ty \nonumber \\
++ (1-\alpha)^2 w(2)^T X^TXw(2) +
+\alpha(1-\alpha) w(2)^TX^TXw(1) + \alpha(1-\alpha)w(1)^TX^TXw(2) \nonumber \\ -\alpha\bigg( y^Ty  + w(1)^TX^TXw(1) - 2w(1)^TX^Ty \bigg) - (1 - \alpha) \bigg( y^Ty + w(2)^TX^TXw(2) - 2w(2)^TX^Ty \bigg) \tag{2.1.4.3.2}
 \end{eqnarray}$$
 
 In equation 2.1.4.3.2 we observe terms 6 and 7 are scalars and are transpose of each other, and are therefore equal
 
 $$\begin{eqnarray}
-\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = \alpha^2 w(1)^Tx^Txw(1) + (1-\alpha)^2 w(2)^Tx^Txw(2) \nonumber \\
-+ 2\alpha(1-\alpha)w(1)^Tx^Txw(2) - \alpha w_1^Tx^Txw_1 - (1-\alpha) w_2^Tx^Txw_2 \nonumber \\
-= (\alpha^2-\alpha)w(1)^Tx^Txw(1) + ((1-\alpha)^2-(1-\alpha))w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \nonumber \\
-= -\alpha(1-\alpha)w(1)^Tx^Txw(1) -\alpha(1-\alpha)w_2^Tx^Txw_2 + 2\alpha(1-\alpha)w(1)^Tx^Txw(2) \tag{2.1.4.3.3}
+\implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) = \alpha^2 w(1)^TX^TXw(1) + (1-\alpha)^2 w(2)^TX^TXw(2) \nonumber \\
++ 2\alpha(1-\alpha)w(1)^TX^TXw(2) - \alpha w_1^TX^TXw_1 - (1-\alpha) w_2^TX^TXw_2 \nonumber \\
+= (\alpha^2-\alpha)w(1)^TX^TXw(1) + ((1-\alpha)^2-(1-\alpha))w_2^TX^TXw_2 + 2\alpha(1-\alpha)w(1)^TX^TXw(2) \nonumber \\
+= -\alpha(1-\alpha)w(1)^TX^TXw(1) -\alpha(1-\alpha)w_2^TX^TXw_2 + 2\alpha(1-\alpha)w(1)^TX^TXw(2) \tag{2.1.4.3.3}
 \end{eqnarray}$$
 
-In equation 2.1.4.3.3 we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^Tx^Txw(2) + \alpha(1-\alpha)w(2)^Tx^Txw(1)$
+In equation 2.1.4.3.3 we observe that the last term is a scalar, therefore its value is the same as its transpose. The complete last term can also be written as $\alpha(1-\alpha)w(1)^TX^TXw(2) + \alpha(1-\alpha)w(2)^TX^TXw(1)$
 
 $$\begin{eqnarray}
 \implies L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) \nonumber \\
-= -\alpha(1-\alpha)\bigg[w(1)^Tx^T\bigg(x(w(1)-w(2))\bigg) - w(2)^Tx^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
-= -\alpha(1-\alpha)\bigg[ \bigg(x(w(1)-w(2))\bigg)^T \bigg(x(w(1)-w(2))\bigg) \bigg] \nonumber \\
-= -\alpha(1-\alpha)\bigg\lVert x(w(1)-w(2)) \bigg\rVert_2^2 \tag{2.1.4.3.4}
+= -\alpha(1-\alpha)\bigg[w(1)^TX^T\bigg(X(w(1)-w(2))\bigg) - w(2)^TX^T \bigg(X(w(1)-w(2))\bigg) \bigg] \nonumber \\
+= -\alpha(1-\alpha)\bigg[ \bigg(X(w(1)-w(2))\bigg)^T \bigg(X(w(1)-w(2))\bigg) \bigg] \nonumber \\
+= -\alpha(1-\alpha)\bigg\lVert X(w(1)-w(2)) \bigg\rVert_2^2 \tag{2.1.4.3.4}
 \end{eqnarray}$$
 
 We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefore, the resulting term is always non-positive. From normal equations it is known that the solution is unique for an invertible covariance matrix. Therefore, for $w(1) \neq w(2)$ such that $w(1) \in R^{(p+1)\times 1}, w(2) \in R^{(p+1)\times 1}$ we have $L(w(3)) - (\alpha L(w(1)) + (1-\alpha) L(w_2)) \le 0$ where $w(3)$ is a convex combination of $w(1), w(2)$, and equality is attained only when $w(1) = w(2)$. Therefore, the OLS linear regression loss function is convex (For $z(3) \in (z(1), z(2))$ such that $w(3) = \alpha w(1) + (1-\alpha)w(2), \alpha \in (0,1)$, if we have $f(w(3)) < \alpha f(w(1)) + (1-\alpha)f(w(2))$ then $f$ is a convex function)
+
+Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OLS linear regression estimation on a data set with invertible covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial L}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
+
+For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$ we know that $\bigg[\frac{\partial^2 f}{\partial w^2}\bigg]_{w=\hat{w}} > 0$. 
