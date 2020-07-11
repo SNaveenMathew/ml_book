@@ -369,3 +369,27 @@ $$w(t+1) = w(t) - \gamma \bigg(H(w(t))\bigg)^{-1}J(w(t)); \gamma \in (0, 1]$$
 We observe that the convergence is independent of the scale of $X$ (inverse Hessian or inverse covariance removes the dependence), but depends on the scale of $y$ (through the Jacobian). Therefore, Newton's method tends to converge to a reasonable solution in finite number of steps without manual choice of learning rate. However, it is important to note that Newton's method, despite being an iterative method, introduces all issues that were present in the analytical solution using normal equations.
 
 [C++ code for solving linear regression using Newton's method](data/linreg_Newton.cpp) **Bias alert: writing this just to prove that I can write C++ code for Newton's method**
+
+### 2.1.4.6. Extensions: Coordinate descent
+
+Let us assume that the design matrix is orthogonal. Therefore, the covariance matrix will be a diagonal matrix.
+
+$$
+\begin{equation}
+H(w)_j^{(i)} =
+\begin{cases}
+    H_i^{(i)}\neq 0 & \text{if } i = j\\
+    0 & \text{otherwise}
+\end{cases}
+\end{equation}$$
+
+$$
+\begin{equation}
+H^{-1}(w)_j^{(i)} =
+\begin{cases}
+    \frac{1}{H_i^{(i)}} & \text{if } i = j\\
+    0 & \text{otherwise}
+\end{cases}
+\end{equation}$$
+
+Assuming all the independent variables have variance, Newton's update ($\gamma = 1$) given by: $w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$ is equivalent to taking scaled steps individually along each of the weight axes. This is similar to profile likelihood approach for parameter estimation, where the parameters that are not important are profiled out. Specifically, this resembles a scenario in profile likelihood where the parameters are independent - similar to mean and variance of a normal distribution. This suggests that the loss function can be projected along each of the weight axes and minimization can be done along each weight axis independently without considering the effects of change in another weight. In the ideal scenario described above where the covariance matrix is a diagonal matrix, coordinate descent will converge after a single sweep of projected optimization along each of weight axes.
