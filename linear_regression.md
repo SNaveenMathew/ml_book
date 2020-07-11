@@ -366,3 +366,6 @@ Adding a step size parameter to satisfy Wolfe's condition ([refer this](https://
 
 $$w(t+1) = w(t) - \gamma \bigg(H(w(t))\bigg)^{-1}J(w(t)); \gamma \in (0, 1]$$
 
+However, it is important to note that Newton's method, despite being an iterative method, introduces all issues that were present in the analytical solution using normal equations.
+
+[C++ code for solving linear regression using Newton's method](data/linreg_Newton.cpp) **Bias alert: writing this just to prove that I can write C++ code for Newton's method**
