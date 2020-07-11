@@ -32,13 +32,13 @@ Normal equations are obtained by setting the partial derivative of likelihood wi
 
 $$\frac{\partial log(L(e; w))}{\partial w} = 0 \implies \bigg[\frac{\partial}{\partial w} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{w = \hat{W}} = 0 \tag{2.1.2.1.1.a}$$
 
-Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - Xw$, using $\frac{\partial e^Te}{\partial w} = 2 \frac{\partial e^T}{\partial w} e$ and substituting $\frac{\partial e^T}{\partial w} = -X^T$ into equation 2.1.2.1.1.a, we get:
+Using clever linear algebra: $\sum_{i=1}^{N} (e^{(i)})^2 = e^Te$, substituting $e = y - Xw$, using $\frac{\partial e^Te}{\partial w} = 2 e^T \frac{\partial e}{\partial w} $ and substituting $\frac{\partial e}{\partial w} = -X$ into equation 2.1.2.1.1.a, we get:
 
-$$ -2 (y - X\hat{W})^T X = 0$$
+$$ -2 (y - X\hat{W})^T X = 0\tag{2.1.2.1.1.b}$$
 
 Equating transpose of LHS and RHS:
 
-$$X^T(y-XW) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W}\tag{2.1.2.1.1.b}$$
+$$X^T(y-XW) = 0 \implies X^Ty - X^TX\hat{W} = 0 \implies X^Ty = (X^TX)\hat{W}\tag{2.1.2.1.1.c}$$
 
 $$\implies \hat{W} = (X^TX)^{-1}X^Ty \tag{2.1.2.1.2}$$
 
@@ -276,7 +276,7 @@ In equation 2.1.4.1.1 we observe that the second and third term are transpose of
 
 $$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
 
-Substituting equations 2.1.2.1.1.b in equation 2.1.4.1.2 we get:
+Substituting equations 2.1.2.1.1.c in equation 2.1.4.1.2 we get:
 
 $$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X \bigg(-2X^T\bigg(y - Xw(t)\bigg) \bigg)$$
 
