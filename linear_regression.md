@@ -247,7 +247,7 @@ We noted that the computational complexity of solving the normal equations is $O
 
 Gradient descent is a popular algorithm for parameter estimation. It differs from the physics analogy in section 2.1.3.1. in a subtle way: consider the gradient as a direct indicator of rate of change of weight (angle in the analogy because $w_1 \to \theta$):
 
-$$w(t + 1) := w(t) - \alpha \bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}$$
+$$w(t + 1) := w(t) - \alpha \bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}$$
 
 Here $\alpha$ is called the learning rate. It determines how quickly (number of iterations) we can reach a solution that is close to the OLS estimate. However, setting it to a high value can have an undesirable effect on the learning. Let us understand simple linear regression through mathematics.
 
@@ -255,32 +255,32 @@ Here $\alpha$ is called the learning rate. It determines how quickly (number of 
 
 For this section let us assume that the covariance matrix is invertible. In other words $(X^TX)^{-1}$ exists.
 
-$$L(w(t)) = \bigg(y - Xw(t)\bigg)^T\bigg(y - Xw(t)\bigg)$$
+$$l(w(t)) = \bigg(y - Xw(t)\bigg)^T\bigg(y - Xw(t)\bigg)$$
 
-$$L(w(t + 1)) = \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg) \bigg]^T \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg) \bigg]$$
+$$l(w(t + 1)) = \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg) \bigg]^T \bigg[y - X\bigg(w(t) - \alpha \bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg) \bigg]$$
 
-$$\implies L(w(t + 1)) = \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]^T \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg]$$
+$$\implies l(w(t + 1)) = \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg]^T \bigg[y - Xw(t) + \alpha X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg]$$
 
 $$\begin{eqnarray}
-\implies L(w(t + 1)) = L(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) \nonumber \\
-+ \alpha^2 \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
+\implies l(w(t + 1)) = l(w(t)) + \alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}  + \alpha \bigg(X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(y - Xw(t)\bigg) \nonumber \\
++ \alpha^2 \bigg(X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg)^T \bigg(X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)}\bigg)  \tag{2.1.4.1.1}
 \end{eqnarray}$$
 
-In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $L(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation 2.1.4.1.1:
+In equation 2.1.4.1.1 we observe that the second and third term are transpose of each other and they are scalars (can be proved by matching dimensions of matrix multiplication or by looking at the terms that are added: $l(w(t))$, which is a scalar). The transpose of a scalar is itself, therefore both the values are equal. Now we assume the following in equation 2.1.4.1.1:
 
 - $\alpha > 0$ is small and the gradients are small enough that the step size is not large, i.e. $w(t+1)$ will be in the neighborhood of $w(t)$
 
-- $\implies \alpha^2 \lVert X [ \frac{\partial L}{\partial w} ]_{w = w(t)}\rVert _2^2 \to 0$
+- $\implies \alpha^2 \lVert X [ \frac{\partial l}{\partial w} ]_{w = w(t)}\rVert _2^2 \to 0$
 
 - We assume this condition is met $\forall w(t) \in R^{p + 1}$, $X \in R^{N_{train} \times (p + 1)}$
 
-$$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial L}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
+$$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
 
 Substituting equations 2.1.2.1.1.c in equation 2.1.4.1.2 we get:
 
-$$L(w(t + 1)) = L(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X \bigg(-2X^T\bigg(y - Xw(t)\bigg) \bigg)$$
+$$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X \bigg(-2X^T\bigg(y - Xw(t)\bigg) \bigg)$$
 
-$$\implies L(w(t + 1)) = L(w(t)) - 4\alpha \bigg(y - Xw(t)\bigg)^T X X^T \bigg(y - Xw(t) \bigg)$$
+$$\implies l(w(t + 1)) = l(w(t)) - 4\alpha \bigg(y - Xw(t)\bigg)^T X X^T \bigg(y - Xw(t) \bigg)$$
 
 Sequentially transforming the above equation, we get:
 
@@ -288,11 +288,11 @@ Sequentially transforming the above equation, we get:
 
 - $dim(A) = p \times 1 \implies dim(A^T) = 1 \times p; dim(A^TA) = 1 \times 1; A^TA = \lVert A \rVert_2^2$
 
-$$\implies L(w(t + 1)) = L(w(t)) - 4 \alpha \bigg|\bigg|X^T\bigg(y - Xw(t)\bigg)\bigg|\bigg|_2^2 \le L(w(t))$$
+$$\implies l(w(t + 1)) = l(w(t)) - 4 \alpha \bigg|\bigg|X^T\bigg(y - Xw(t)\bigg)\bigg|\bigg|_2^2 \le l(w(t))$$
 
-Therefore, for a sufficiently small $\alpha$ we observe that $L(w(t))$ is a non-increasing function. Also, $L(w(t))$ is lower bounded by 0 because it is a 2-norm. Therefore, gradient descent theoretically converges to at least a local minima for OLS linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the covariance matrix will be discused in section <>.
+Therefore, for a sufficiently small $\alpha$ we observe that $l(w)$ is a non-increasing function. Also, $l(w)$ is lower bounded by 0 because it is a 2-norm. Therefore, gradient descent theoretically converges to at least a local minima for OLS linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the covariance matrix will be discused in section <>.
 
-**Additional note:** We observe that $\frac{\partial L}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
+**Additional note:** We observe that $\frac{\partial l}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
 
 ### 2.1.4.2. Writing a solver for linear regression using gradient descent
 
