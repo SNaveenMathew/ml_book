@@ -28,7 +28,7 @@ $$\DeclareMathOperator*{\argmax}{argmax} \DeclareMathOperator*{\argmin}{argmin} 
 
 ### 2.1.2.1. Normal equations
 
-Normal equations are obtained by setting the partial derivative of likelihood with respect to $w$ to zero. Since logarithm is a monotonous transformation and likelihood function lies in the domain of logarithm, we can obtain the normal equations by setting the partial derivative of log-likelihood with respect to $w$ to zero.
+Normal equations are obtained by setting the partial derivative of likelihood with respect to $w$ (Jacobian) to zero. Since logarithm is a monotonous transformation and likelihood function lies in the domain of logarithm, we can obtain the normal equations by setting the partial derivative of log-likelihood with respect to $w$ to zero.
 
 $$\frac{\partial l(e; w)}{\partial w} = \frac{\partial log(L(e; w))}{\partial w} = 0 \implies \bigg[\frac{\partial}{\partial w} \sum_{i=1}^{N}(e^{(i)})^2 \bigg]_{w = \hat{W}} = 0 \tag{2.1.2.1.1.a}$$
 
@@ -346,6 +346,23 @@ We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefor
 
 Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OlS linear regression estimation on a data set with invertible covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
 
+### 2.1.4.4. Issues with gradient descent
+
+Learning rate is a hyperparatmer in linear regression solved using gradient descent. Choosing a suitable learning rate ($\alpha$) for gradient descent is not trivial, which is a major drawback of gradient descent. A very high learning rate will lead to divergence of weights. A very low learning rate will lead to slow convergence. It is important to note that the choice of learning rate also depends on the scale of the data set (derivative depends on $X, y$). Standard steps are followed to fix these issues: both $X$ and $y$ are standardized to have $mean=0$ and $variance=1$ (a.k.a. [batch normalization](https://en.wikipedia.org/wiki/Batch_normalization)). Also, modern packages for machine learning and deep learning such as [scikit-learn](https://scikit-learn.org/stable/), [Tensorflow](https://www.tensorflow.org/), [PyTorch](https://pytorch.org/), etc. have standard set of learning rates and allow user defined learning rate schedulers to alleviate this problem. However, standard recipes still don't solve all problems.
+
+### 2.1.4.5. Extensions: Newton's method
+
 For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$ we know that $\bigg[\frac{\partial^2 f}{\partial w^2}\bigg]_{w=\hat{w}} > 0$. Differentiating equation $2.1.2.1.1.b$ with respect to $W^T$ we get:
 
-$$\frac{\partial^2 l}{\partial W\partial W^T} = 2 X^T X$$
+$$\bigg[\frac{\partial^2 l}{\partial W\partial W^T}\bigg]_{W = \hat{W}} = 2 X^T X$$
+
+This is called the Hessian matrix. We observe that for the chosen data set (invertible $X^TX$) the Hessian is a positive (semi)-definite matrix at the optimal solution. This is the necessary second order condition for optimality. Interestingly if the Hessian at every weight $w$ is invertible, we can use the first and second order optimality conditions together to avoid choosing a learning rate. This is achieved using Newton's method.
+
+If the Hessian is denoted by $H(w)$ and Jacobian is denoted by $J(w)$, then the Newton update without considering step size ([also refer this link](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization#Higher_dimensions)), without any change in first or second order optimality conditions, is given by:
+
+$$w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$$
+
+Adding Wolfe's condition ([refer this](https://en.wikipedia.org/wiki/Wolfe_conditions)) the update is given by:
+
+$$w(t+1) = w(t) - \gamma \bigg(H(w(t))\bigg)^{-1}J(w(t)); \gamma \in (0, 1]$$
+
