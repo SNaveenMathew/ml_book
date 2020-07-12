@@ -399,7 +399,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \begin{algorithm}
     \caption{Quicksort}
     \begin{algorithmic}
-    \PROCEDURE{Quicksort}{$A, p, r$}
+    \PROCEDURE{linreg\_coord}{$X, y$}
         \IF{$p < r$} 
             \STATE $q = $ \CALL{Partition}{$A, p, r$}
             \STATE \CALL{Quicksort}{$A, p, q - 1$}
