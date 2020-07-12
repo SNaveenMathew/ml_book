@@ -171,4 +171,11 @@ linreg_coord(x = x1, y = y1)
 model <- lm(y ~ x)
 model$coefficients
 
+# Coordinate descent after scaling x_1 (not scaling x_0=1 and y)
+x1 <- x - mean(x)
+x2 <- cbind(1, x1)
+w <- linreg_coord(x = x2, y = y1)
+w[1] <- w[1] - w[2] * mean(x)
+
+print(w)
 */
