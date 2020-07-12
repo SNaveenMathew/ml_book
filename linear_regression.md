@@ -399,14 +399,18 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \begin{algorithm}
     \caption{Coordinate descent applied to linear regression}
     \begin{algorithmic}
-    \PROCEDURE{linregCoord}{$X, y$}
+    \PROCEDURE{linregCoord}{$X, y, tolerance$}
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
-        \FOR{$j = 0$ \TO $p - 1$}
-            \STATE $q = $ \CALL{Partition}{$A, p, r$}
-            \STATE \CALL{Quicksort}{$A, p, q - 1$}
-            \STATE \CALL{Quicksort}{$A, q + 1, r$}
-        \ENDFOR
+        \STATE $Loss_{prev} = Loss_{next} = 1$
+        \STATE $tol = \frac{Loss_{prev}}{Loss_{next}}$
+        \WHILE{$tol > tolerance$}
+            \FOR{$j = 0$ \TO $p - 1$}
+                \STATE $q = $ \CALL{Partition}{$A, p, r$}
+                \STATE \CALL{Quicksort}{$A, p, q - 1$}
+                \STATE \CALL{Quicksort}{$A, q + 1, r$}
+            \ENDFOR
+        \ENDWHILE
     \ENDPROCEDURE
     \end{algorithmic}
     \end{algorithm}
