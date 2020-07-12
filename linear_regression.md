@@ -399,19 +399,23 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \begin{algorithm}
     \caption{Coordinate descent applied to linear regression}
     \begin{algorithmic}
-    \PROCEDURE{linregCoord}{$X, y, tolerance$}
+    \FUNCTION{linregCoord}{$X, y, tolerance$}
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
-        \STATE $tol = \frac{Loss_{prev}}{Loss_{next}}$
+        \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
         \WHILE{$tol > tolerance$}
+            \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
             \FOR{$j = 0$ \TO $p - 1$}
                 \STATE $q = $ \CALL{Partition}{$A, p, r$}
                 \STATE \CALL{Quicksort}{$A, p, q - 1$}
                 \STATE \CALL{Quicksort}{$A, q + 1, r$}
             \ENDFOR
+            \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
+            \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
         \ENDWHILE
-    \ENDPROCEDURE
+        \RETURN $w$
+    \ENDFUNCTION
     \end{algorithmic}
     \end{algorithm}
 </pre>
