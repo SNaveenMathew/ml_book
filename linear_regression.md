@@ -404,7 +404,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
-        \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
+        \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
         \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
             \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
             \FOR{$j = 0$ \TO $p - 1$}
@@ -413,7 +413,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
                 \STATE \CALL{Quicksort}{$A, q + 1, r$}
             \ENDFOR
             \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
-            \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
+            \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
             \STATE $iter = iter+1$
         \ENDWHILE
         \RETURN $w$
