@@ -429,6 +429,15 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
 
 [C++ code for solving linear regression using coordinate descent](data/linreg_coord.cpp) **Bias alert: writing this just to prove that I can write C++ code for coordinate descent**
 
+It is important to note that coordinate descent is very similar to Newton's method. There are two differences:
+
+1. Typical gradient based methods such as gradient descent and Newton's method that update all weights simultaneously. However, coordinate descent updates one weight at a time
+2. Newton's method resorts to inversion of the Hessian matrix. Coordinate descent (loosely written) approximates the Hessian as a diagonal matrix and uses the sum of squares to solve for the weights, assuming the weights to be orthogonal
+
+The second difference gives us a way to optimize coordinate descent for *simple linear regression*: if $x_1$ is recentered to zero mean, $x_0^Tx_1 = \sum_{i=1}^{N_{train}}{x_1^{(i)}} = N_{train}\bar{x} = 0$, which ensures orthogonality. Therefore, coordinate descent will converge to optimal solution in one iteration (second iteration is run just to check for convergence). However, the intercept is computed based on recentered $x_1$, and is therefore adjusted as shown in the last section of the [code](data/linreg_coord.cpp).
+
+This simple linear regression example suggests that centering all independent variables can make coordinate descent converge faster for any value of $p$, but it is known that adjusting the center does not change the correlation between the independent variables. It is easy to assume that the center can be sequentially adjusted to have all pairs of $x_{j}^Tx_k = 0 \forall j \neq k$, but this is not possible unless all pairs of independent variables are uncorrelated. Secondly, if we consider two independent variables that are perfectly correlated, the first (in order of weight update) variable will capture all the weight and the second variable will receive a weight of 0. However, linear regression is supposed to have indeterminate solution for this case. Coordinate descent is not capable of identifying this issue.
+
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
 </script>
