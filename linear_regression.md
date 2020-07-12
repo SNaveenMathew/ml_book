@@ -402,11 +402,11 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \PROCEDURE{linregCoord}{$X, y$}
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
-        \IF{$p < r$} 
+        \FOR{$j = 0$ \TO $p - 1$}
             \STATE $q = $ \CALL{Partition}{$A, p, r$}
             \STATE \CALL{Quicksort}{$A, p, q - 1$}
             \STATE \CALL{Quicksort}{$A, q + 1, r$}
-        \ENDIF
+        \ENDFOR
     \ENDPROCEDURE
     \end{algorithmic}
     \end{algorithm}
