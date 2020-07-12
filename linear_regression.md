@@ -399,12 +399,13 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \begin{algorithm}
     \caption{Coordinate descent applied to linear regression}
     \begin{algorithmic}
-    \FUNCTION{linregCoord}{$X, y, tolerance$}
+    \FUNCTION{linregCoord}{$X, y, tolerance, maxIter$}
+        \STATE $iter = 0$
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
         \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
-        \WHILE{$tol > tolerance$}
+        \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
             \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
             \FOR{$j = 0$ \TO $p - 1$}
                 \STATE $q = $ \CALL{Partition}{$A, p, r$}
@@ -413,6 +414,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
             \ENDFOR
             \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
             \STATE $tol = \lVert \frac{Loss_{prev}}{Loss_{next}} -1 \rVert$
+            \STATE $iter = iter+1$
         \ENDWHILE
         \RETURN $w$
     \ENDFUNCTION
