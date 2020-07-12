@@ -403,6 +403,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
         \STATE $iter = 0$
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
+        \STATE $X^TX_{diag} = $ \CALL{sumSquaresColumns}{$X$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
         \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
         \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
@@ -415,6 +416,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
                 \STATE $X_j = $ \CALL{chooseJthColumn}{$X, j$}
                 \STATE $X_j^T = $ \CALL{transpose}{$X_j$}
                 \STATE $X_j^Tres_{-j} = $ \CALL{matrixMuliply}{$X_j^T, res_{-j}$}
+                \STATE $w_{j} = \frac{X_j^Tres_{-j}}{[X^TX_{diag}]_j}$
             \ENDFOR
             \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
             \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
