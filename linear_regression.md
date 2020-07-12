@@ -397,7 +397,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
 <pre id="quicksort" style="display:hidden;">
     % This quicksort algorithm is extracted from Chapter 7, Introduction to Algorithms (3rd edition)
     \begin{algorithm}
-    \caption{Quicksort}
+    \caption{Coordinate descent applied to linear regression}
     \begin{algorithmic}
     \PROCEDURE{linregCoord}{$X, y$}
         \IF{$p < r$} 
