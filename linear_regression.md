@@ -400,6 +400,8 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
     \caption{Coordinate descent applied to linear regression}
     \begin{algorithmic}
     \PROCEDURE{linregCoord}{$X, y$}
+        \STATE $p = $ \CALL{numberOfColumns}{$X$}
+        \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \IF{$p < r$} 
             \STATE $q = $ \CALL{Partition}{$A, p, r$}
             \STATE \CALL{Quicksort}{$A, p, q - 1$}
