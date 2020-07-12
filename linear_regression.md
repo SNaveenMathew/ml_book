@@ -411,6 +411,10 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
                 \STATE $w_{-j} = $ \CALL{dropJthRow}{$w, j$}
                 \STATE $X_{-j} = $ \CALL{dropJthColumn}{$X, j$}
                 \STATE $yhat_{-j} = $ \CALL{matrixMuliply}{$X_{-j}, w_{-j}$}
+                \STATE $res_{-j} = $ \CALL{vectorDifference}{$y, yhat_{-j}$}
+                \STATE $X_j = $ \CALL{chooseJthColumn}{$X, j$}
+                \STATE $X_j^T = $ \CALL{transpose}{$X_j$}
+                \STATE $X_j^Tres_{-j} = $ \CALL{matrixMuliply}{$X_j^T, res_{-j}$}
             \ENDFOR
             \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
             \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
