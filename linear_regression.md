@@ -409,8 +409,8 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
             \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
             \FOR{$j = 0$ \TO $p - 1$}
                 \STATE $w_{-j} = $ \CALL{dropJthRow}{$w, j$}
-                \STATE \CALL{Quicksort}{$A, p, q - 1$}
-                \STATE \CALL{Quicksort}{$A, q + 1, r$}
+                \STATE $X_{-j} = $ \CALL{dropJthColumn}{$X, j$}
+                \STATE $yhat_{-j} = $ \CALL{matrixMuliply}{$X_{-j}, w_{-j}$}
             \ENDFOR
             \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
             \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
