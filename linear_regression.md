@@ -438,6 +438,16 @@ The second difference gives us a way to optimize coordinate descent for *simple 
 
 This simple linear regression example suggests that centering all independent variables can make coordinate descent converge faster for any value of $p$, but it is known that adjusting the center does not change the correlation between the independent variables. It is easy to assume that the center can be sequentially adjusted to have all pairs of $x_{j}^Tx_k = 0 \forall j \neq k$, but this is not possible unless all pairs of independent variables are uncorrelated. Secondly, if we consider two independent variables that are perfectly correlated, the first (in order of weight update) variable will capture all the weight and the second variable will receive a weight of 0. However, linear regression is supposed to have indeterminate solution for this case. Coordinate descent is not capable of identifying this issue.
 
+### 2.1.5.3. Extensions: gradient computation using finite difference method
+
+The sum of squares loss is a relatively simple loss function to differentiate with respect to the parameters. But let us analyze the computational complexity of two operations for a given set of weights (may not be optimal): exact gradient computation and prediction + error computation. The complexity of exact gradient computation is $O(N_{train}(p+1) + N_{train} + N_{train}(p+1))$. The complexity of prediction is $O(N_{train}(p+1))$, and the additional complexity of error computation is $O(N_{train})$. Now let us recall the forward difference approach for computing gradient with respect to a variable $w_j$:
+
+$$\bigg[\frac{\partial L}{\partial w_j}\bigg]_{w_j = w_j(1)} = lim\limits{h \to 0} \frac{L(w_j = w_j(1) + h, w_{-j}) - L(w_j = w_j(1), w_{-j})}{h} \approx \frac{L(w_j = w_j(1) + \delta h, w_{-j}) - L(w_j = w_j(1), w_{-j})}{\delta h}$$
+
+For computing this for each of the weights we need to perform $p+1$ operations, each of which have a complexity of $O(2(N_{train}(p+1) + N_{train}))$ as discussed above. This operation seems to be slightly more expensive than computing the analytical gradient for linear regression. However, the finite difference approach becomes computationally more efficient if the gradient computation is very expensive compared to prediction + loss computation. Even if the computational efficiency is poor, numeric gradient computation is often used to check the accuracy of computed analytical gradient. This is because humans are prone to errors, and may miss constants or negative sign while coding the analytical gradient, whereas finite difference method gives a *near* fool-proof way for computing the gradient with respect to any weight (for example: in any layer for a neural network).
+
+[C++ code for solving linear regression using gradient descent and forward difference gradient](data/linreg_GD_finite_difference.cpp) **Bias alert: writing this just to prove that I can write C++ code for gradient descent and forward differnece**
+
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
 </script>
