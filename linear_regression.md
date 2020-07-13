@@ -450,6 +450,8 @@ For computing this for each of the weights we need to perform $p+1$ operations, 
 
 ### 2.1.5.4. Extensions: stochastic gradient descent
 
+Content goes here
+
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
 </script>
