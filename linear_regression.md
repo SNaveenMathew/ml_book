@@ -448,6 +448,8 @@ For computing this for each of the weights we need to perform $p+1$ operations, 
 
 [C++ code for solving linear regression using gradient descent and forward difference gradient](data/linreg_GD_finite_difference.cpp) **Bias alert: writing this just to prove that I can write C++ code for gradient descent and forward differnece**
 
+### 2.1.5.4. Extensions: stochastic gradient descent
+
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
 </script>
