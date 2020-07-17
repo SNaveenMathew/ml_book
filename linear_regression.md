@@ -452,6 +452,13 @@ For computing this for each of the weights we need to perform $p+1$ operations, 
 
 Content goes here
 
+## 2.1.6. Model assumptions
+
+Let us recap the assumptions in this section:
+
+1. The model is linear: variables may be transfored to incorporate non-linear effects, but the model is linear with respect to the coefficients. Example: $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2$ is a linear model with independent variables $(X_1, X_1^2)$
+2. The error is *normally distributed* with *zero* mean and *constant variance* that is independent of $X$: this statement often causes misinterpretation. One common misinterpretations is that the independent variables should be normally distributed (mentioned in "The story of normality of ... independent variables in linear regression" section of [introduction](introduction.md)).
+
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
 </script>
