@@ -404,7 +404,7 @@ Assuming all the independent variables have variance, Newton's update ($\gamma =
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \STATE $X^TX_{diag} = $ \CALL{sumSquaresColumns}{$X$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
-        \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
+        \STATE $tol = tolerance + 1$
         \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
             \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
             \FOR{$j = 0$ \TO $p - 1$}
