@@ -77,3 +77,57 @@ The magnitude of risk faced by even the most passionate of data scientists is ti
 ## Tru(uuuuu...)th about modern data scientists
 
 ![](data/import_scientist.jpg)
+
+Consider this thought experiment - person A built an application on [R Shiny](https://shiny.rstudio.com/) by using widgets. Person B is a full stack developer with skills in R, Python, HTML, CSS, JavaScript, etc. Both 'full stack developers' meet and have a conversation.
+
+A: "Hey B, I built a full-stack application that's very useful for business"
+
+B: "That's great, can I take a look?"
+
+A: "Unfortunately I can't show you the application, but I can tell you, it has every plot under the Sun and allows business users to view KPIs and dynamically drill down to the root cause"
+
+B: "Sounds great! Which tech stack did you use?"
+
+A: "Tech stack? What does that mean?"
+
+B (sipping some water): "Oh, I meant the set of tools used as database, backend, middleware and frontend"
+
+A: "Oh, I used R Shiny..."
+
+B (almost unable to control the laughter):
+
+![](data/laugh_water.gif)
+
+A: "What so funny?"
+
+B: "Nothing. Great work!"
+
+B unethically peeks into A's computer to take a look at the application. It looked more or less like this:
+
+![](data/blank_dashboard.png)
+
+A noticed B looking into the dashboard. The conversation resumed:
+
+A: "Don't you think it's cool?"
+
+B: "Sure, looks great!"
+
+A: "I know you are a great full-stack deveoper. Do you have suggestions to improve my app?"
+
+B: "Nothing much really. You may want to change the font style and size of the dashboard title"
+
+A: "Ok, let me do it right away"
+
+B curiously looks at A's steps to modify the font style and size. They were as follows:
+
+1. Look at the documentation of ?shinydashboard::dashboardHeader. Problem could not be solved
+2. Google "stackoverflow change shinydashboard header font style"
+3. Copy paste the CSS code into a new file, save and build the HTML using R Studio
+
+A: "Well, there you go! It was harder than I thought, but I did it!"
+
+B: "Great work! It looks good now. Good luck!"
+
+Moral: R Shiny uses widgets to abstract away the difficulties of building UI using HTML, CSS, JavaScript, etc. There are several simple components in R Shiny that require knowledge of the underlying concepts. Several widgetized components use HTML / JavaScript in the backend. Only simple applications can be built without knowing the underlying constructs.
+
+The moral of this story was kept soft (intentionally), but there's an important message to the reader: importing packages without the curiosity to know (or understand) the underlying constructs is not a passion, it is a hobby. Most data scientists in the world, especially in body-shop companies, are pursuing a hobby and getting paid for it - how cool is that?!
