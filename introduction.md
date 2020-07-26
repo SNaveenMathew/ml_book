@@ -73,3 +73,7 @@ Under these circumstances I'm not trying to plead 'not guilty'. Standing one's g
 This story does not have a conclusion because of two reasons: a) I'm not a storyteller, b) the future is uncertain. These experiences gave me a vision that, in spite of involvement of mediocre people and lack of income, will keep me on my toes and force me to update myself. Life is too simple to be contained by trivial roadblocks.
 
 The magnitude of risk faced by even the most passionate of data scientists is tiny compared to the risks faced by [Giordano Bruno](https://en.wikipedia.org/wiki/Giordano_Bruno), [Galileo Galilei](https://en.wikipedia.org/wiki/Galileo_Galilei), [Edmund Halley](https://en.wikipedia.org/wiki/Edmond_Halley), [Isaac Newton](https://en.wikipedia.org/wiki/Isaac_Newton), [Georg Cantor](https://en.wikipedia.org/wiki/Georg_Cantor), [Ludwig Boltzmann](https://en.wikipedia.org/wiki/Ludwig_Boltzmann), and several other scientists who were considered blasphemous. It is alright if your ML model failed to recommend the correct online news article to a customer; the modeler can forgive himself/herself even if the business people don't forgive him/her for not achieving 100% accuracy (on any arbitrary problem).
+
+## Tru(uuuuu...)th about modern data scientists
+
+![](data/import_scientist.jpg)
