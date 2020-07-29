@@ -217,6 +217,6 @@ The team implemented few of my suggestions. They used a Cloud VM to run somethin
 Moral: Leo Beebe (just the movie portrayal) in [Ford vs Ferrari](https://www.imdb.com/title/tt1950186/) is real. Techincal people are treated by the sales (a.k.a. customer success) team as either:
 
 - a scape goat when they fail
-- a black sheet when they succeed
+- a black sheep when they succeed
 
 If you are a technical person who focuses on depth / details, be prepared to be treated like an animal!
