@@ -214,7 +214,7 @@ I had more suggestions around class balance (it was multiclass), but after this 
 
 The team implemented few of my suggestions. They used a Cloud VM to run something that required at max 1 GB of GPU memory. Using binary vectorizer they achieved a higher accuracy than count vectorizer. So they reappeared in the next India Team Meeting and presented their results: 98% accuracy. Their work stole the spotlight as one of the most innovative and forward looking projects in the company. It should be obvious by now that I was not credited.
 
-Moral: Leo Beebe (just the movie portrayal) in [Ford vs Ferrari](https://www.imdb.com/title/tt1950186/) is real. Techincal people are treated by the sales (a.k.a. customer success) team as either:
+Moral: Leo Beebe (just the movie portrayal) in [Ford vs Ferrari](https://www.imdb.com/title/tt1950186/) is real. Sales (a.k.a. customer success) team treats techincal people as either:
 
 - a scape goat when they fail
 - a black sheep when they succeed
