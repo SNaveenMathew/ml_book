@@ -148,7 +148,7 @@ The story goes like this: a chemistry teach was teaching passionately while this
 
 $$<some\ really\ complicated\ chemical> + <some\ other\ really\ complicated\ chemical> \to_{it's\ complicated} <another\ really\ complicated\ chemical>$$
 
-Question: What is should one do to this reaction to get $<another\ really\ complicated\ chemical>$?
+Question: What is should one do to this reaction to get $<yet another\ really\ complicated\ chemical>$?
 
 The student looked at the teacher, laughed, and said "pour water" in a sarcastic way to say "cool down". But that was the right answer - "pour water". This answer could not be found hidden in the P. W. Atkins (Physical Chemistry), Morrison & Boyd (Organic Chemistry), etc. The student went on to become AIR-1! The legend ends here, the relevance of this legend may become clear later.
 
