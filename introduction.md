@@ -219,4 +219,4 @@ Moral: Leo Beebe (just the movie portrayal) in [Ford vs Ferrari](https://www.imd
 - a scape goat when they fail
 - a black sheet when they succeed
 
-If you are a technical person, be prepared to be treated like an animal!
+If you are a technical person who focuses on depth / details, be prepared to be treated like an animal!
