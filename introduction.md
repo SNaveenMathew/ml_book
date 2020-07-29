@@ -146,7 +146,7 @@ This story, despite being slightly old, is relatively fresh in my memory because
 
 The story goes like this: a chemistry teach was teaching passionately while this person was joking playfully. The teacher, who was annoyed after a while, asked the student a tough question (some say it was the toughest question ever):
 
-$$\<some\ really\ complicated\ chemical\> + \<some\ other\ really\ complicated\ chemical\> \to_{it's\ complicated} \<another\ really\ complicated\ chemical\>$$
+$$<some\ really\ complicated\ chemical> + <some\ other\ really\ complicated\ chemical> \to_{it's\ complicated} <another\ really\ complicated\ chemical>$$
 
 Question: What is should one do to this reaction to get $\<another\ really\ complicated\ chemical\>$?
 
