@@ -44,6 +44,8 @@ I consider this section a 'fall from grace' because we are transitioning instant
 
 The intent of this section is to bring the lack of competency in the data science industry to light in a gentlemanly (read: this is the best I can do) way. Let's get started!
 
+Note: Few stories (not all) are exaggerated to (hopefully) enhance the impact. I will not name them, so have fun!
+
 ### The unreasonable effectiveness of ... lies, emotions and 'people connect'
 
 I was one of two *developers* involved in mathematical modeling of product substitution. The timeline - 1 week - was highly unrealistic (if this sounds new, welcome to the world of consulting!). After reading few research papers I quickly understood that the mathematical models are very complicated, and involve creation of *consumer decision tree*, *nested modeling*, etc. After some brainstorming with the business team (i.e. the people who promised a working demo in 1 week without understanding the difficulties such as time complexity of storage/querying, quantitative analysis, coding, scaling, etc.), we came to a conclusion that we need to frame a metric that looks similar to *variance*. So we took a page out of economics of competition (specifically [HHI](https://en.wikipedia.org/wiki/Herfindahl%E2%80%93Hirschman_Index)) and designed a simple scoring function that was scalable! The math was so simple that even a high schooler with an average understanding of algebra would easily understand all the nuances of the model.
@@ -140,4 +142,81 @@ The moral of this story was kept soft (intentionally), but there's an important 
 
 It should be no surprise by now that I made up this quote.
 
+This story, despite being slightly old, is relatively fresh in my memory because it has an emotional background. Background (emotional) story: For readers who are not Indian, [IIT-JEE](https://en.wikipedia.org/wiki/Joint_Entrance_Examination_%E2%80%93_Advanced) is considered one of the toughest exams in the world, and All India Rank 1 (AIR-1) is considered an achievement by itself, even if the person who achieves this feat does nothing in his/her life later. There was a legend about one of the AIR-1 candidates (don't remember the name or year) during IIT-JEE preparation days.
 
+The story goes like this: a chemistry teach was teaching passionately while this person was joking playfully. The teacher, who was annoyed after a while, asked the student a tough question (some say it was the toughest question ever):
+
+$$\<some\ really\ complicated\ chemical\> + \<some\ other\ really\ complicated\ chemical\> \to_{it's\ complicated} \<another\ really\ complicated\ chemical\>$$
+
+Question: What is should one do to this reaction to get $\<another\ really\ complicated\ chemical\>$?
+
+The student looked at the teacher, laughed, and said "pour water" in a sarcastic way to say "cool down". But that was the right answer - "pour water". This answer could not be found hidden in the P. W. Atkins (Physical Chemistry), Morrison & Boyd (Organic Chemistry), etc. The student went on to become AIR-1! The legend ends here, the relevance of this legend may become clear later.
+
+Fast forward several years to 2017, the new story begins. I received an award in early 2017 for my contributions in "The unreasonable effectiveness of ... lies, emotions and 'people connect'" (the tangible contribution, not for the 'people connect'). As a result, I assumed that awards are important and that presentations in "Town Hall" and "India Team Meeting" have value.
+
+Here's the typical flow of one of these meetings: 2+ grueling hours of ordinary people presenting ordinary work as extraordinary results (everyone believes them), followed by the C_O delivering 15-30 minutes of pure motivation, finally followed by 30 minutes of forward looking technical work. I learnt to wait for the final 30 minutes which were of importance to me. One presentation was on applications of neural networks in product categorization.
+
+To my surprise this presentation was unusually candid - the team talked about "term frequency–inverse document frequency vectorizer", "stemming vs lemmatization", "GPUs to speed up matrix computation", etc. These are usually taboo in such meetings (even though they are forward looking) because they expose the extremely ordinary thought process of ordinary people. Only terms like "artificial intelligence", "scalable deep learning", etc. were allowed.
+
+As the meeting progressed, the team highlighted their difficulties. Despite having cool ideas (*relatively speaking*) they were unsuccessful in training the neural network because the GPU ran out of memory in the very first iteration. In conclusion, the team moved their data and code to Cloud and achieved 97% accuracy by leveraging the scale. This is where I started having concerns. It should be no surprise that the ~10 MB text file can bloat up after performing TF-IDF, but there were other concerns. I questioned them during the meeting (taboo #2).
+
+Me: "What vectorization (taboo already committed, so I'm not counting this) did you use?"
+
+Them: "Term-document matrix"
+
+Me: "What was your vocabulary size (taboo #3)?"
+
+Them: "Vocabulary size? What does that mean?"
+
+Me: "Number of columns in term-document matrix"
+
+Them: "Oh, that was a lot! 1 million, or maybe more?"
+
+Me (stunned): "Ok, looks odd. Did you discard words that appeared as little as once?"
+
+Them: "No"
+
+Me: "Ok, that's fine (not really, but it was necessary to say this to make progress in such conversations). What was your batch size (taboo #4)?"
+
+Them: "Please explain"
+
+Me: "Ok, how many rows did you take in while executing the training loop (taboo, maybe?)?"
+
+Them: "We took the whole matrix - x million records"
+
+Me: "Ok, that's fine (you know the drill). What was the data type of each cell?"
+
+Them: "How am I supposed to know that?"
+
+Me: "Ok, at least tell me this - how did you build the matrix?"
+
+Them: "We used sklearn.you_can_find_this_online.just_Google_it.CountVectorizer"
+
+Me: "Alright, I assume you have float32 type (**I was wrong, it's int64**), which is 4 bytes (taboo #5) per cell. (After some back of the envelope calculation) You are expected to use y GB of GPU memory, which is well above your machine's GPU memory"
+
+Them: "Yes, precisely! That's why we moved it to Cloud"
+
+Me: "Ok, that's not the point. Did you estimate the accuracy using binary (taboo #<whatever, I don't want to count>) vectors instead of count?"
+
+Them: "No, we can always do that. Do you think it'll make it >97%?"
+
+Me: "No, but it will reduce the GPU memory requirement by a factor of 32 (**I was wrong, it was 64**), which amounts to only y MB. It may (or may not) decrease your accuracy by a bit"
+
+Them: "Then why should we do it?"
+
+Me: "It's worth trying"
+
+Them: "Cool, thank you (*performing slow claps to suggest that the meeting was over; probably signalling me to stop rambling*)! Any other suggestions from the rest of the company?"
+
+Me: "Sorry, I'm not done (taboo #$\infty$). You should probably consider using mini batches (taboo #$\infty + 1$). Also storing it as sparse matrix (taboo #$\infty + 2$) may save more space. You can further compress the counts using delta compression (taboo #$\infty + 3$). A problem of this scale will probably never need to be on Cloud and can be run on a laptop (taboo #$\infty^\infty$)"
+
+I had more suggestions around class balance (it was multiclass), but after this statement I was overcome by emotions - this was my "pour water" moment. This realization was very deep because I never had faith in myself and everyone around me was superior (at least on paper / designation). But was it really a "pour water" moment?
+
+The team implemented few of my suggestions. They used a Cloud VM to run something that required at max 1 GB of GPU memory. Using binary vectorizer they achieved a higher accuracy than count vectorizer. So they reappeared in the next India Team Meeting and presented their results: 98% accuracy. Their work stole the spotlight as one of the most innovative and forward looking projects in the company. It should be obvious by now that I was not credited.
+
+Moral: Leo Beebe (just the movie portrayal) in [Ford vs Ferrari](https://www.imdb.com/title/tt1950186/) is real. Techincal people are treated by the sales (a.k.a. customer success) team as either:
+
+- a scape goat when they fail
+- a black sheet when they succeed
+
+If you are a technical person, be prepared to be treated like an animal!
