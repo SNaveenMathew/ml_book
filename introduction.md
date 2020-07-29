@@ -38,9 +38,13 @@ My personal curiosity was sparked by one question: how do all the observations b
 
 Today we are aware that Newton's universal law of gravitation is not accurate enough to explain the motion of Mercury. It took another scientific genius ([Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein)) to fit the curve in a better way and simultaneously come up with a law that generalizes well to astronomical objects that were not observed during his lifetime. This is (data) science at work!
 
-## The unreasonable effectiveness of ... lies, emotions and 'people connect'
+## Tru(uuuuu...)th about modern data scientists
 
 I consider this section a 'fall from grace' because we are transitioning instantaneously from incredible science (repeatability, reproducibility, predictive power, etc.) to a highly subjective topic: emotions.
+
+The intent of this section is to bring the lack of competency in the data science industry to light in a gentlemanly (read: this is the best I can do) way. Let's get started!
+
+### The unreasonable effectiveness of ... lies, emotions and 'people connect'
 
 I was one of two *developers* involved in mathematical modeling of product substitution. The timeline - 1 week - was highly unrealistic (if this sounds new, welcome to the world of consulting!). After reading few research papers I quickly understood that the mathematical models are very complicated, and involve creation of *consumer decision tree*, *nested modeling*, etc. After some brainstorming with the business team (i.e. the people who promised a working demo in 1 week without understanding the difficulties such as time complexity of storage/querying, quantitative analysis, coding, scaling, etc.), we came to a conclusion that we need to frame a metric that looks similar to *variance*. So we took a page out of economics of competition (specifically [HHI](https://en.wikipedia.org/wiki/Herfindahl%E2%80%93Hirschman_Index)) and designed a simple scoring function that was scalable! The math was so simple that even a high schooler with an average understanding of algebra would easily understand all the nuances of the model.
 
@@ -56,7 +60,7 @@ The salesperson's cameo worked positively. The sale went through! But let's anal
 
 This is a true story; this is (almost) every data scientist's story. Even if the story doesn't make sense, there is one important lesson to take back: we often use the data to support a story we already assume as the truth, or we use data to massage the ego of one or more people. This is outside the scope of science. In my opinion this is not data science!
 
-## The story of normality of ... independent variables in linear regression
+### The story of normality of ... independent variables in linear regression
 
 If the story wasn't depressing enough, there's more to come! After several disappointing years spent in a system that encourages mediocrity, yes-men, bigotry, credit-stealing, etc. I decided to travel to USA to pursue a higher degree. The journey was arduous - I had to cater to the need and greed of mediocre people while I was completing prerequisite courses, knowing that I may not get even a single admit. But it paid off - I got the admits I wanted. The time I spent in graduate school was invaluable. I created my own path, worked with awesome people - some over 10 years younger than me, studied interesting topics across departments, started working on interesting problems, and completed several courses from my course backlog (which was 100+ when I quit my job).
 
@@ -74,7 +78,7 @@ This story does not have a conclusion because of two reasons: a) I'm not a story
 
 The magnitude of risk faced by even the most passionate of data scientists is tiny compared to the risks faced by [Giordano Bruno](https://en.wikipedia.org/wiki/Giordano_Bruno), [Galileo Galilei](https://en.wikipedia.org/wiki/Galileo_Galilei), [Edmund Halley](https://en.wikipedia.org/wiki/Edmond_Halley), [Isaac Newton](https://en.wikipedia.org/wiki/Isaac_Newton), [Georg Cantor](https://en.wikipedia.org/wiki/Georg_Cantor), [Ludwig Boltzmann](https://en.wikipedia.org/wiki/Ludwig_Boltzmann), and several other scientists who were considered blasphemous. It is alright if your ML model failed to recommend the correct online news article to a customer; the modeler can forgive himself/herself even if the business people don't forgive him/her for not achieving 100% accuracy (on any arbitrary problem).
 
-## Tru(uuuuu...)th about modern data scientists
+### How many imports should one make to call oneself a data scientist?
 
 ![](data/import_scientist.jpg)
 
@@ -130,4 +134,10 @@ B: "Great work! It looks good now. Good luck!"
 
 Moral: R Shiny uses widgets to abstract away the difficulties of building UI using HTML, CSS, JavaScript, etc. There are several simple components in R Shiny that require knowledge of the underlying concepts. Several widgetized components use HTML / JavaScript in the backend. Only simple applications can be built without knowing the underlying constructs.
 
-The moral of this story was kept soft (intentionally), but there's an important message to the reader: importing packages without the curiosity to know (or understand) the underlying constructs is not a passion, it is a hobby. Most data scientists in the world, especially in body-shop companies, are pursuing a hobby and getting paid for it - how cool is that?!
+The moral of this story was kept soft (intentionally), but there's an important message to the reader: importing packages without the curiosity to know (or understand) the underlying constructs is not a passion, it is a hobby. Most data scientists in the world, especially in body-shop companies, are pursuing a hobby and are getting paid for it - how cool is that?!
+
+### "If only god can save our souls, only Cloud can save our neural networks"
+
+It should be no surprise by now that I made up this quote.
+
+
