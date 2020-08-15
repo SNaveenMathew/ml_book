@@ -225,6 +225,10 @@ If you are a technical person who focuses on depth / details, be prepared to be 
 
 I hope you had fun reading these stories. Though these accounts were not 100% accurate there are important lessons to be learnt from them that deal primarily with science, morality and interpersonal communication.
 
+### I'm getting started. These experiences are scary as they sound commonplace
+
+Welcome to data science! I sincerely wish you a happy journey. Fortunately the field is more diverse now than ever before. This makes each individual's journey almost unique. I tried to present scenarios that were experienced by myself and other people I know. You may or may not encounter any of these situations. I request you to write about your experiences without hiding the 'nasty' details because people like me may be able to learn from your experiences.
+
 ### I listened to your story and share similar experiences. Now what should I do?
 
 At work a honest, sincere and pedantic data scientist  is *likely* to face one or more such scenarios irrespective of the workplace. It is important to note that we are employed in industry to make economical decisions to monetarily benefit a company in short/long term. Despite the pedantic approach it is important to have finite number of tangible deliverables to financially justify our paycheck. I don't have anything to say other than: make yourself responsible, accountable and efficient at work with the target to become one of the best data scientists in the future. This journey is not going to be short; this journey is not going to be without hurdles. But don't ever fail to justify your paycheck, and, if you can, be grateful to the *experiences* (employer may not necessarily play a part in this).
