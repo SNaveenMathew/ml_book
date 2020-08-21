@@ -66,7 +66,7 @@ It is essential to be as less subjective (emotional) as possible to draw conclus
 
 1. Even though I did not have anything to lose, the post was made in a generic way. Firstly, if a particular group claimed to be offended by the post and wanted to take legal action against me, they first had to acknowledge their misdeeds publicly
 2. Opinions can be wrong, but carefully tested hypotheses are scientific. Any form of dissent requires strong evidence and should be expressed in a way that either exploits uncertainties in law or does what's deemed lawful. Also, [ignorantia juris non excusat](https://en.wikipedia.org/wiki/Ignorantia_juris_non_excusat)
-3. Despite the 'wannabe' nature of majority of the individuals, society does not support whistleblowers and dissenters. This should not be shocking because upholding age-old practices is not always wrong; also people who go against those practices may be wrong
+3. Being a 'yes man' is the norm despite the 'wannabe' nature of majority of the individuals. Society does not support whistleblowers and dissenters. This should not be shocking because upholding age-old practices is not always wrong; people who go against those practices are not always right
 
 **Note:** The approach is summarized in [this](http://image.slidesharecdn.com/radicalinnovationfinal-140328064741-phpapp02/95/radical-rules-for-radical-innovation-29-638.jpg?cb=1406816127&fbclid=IwAR2wg4ZOJYvlaeB1qWcB7ykjLxSjzjI99Jy8IEOsFITchBroQPee2ONo7EQ) image. This is not my original content. I hope the right people were acknowledged.
 
