@@ -38,6 +38,36 @@ My personal curiosity was sparked by one question: how do all the observations b
 
 Today we are aware that Newton's universal law of gravitation is not accurate enough to explain the motion of Mercury. It took another scientific genius ([Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein)) to fit the curve in a better way and simultaneously come up with a law that generalizes well to astronomical objects that were not observed during his lifetime. This is (data) science at work!
 
+## Theory vs practice
+
+### Examples of experimentation driving science
+
+With all due respect to experimentalists I'm presenting my limited understanding of the role of experimentation in science before presenting my understanding of the role of theory. It's not hard to guess that I strongly favor the *need* for theory and first principles to drive science. However, historically this has not been the case and experimentalists have made giant leaps in the direction of scientific progress. There are several examples of such advancements; let's focus on the work of Ernest Rutherford.
+
+["If your experiment needs statistics, you ought to have done a better experiment"](https://www.quora.com/What-did-Ernest-Rutherford-mean-by-If-your-experiment-needs-statistics-you-ought-to-have-done-a-better-experiment) - Ernest Rutherford
+
+### Examples of theory driving science
+
+Section to be filled
+
+### Some thoughts on theory vs practice
+
+Rutherford's picture is not complete. It's often not easy to experiment with a system by varying one measurement while controlling all other measurements. For example, in order to study the election of John F. Kennedy as the President of the United States on the economy it's not possible to travel back in time to change the result of the election to observe the effect on today's economy. It may be appropriate to say "Ok, instead I will clone John F. Kennedy, allow him to compete in 2020 and *not* elect him", but other variables have changed between . Non-stationarity of the outcome makes experimentation extremely hard. In case of non-stationarity the best solution is to perform simultaneous test-control studies. [This](https://physicstoday.scitation.org/do/10.1063/PT.5.010218/full/) article provides insights on the need for *correct* models to test hypotheses. However, it does not dismiss the **need** for experimentation. Currently experimentation is the best way to establish **causality**.
+
+#### A personal story
+
+The article "Using statistics to catch cheats and criminals" reminds me of a cause that I stood for in 2014-15 that was blatant and *significant* beyond doubt. "Powerful people" were doing what they always do - abusing their power. Though the "movement" was limited to a Facebook post and did not lead to significant change in behavior of "powerful people", it turned out to be a (emotionally) memorable event.
+
+The affected people (majority, ~300 out of ~350) implicitly acknowledged the injustice, but never managed to voice their concerns in a structured way. Also, at that time I knew I had nothing to lose, so I decided to write about the injustice on Facebook. Despite the best efforts of the "powerful people" I did not delete the post. The response from the exploited people was a pleasant surprise. In support of the movement several people liked the post and unliked it within seconds in order to remove any publicly quotable evidence.
+
+#### Learnings from the story
+
+It is essential to be as less subjective (emotional) as possible to draw conclusions that conform to the principles of science. In the end there was no tangible outcome, but this led to few important insights:
+
+1. Even though I did not have anything to lose, the post was made in a generic way. Firstly, if a particular group claimed to be offended by the post and wanted to take legal action against me, they first had to acknowledge their misdeeds publicly
+2. Opinions can be wrong, but carefully tested hypotheses are scientific. Any form of dissent requires strong evidence and should be expressed in a way that either exploits uncertainties in law or does what's deemed lawful. Also, [ignorantia juris non excusat](https://en.wikipedia.org/wiki/Ignorantia_juris_non_excusat)
+3. Despite the 'wannabe' nature of majority of the individuals, society does not support whistleblowers and dissenters. This should not be shocking because upholding age-old practices is not always wrong; also people who go against those practices may be wrong
+
 ## Tru(uuuuu...)th about modern data scientists
 
 I consider this section a 'fall from grace' because we are transitioning instantaneously from incredible science (repeatability, reproducibility, predictive power, etc.) to a highly subjective topic: emotions.
