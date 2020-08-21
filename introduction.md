@@ -68,6 +68,8 @@ It is essential to be as less subjective (emotional) as possible to draw conclus
 2. Opinions can be wrong, but carefully tested hypotheses are scientific. Any form of dissent requires strong evidence and should be expressed in a way that either exploits uncertainties in law or does what's deemed lawful. Also, [ignorantia juris non excusat](https://en.wikipedia.org/wiki/Ignorantia_juris_non_excusat)
 3. Despite the 'wannabe' nature of majority of the individuals, society does not support whistleblowers and dissenters. This should not be shocking because upholding age-old practices is not always wrong; also people who go against those practices may be wrong
 
+**Note:** The approach is summarized in [this](http://image.slidesharecdn.com/radicalinnovationfinal-140328064741-phpapp02/95/radical-rules-for-radical-innovation-29-638.jpg?cb=1406816127&fbclid=IwAR2wg4ZOJYvlaeB1qWcB7ykjLxSjzjI99Jy8IEOsFITchBroQPee2ONo7EQ) image. This is not my original content. I hope the right people were acknowledged.
+
 ## Tru(uuuuu...)th about modern data scientists
 
 I consider this section a 'fall from grace' because we are transitioning instantaneously from incredible science (repeatability, reproducibility, predictive power, etc.) to a highly subjective topic: emotions.
