@@ -274,7 +274,7 @@ I partially understand your point-of-view. Most sales team members have never do
 
 **Definition:** According to one of my former employers 'bad apple' refers to an employee who says "No" to a request to work 24/7 and wants to get a life.
 
-## Tying the knots together
+## Tying the knots together: guidelines for data scientists
 
 The introduction started with tall claims of science, discussed the need for a mix of theory and practice, and discussed how the industry is actually structured. I'd like to end this section on a positive note with some of my own guidelines for a career in data science. These guidelines are tailor-made for people who are pedantic and are not meant to be exhaustive.
 
