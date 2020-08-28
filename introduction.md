@@ -273,3 +273,41 @@ At work a honest, sincere and pedantic data scientist  is *likely* to face one o
 I partially understand your point-of-view. Most sales team members have never done hands-on work. Try to understand the voice of your delivery team. Your tag line - "customer success" - is not only about getting 10x work done by your team in 1/10th of the time at the cost of their personal lives. Be clear and honest about the work you sign up for. Most team members need clarity from you so that they can play out a 'victory scenario' on paper (this phase is called 'planning') and attempt to execute it. Planning requires a set of time-bound goals that are mostly unchanging (with a certain predefined margin of error) over a given period of time (at least a sprint). Few 'bad apples' (like me) in your team will never be satisfied with the quality of work - your clarity will give them a clearer idea about their next steps; remember, making false promises is only going to make it worse for you and those 'bad apples'. Your clients will win only if your team wins on behalf of your clients. More importantly, to increase your accountability you should be appropriately penalized (monetarily) for changes in requirement (beyond the predefined margin) that happen during the time window (sprint or otherwise).
 
 **Definition:** According to one of my former employers 'bad apple' refers to an employee who says "No" to a request to work 24/7 and wants to get a life.
+
+## Tying the knots together
+
+The introduction started with tall claims of science, discussed the need for a mix of theory and practice, and discussed how the industry is actually structured. I'd like to end this section on a positive note with some of my own guidelines for a career in data science. These guidelines are tailor-made for people who are pedantic and are not meant to be exhaustive.
+
+### Guideline 1: import sklearn
+
+Yes, you read that right! Please learn to `import sklearn`. Why? Think of this analogy: even today people who study pure mathematics are considered [unemployable in industry](https://www.quora.com/What-are-common-jobs-for-people-with-pure-mathematics-degrees-e-g-a-B-S-in-Mathematics) because of the enigma that surrounds mathematicians. They are thought by many as people who live in an ideal world that doesn't exist and that their "models" are purely theoretical and have no relevance to the real world. Even though the perception has changed over time, there is some truth to this statement.
+
+The corporate world considers only two financial concepts: cost and return-on-investments (ROI). While it's fair to consider a company as a "going concern" and to perform valuation using an infinite sum ([discounted cash flow](https://www.investopedia.com/terms/d/dcf.asp#:~:text=Discounted%20cash%20flow%20(DCF)%20is,will%20generate%20in%20the%20future.)), it is important to have a continuous source of revenue (short-term) before involving in moonshots (long-term). As a results, most small/medium sized companies are evaluated purely on short-term returns. This view may not be wrong because moonshots require significant amount of time and investment. However, this significantly affects the portfolio. Companies tend to invest in the choices with least risk. This act tends to produce thousands of identical small / medium sized companies with different names that compete on price charged on the client (business / individual). I'm a product of one of those companies.
+
+I'm not going to comment on a way to create a company with a balanced portfolio of mundane projects and mooonshots because the decision makers in those thousand identical companies are wiser than me. I'm going to share a way to work as an ethical data scientist. A good data scientist identifies KPIs that count and identifies the levers that affect the KPI. Therefore, a good data scientist is expected to know how to evaluate oneself. Since the company is more likely to care about cost and ROI, a good data scientist should be able to: a) fetch more revenue than the cost-to-company (CTC, often larger than gross salary), b) show higher ROI as a justification for growth within the company.
+
+In order to achieve short-term goals it is essential to build generic prototypes using predefined functions. Therefore, it becomes critical to use packages like `sklearn` and `caret` to demonstrate the potential returns. This may differ from the long term goals of the individual (like me, who wants to understand the details from theory to practice), but is a company's unexpressed *need*. There's no point in achieving greatness in machine learning without fulfilling this need.
+
+To summarize: do whatever everyone else is doing. However, as one might imagine, this is not enough. One needs to do more, which takes us to guideline 2.
+
+### Guideline 2: learn and understand classical methods before going 'deep'
+
+Going through classical methods is like going through the history of a field. For example, natural language processing started humbly by assuming 'he' and 'him' as unrelated words. Today's methods perform some for of magic (more on this later) to learn representations that relate 'he' and 'him'. The transition is smoother than one may imagine. This makes it mandatory to understand that methods that were on the way between [DTM](https://en.wikipedia.org/wiki/Document-term_matrix) and [GPT-3](https://en.wikipedia.org/wiki/GPT-3). Marketeting GPT-3 as the ultimate AI (as most people do) is not going to help. But, as mentioned in point #1, it is essential to have a working implementation of GPT-3 to showcase one's employability.
+
+### Guideline 3: never stop learning
+
+I don't have to explain this in detail. The landscape of machine learning is evolving rapidly. Research papers like [this](https://arxiv.org/pdf/1611.03530) have pointed out the need for rigorous theoretical frameworks to redesign the way we understand machine learning. Some of these views could be wrong, but it is essential to scrutinize all views in a scientific and logical way. This requires tremendous amount of effort because tremendously large number of streams show improvements either theoretically or empirically. Also, rationalizing improvements across several streams requires solid theoretical foundations.
+
+This is also closely related to ROI and guideline #1: try new things. If nearly 90% of the 'deep learning specialists' built an `opencv` (sigh!) application for face detection from live webcam feed, you should have one too!
+
+### Guideline 4: build your portfolio
+
+The last sentence transitions smoothly into the next guideline: your portfolio defines your ability to produce high ROI. There are several ways to build a portfolio:
+
+1. Kaggle (irony!): this is considered as the de facto standard
+2. GitHub: build your own code and open-source, or copy code (with acknowledgements) and build on it
+3. Contributions: work on widening, optimizing or improving existing packages like `sklearn`. This may be challenging because thousands of people work together to produce optimized code. Alternatively, one can identify a need and work on an open-source package that caters to the need
+
+### Bonus (not mandatory): read research, try 'papers with code'
+
+As mentioned in the first paragraph of guideline #3, it may be hard to have a consistent understanding of research because of the diverse nature of recent publications. This is especially true with publications that use biased data sets that give empirically better results. This makes the comparison of two empirical results hard. The best approach to solve this problem is to download the code and to examine their experimental behavior on different data sets. [Papers with code](https://paperswithcode.com/) is an excellent starting point. This step is essential to characterize the behavior of models against different types of data sets, especially in areas where ['transfer learning'](https://en.wikipedia.org/wiki/Transfer_learning) feature extractors are not mature.
