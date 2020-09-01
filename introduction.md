@@ -342,4 +342,8 @@ Several people use high school mathematics only for posting "1 + 1 - 1 * 1 + 1 /
 
 As stated in the preface and earlier sections of the introduction, this book is meant for people who are interested in details. The preliminary structure (2020/08/31) is as follows:
 
-1. 
+1. Exploratory data analysis - building plots from scratch to building plots using `matplotlib` / `ggplot2`
+2. Basic statistics - mathematical foundations of point estimation, bias-variance tradeoff, hypothesis testing and inference
+3. Statistical models - definition, parameter estimation, motivation for different optimization methods and inference
+4. Machine learning - similar to statistical models
+5. Deep learning - similar to statistical models
