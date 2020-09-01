@@ -311,3 +311,35 @@ The last sentence transitions smoothly into the next guideline: your portfolio d
 ### Bonus (not mandatory): read research, try 'papers with code'
 
 As mentioned in the first paragraph of guideline #3, it may be hard to have a consistent understanding of research because of the diverse nature of recent publications. This is especially true with publications that use biased data sets that give empirically better results. This makes the comparison of two empirical results hard. The best approach to solve this problem is to download the code and to examine their experimental behavior on different data sets. [Papers with code](https://paperswithcode.com/) is an excellent starting point. This step is essential to characterize the behavior of models against different types of data sets, especially in areas where ['transfer learning'](https://en.wikipedia.org/wiki/Transfer_learning) feature extractors are not mature.
+
+### Personal guideline: first principles!
+
+![](data/ML_leap_of_faith.jpg)
+
+Forbes predicts that [in the United States there will be another 250,000 data scientist job openings by 2024](https://www.forbes.com/sites/joewalleneurope/2019/03/26/can-outsourcing-data-science-fill-the-jobs-shortage-fayrix-believes-so/#54eda092bce7). Given the current shortage the gap between demand and supply of data scientists is expetcted to grown. In fact the situation has changed to such an extent that (data science) training institutes are pointing fingers at academia. In some cases data science experts (sigh!) are encouraging students to directly enrol in training institutes instead of applying for a bachelors degree. What does it really take to become a data scientist?
+
+Most machine learning experts (sigh!), trainers and self-proclaimed gurus claim that domain knowledge, SQL and scikit-learn are sufficient to make a complete data scientist. If every new data science candidate follows this approach in the United States we will have an increase in demand-supply gap of 250,000 by 2024.
+
+The data science industry is moving towards black-box models. Sales people, data science experts, trainers and self-proclaimed gurus get a high when they say "We built a complicated deep <insert your architecture here> model that gave xx.xx% accuracy". The true interpretation of this statement is - "I copied some code from GitHub and struggled hard to get it to work for my data set. Finally I identified and tuned hyperparameters" without actually knowing why <insert your architecture here> works.
+
+Sometimes these experts deliver a model that takes x days to train. Then identify inefficiencies in their code, optimize the code to run in x/1000 days, and claim that they saved \$x million for their client by optimizing the code. This is unethical! The truth is - the client spent \$y million more because of the inefficient code that was submitted earlier. Why didn't the data scientist identify inefficiencies in the code before the first release?
+
+The answer is surprisingly simple - the experts, trainers and gurus who advise students to "think beyond bachelors degree" (Indians who read this will recall a similar statement by a famous person) and prepare cheatsheets for trivial problems failed to teach first principles. Suboptimal code is produced when a graduate of the data science training academy faces a problem that's not in the cheatsheet. A handful of graduates eventually understand first principles by reading zillions of Stack Overflow / Stack Exchange issues, which helps them in solving inefficiencies.
+
+Training institutes are like factories - their outputs are almost identical. Sometimes academia participates in mass production - especially when the fee is high and ROI is low, where students who take risks are systematically disassociated and removed from 'statistics' (reports). This ecosystem is sustained by companies that need people who roll-over on command without thinking. I was the product of such an ecosystem. I joined factories not once, not twice, but thrice (as of September 2020).
+
+After some introspection at the turn of the decade (2019-2020) I came to the following conclusions:
+
+1. Around 2014 I made a skillset map with 3 colors: red (no/little understanding of theory and no/little practice), orange (no/little understanding of theory and medium/high practice), green (medium/high understanding of theory and medium/high practice). Several areas that were red/orange in 2014 became green in early 2020
+2. It took few drastic changes to bring my career back on track
+3. It took me **13+ years** of semi-structured learning to gain a half-decent understanding of machine learning
+
+Several people use high school mathematics only for posting "1 + 1 - 1 * 1 + 1 / 1 = ?" on social media. Several people claim that high school mathematics was totally useless because it did not help them in doing their taxes. Data science is not such a career. Strong foundations in mathematics and computation are required for a career in data science.
+
+## Objective of the 'book'
+
+"Theoretically sound practice" of machine learning is a common area that's explored by everyone. It has become so common that memes such as "University professor vs that Indian guy on YouTube" get liked by majority of the people. This book attempts to provide "practically sound theory". The motivation is to fill the every-growing gap between theory and practice. One may assume that "theoretically sound practice" is sufficient to bridge the gap between theory and practice, but this is clearly not the case.
+
+As stated in the preface and earlier sections of the introduction, this book is meant for people who are interested in details. The preliminary structure (2020/08/31) is as follows:
+
+1. 
