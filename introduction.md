@@ -347,3 +347,4 @@ As stated in the preface and earlier sections of the introduction, this book is 
 3. Statistical models - definition, parameter estimation, motivation for different optimization methods and inference
 4. Machine learning - similar to statistical models
 5. Deep learning - similar to statistical models
+6. Efficiency (storage, retrieval, memory, computation, etc.)
