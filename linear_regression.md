@@ -466,6 +466,7 @@ For a fixed learning rate stochastic gradient descent is not expected to converg
     \begin{algorithmic}
     \FUNCTION{linregSGD}{$X, y, maxIter, lr$}
         \STATE $iter = 0$
+        \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \WHILE{$iter < maxIter$}
             \STATE $i = $ \CALL{floor}{\CALL{randomUniform}{$[0, n)$}}
