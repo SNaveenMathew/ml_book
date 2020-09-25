@@ -458,9 +458,9 @@ In simple words, if the sample $(x^{(i)}, y^{(i)}) \sim_{iid} (X, Y)$ the expect
 
 However, unbiased behavior of the gradient calculated using a single data point does not ensure convergence. It must be noted that the estimate of gradient using a single data point is noisy (it is also a statistic) - it has a large variance. Assuming an iid sample (achieved in practice by randomizing the sample used for computing loss and gradient in each iteration), the variance is given by $N_{train} \sigma^2$, where $\sigma^2$ is the variance of the estimate computed using the entire batch (which is also a statistic). If this noisy estimate is assumed to be a random variable, the expectation does not change if a new statistic is derived by averaging over a sample of size $N_{mini-batch}$. Howwver, the variance of the averaged estimate will be $\frac{1}{N_{mini-batch}}$ times the variance of the SGD estimate. This approach is known as mini-batch gradient descent. Therefore, the variance of mini-batch gradient is given by $\frac{N_{train}}{N_{mini-batch}} \sigma^2$.
 
-<pre id="SGD" style="display:hidden;">
+<pre id="MBGD" style="display:hidden;">
     \begin{algorithm}
-    \caption{Stochastic gradient descent applied to linear regression}
+    \caption{Mini-batch gradient descent applied to linear regression}
     \begin{algorithmic}
     \FUNCTION{linregMBGD}{$X, y, N_{MB}, maxIter, lr$}
         \STATE $iter = 0$
@@ -493,5 +493,5 @@ Let us recap the assumptions in this section:
 
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
-    pseudocode.renderElement(document.getElementById("SGD"));
+    pseudocode.renderElement(document.getElementById("MBGD"));
 </script>
