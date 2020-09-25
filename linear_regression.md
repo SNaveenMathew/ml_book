@@ -462,17 +462,18 @@ However, unbiased behavior of the gradient calculated using a single data point 
     \begin{algorithm}
     \caption{Stochastic gradient descent applied to linear regression}
     \begin{algorithmic}
-    \FUNCTION{linregSGD}{$X, y, maxIter, lr$}
+    \FUNCTION{linregMBGD}{$X, y, N_{MB}, maxIter, lr$}
         \STATE $iter = 0$
         \STATE $p = $ \CALL{numberOfColumns}{$X$}
+        \STATE $N_{train} = $ \CALL{numberOfRows}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
         \WHILE{$iter < maxIter$}
-            \STATE $i = $ \CALL{floor}{\CALL{randomUniform}{$[0, n)$}}
-            \STATE $X_i, y_i = $ \CALL{getIthSample}{$X, y$}
-            \STATE $Loss = $ \CALL{calculateLoss}{$y_i, X_i, w$}
-            \STATE $grad = $ \CALL{computeGradient}{$X_i, y_i, w$}
+            \STATE $mb_{idx} = $ \CALL{sampleMiniBatch}{$[0, N_{train})$}
+            \STATE $X_{MB}, y_{MB} = $ \CALL{getMiniBatch}{$X, y, mb_{idx}$}
+            \STATE $Loss = $ \CALL{calculateLoss}{$y_{MB}, X_{MB}, w$}
+            \STATE $grad = $ \CALL{computeGradient}{$X_{MB}, y_{MB}, w$}
             \STATE $w = w - lr * grad$
-            \STATE $lr = $ \CALL{learningRateSchedule}{$lr, i$}
+            \STATE $lr = $ \CALL{learningRateSchedule}{$lr, iter$}
             \STATE $iter = iter+1$
         \ENDWHILE
         \RETURN $w$
