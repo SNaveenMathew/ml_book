@@ -448,9 +448,50 @@ For computing this for each of the weights we need to perform $p+1$ operations, 
 
 [C++ code for solving linear regression using gradient descent and forward difference gradient](data/linreg_GD_finite_difference.cpp) **Bias alert: writing this just to prove that I can write C++ code for gradient descent and forward differnece**
 
-### 2.1.5.4. Extensions: stochastic gradient descent
+### 2.1.5.4. Extensions: stochastic / mini-batch gradient descent
 
-Content goes here
+Let us look at the following relationship for a loss function that is continuously differentiable:
+
+$$E[\frac{\partial l}{\partial w}] = \frac{\partial E[l]}{\partial w}$$
+
+In simple words, if the sample $(x^{(i)}, y^{(i)}) \sim_{iid} (X, Y)$ the expected direction of the gradient over a batch is given by the gradient of the expected loss over the sample. This leads to a powerful result: the gradient computed from a data point is an unbiased estimator of the gradient computed from a batch. Therefore, each iteration of gradient descent can be simplified computationally by computing the loss and gradient with respect to a single data point instead of computing over the entire batch of size $N_{train}$.
+
+However, unbiased behavior of the gradient calculated using a single data point does not ensure convergence. It must be noted that the estimate of gradient using a single data point is noisy (it is also a statistic) - it has a large variance. Assuming an iid sample (achieved in practice by randomizing the sample used for computing loss and gradient in each iteration), the variance is given by $N_{train} \sigma^2$, where $\sigma^2$ is the variance of the estimate computed using the entire batch (which is also a statistic). If this noisy estimate is assumed to be a random variable, the expectation does not change if a new statistic is derived by averaging over a sample of size $N_{mini-batch}$. Howwver, the variance of the averaged estimate will be $\frac{1}{N_{mini-batch}}$ times the variance of the SGD estimate. This approach is known as mini-batch gradient descent. Therefore, the variance of mini-batch gradient is given by $\frac{N_{train}}{N_{mini-batch}} \sigma^2$.
+
+For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
+
+<pre id="coordinateDescent1" style="display:hidden;">
+    \begin{algorithm}
+    \caption{Coordinate descent applied to linear regression}
+    \begin{algorithmic}
+    \FUNCTION{linregCoord}{$X, y, tolerance, maxIter$}
+        \STATE $iter = 0$
+        \STATE $p = $ \CALL{numberOfColumns}{$X$}
+        \STATE $w = $ \CALL{initializeRandomly}{$p$}
+        \STATE $X^TX_{diag} = $ \CALL{sumSquaresColumns}{$X$}
+        \STATE $Loss_{prev} = Loss_{next} = 1$
+        \STATE $tol = tolerance + 1$
+        \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
+            \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
+            \FOR{$j = 0$ \TO $p - 1$}
+                \STATE $w_{-j} = $ \CALL{dropJthRow}{$w, j$}
+                \STATE $X_{-j} = $ \CALL{dropJthColumn}{$X, j$}
+                \STATE $yhat_{-j} = $ \CALL{matrixMuliply}{$X_{-j}, w_{-j}$}
+                \STATE $res_{-j} = $ \CALL{vectorDifference}{$y, yhat_{-j}$}
+                \STATE $X_j = $ \CALL{chooseJthColumn}{$X, j$}
+                \STATE $X_j^T = $ \CALL{transpose}{$X_j$}
+                \STATE $X_j^Tres_{-j} = $ \CALL{matrixMuliply}{$X_j^T, res_{-j}$}
+                \STATE $w_{j} = \frac{X_j^Tres_{-j}}{[X^TX_{diag}]_j}$
+            \ENDFOR
+            \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
+            \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
+            \STATE $iter = iter+1$
+        \ENDWHILE
+        \RETURN $w$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
 
 ## 2.1.6. Model assumptions
 
@@ -461,4 +502,5 @@ Let us recap the assumptions in this section:
 
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
+    pseudocode.renderElement(document.getElementById("coordinateDescent1"));
 </script>
