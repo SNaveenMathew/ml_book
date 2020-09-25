@@ -460,31 +460,21 @@ However, unbiased behavior of the gradient calculated using a single data point 
 
 For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
 
-<pre id="coordinateDescent1" style="display:hidden;">
+<pre id="SGD" style="display:hidden;">
     \begin{algorithm}
-    \caption{Coordinate descent applied to linear regression}
+    \caption{Stochastic gradient descent applied to linear regression}
     \begin{algorithmic}
-    \FUNCTION{linregCoord}{$X, y, tolerance, maxIter$}
+    \FUNCTION{linregSGD}{$X, y, maxIter, lr$}
         \STATE $iter = 0$
-        \STATE $p = $ \CALL{numberOfColumns}{$X$}
         \STATE $w = $ \CALL{initializeRandomly}{$p$}
-        \STATE $X^TX_{diag} = $ \CALL{sumSquaresColumns}{$X$}
         \STATE $Loss_{prev} = Loss_{next} = 1$
-        \STATE $tol = tolerance + 1$
-        \WHILE{$tol > tolerance$ \AND $iter < maxIter$}
-            \STATE $Loss_{prev} = $ \CALL{calculateLoss}{$y, X, w$}
-            \FOR{$j = 0$ \TO $p - 1$}
-                \STATE $w_{-j} = $ \CALL{dropJthRow}{$w, j$}
-                \STATE $X_{-j} = $ \CALL{dropJthColumn}{$X, j$}
-                \STATE $yhat_{-j} = $ \CALL{matrixMuliply}{$X_{-j}, w_{-j}$}
-                \STATE $res_{-j} = $ \CALL{vectorDifference}{$y, yhat_{-j}$}
-                \STATE $X_j = $ \CALL{chooseJthColumn}{$X, j$}
-                \STATE $X_j^T = $ \CALL{transpose}{$X_j$}
-                \STATE $X_j^Tres_{-j} = $ \CALL{matrixMuliply}{$X_j^T, res_{-j}$}
-                \STATE $w_{j} = \frac{X_j^Tres_{-j}}{[X^TX_{diag}]_j}$
-            \ENDFOR
-            \STATE $Loss_{next} = $ \CALL{calculateLoss}{$y, X, w$}
-            \STATE $tol = \bigg| \frac{Loss_{prev}}{Loss_{next}} -1 \bigg|$
+        \WHILE{$iter < maxIter$}
+            \STATE $i = $ \CALL{floor}{\CALL{randomUniform}{$[0, n)$}}
+            \STATE $X_i, y_i = $ \CALL{getIthSample}{$X, y$}
+            \STATE $Loss = $ \CALL{calculateLoss}{$y_i, X_i, w$}
+            \STATE $grad = $ \CALL{computeGradient}{$X_i, y_i, w$}
+            \STATE $w = w - lr * grad$
+            \STATE $lr = $ \CALL{learningRateSchedule}{$lr, i$}
             \STATE $iter = iter+1$
         \ENDWHILE
         \RETURN $w$
@@ -502,5 +492,5 @@ Let us recap the assumptions in this section:
 
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
-    pseudocode.renderElement(document.getElementById("coordinateDescent1"));
+    pseudocode.renderElement(document.getElementById("SGD"));
 </script>
