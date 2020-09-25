@@ -458,8 +458,6 @@ In simple words, if the sample $(x^{(i)}, y^{(i)}) \sim_{iid} (X, Y)$ the expect
 
 However, unbiased behavior of the gradient calculated using a single data point does not ensure convergence. It must be noted that the estimate of gradient using a single data point is noisy (it is also a statistic) - it has a large variance. Assuming an iid sample (achieved in practice by randomizing the sample used for computing loss and gradient in each iteration), the variance is given by $N_{train} \sigma^2$, where $\sigma^2$ is the variance of the estimate computed using the entire batch (which is also a statistic). If this noisy estimate is assumed to be a random variable, the expectation does not change if a new statistic is derived by averaging over a sample of size $N_{mini-batch}$. Howwver, the variance of the averaged estimate will be $\frac{1}{N_{mini-batch}}$ times the variance of the SGD estimate. This approach is known as mini-batch gradient descent. Therefore, the variance of mini-batch gradient is given by $\frac{N_{train}}{N_{mini-batch}} \sigma^2$.
 
-For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
-
 <pre id="SGD" style="display:hidden;">
     \begin{algorithm}
     \caption{Stochastic gradient descent applied to linear regression}
@@ -482,6 +480,8 @@ For a fixed learning rate stochastic gradient descent is not expected to converg
     \end{algorithmic}
     \end{algorithm}
 </pre>
+
+For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
 
 ## 2.1.6. Model assumptions
 
