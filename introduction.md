@@ -316,7 +316,7 @@ As mentioned in the first paragraph of guideline #3, it may be hard to have a co
 
 ![](data/ML_leap_of_faith.jpg)
 
-Forbes predicts that [in the United States there will be another 250,000 data scientist job openings by 2024](https://www.forbes.com/sites/joewalleneurope/2019/03/26/can-outsourcing-data-science-fill-the-jobs-shortage-fayrix-believes-so/#54eda092bce7). Given the current shortage the gap between demand and supply of data scientists is expetcted to grown. In fact the situation has changed to such an extent that (data science) training institutes are pointing fingers at academia. In some cases data science experts (sigh!) are encouraging students to directly enrol in training institutes instead of applying for a bachelors degree. What does it really take to become a data scientist?
+Forbes predicted that [in the United States there will be another 250,000 data scientist job openings by 2024](https://www.forbes.com/sites/joewalleneurope/2019/03/26/can-outsourcing-data-science-fill-the-jobs-shortage-fayrix-believes-so/#54eda092bce7). Given the current shortage the gap between demand and supply of data scientists is expetcted to grown. In fact the situation has changed to such an extent that (data science) training institutes are pointing fingers at academia. In some cases data science experts (sigh!) are encouraging students to directly enrol in training institutes instead of applying for a bachelors degree. What does it really take to become a data scientist?
 
 Most machine learning experts (sigh!), trainers and self-proclaimed gurus claim that domain knowledge, SQL and scikit-learn are sufficient to make a complete data scientist. If every new data science candidate follows this approach in the United States we will have an increase in demand-supply gap of 250,000 by 2024.
 
@@ -342,7 +342,7 @@ Several people use high school mathematics only for posting "1 + 1 - 1 * 1 + 1 /
 
 As stated in the preface and earlier sections of the introduction, this book is meant for people who are interested in details. The preliminary structure (2020/08/31) is as follows:
 
-1. Exploratory data analysis - building plots from scratch to building plots using `matplotlib` / `ggplot2`
+1. Exploratory data analysis - building plots from scratch to building plots using `matplotlib` / `ggplot2` and beyond
 2. Basic statistics - mathematical foundations of point estimation, bias-variance tradeoff, hypothesis testing and inference
 3. Statistical models - definition, parameter estimation, motivation for different optimization methods and inference
 4. Machine learning - similar to statistical models
