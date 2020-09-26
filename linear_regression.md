@@ -486,7 +486,7 @@ However, unbiased behavior of the gradient calculated using a single data point 
     \end{algorithm}
 </pre>
 
-For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
+For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to \infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
 
 ## 2.1.6. Model assumptions
 
