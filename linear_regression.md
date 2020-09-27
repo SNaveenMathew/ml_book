@@ -523,7 +523,16 @@ From equation $2.1.8.1$ and the definition of $H$ we have: $X^T\hat{y} = X^TX(X^
 Let us recap the assumptions in this section:
 
 1. The model is linear: variables may be transfored to incorporate non-linear effects, but the model is linear with respect to the coefficients. Example: $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2$ is a linear model with independent variables $(X_1, X_1^2)$
-2. The error is *normally distributed* with *zero* mean and *constant variance* that is independent of $X$: this statement often causes misinterpretation. One common misinterpretations is that the independent variables should be normally distributed (mentioned in "The story of normality of ... independent variables in linear regression" section of [introduction](introduction.md)).
+2. The error is *normally distributed* with *zero* mean and *constant variance* that is independent of $X$: this statement often causes misinterpretation. One common misinterpretations is that the independent variables should be normally distributed (mentioned in "The story of normality of ... independent variables in linear regression" section of [introduction](introduction.md))
+    a. No heteroskedasticity: variance of the error is independent of X and is constant throughout. A weaker form is: $\hat{\sigma}^2$ is approximately the same over the range of independent variables $X$
+3. The sample covariance matrix is invertible. In other words, the independent variables don't exhibit high levels of multicollinearity
+4. No 'autocorrelation'; the errors are independent
+    a. A weaker form is: 'lagged' residue terms are not strongly correlated
+
+**Note:**
+
+1. In the above definition of the model there is no uncertainty in the measurement of independent variables. However, it is possible to accommodate for uncertainties in $X$ in linear regression
+2. More special properties can be derived if the distribution of independent variables is multivariate normal. However, this condition is not necessary for the validity of a linear regression model
 
 <script>
     pseudocode.renderElement(document.getElementById("coordinateDescent"));
