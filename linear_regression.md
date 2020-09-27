@@ -510,11 +510,13 @@ $$\hat{y} = X\hat{\beta} = X(X^TX)^{-1}X^Ty$$
 
 Let us define $H = X(X^TX)^{-1}X^T$, then we:
 
-$$\hat{y} = Hy; \hat{e} = y - \hat{y} = (I - H)y$$
+$$\hat{y} = Hy; \hat{e} = y - \hat{y} = (I - H)y \tag{2.1.8.1}$$
 
 Clearly, H is a square matrix. Let us examine $H$ closely:
 
 $$H^T = (X(X^TX)^{-1}X^T)^T = (X^T)^T[(X^TX)^{-1}]^T X^T = X[(X^TX)^T]^{-1}X^T = X[X^T(X^T)^T]^{-1}X^T = X(X^TX)^{-1}X^T = H$$
+
+From equation $2.1.8.1$ and the definition of $H$ we have: $X^T\hat{y} = X^TX(X^TX)^{-1}X^Ty = X^Ty$, which is also evident from $X^T\hat{e} = 0$ derived using first order optimality condition.
 
 ## 2.1.9. Model assumptions
 
