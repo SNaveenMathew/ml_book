@@ -488,7 +488,35 @@ However, unbiased behavior of the gradient calculated using a single data point 
 
 For a fixed learning rate stochastic gradient descent is not expected to converge. However, if the learning rate gradually reduces to 0 at the limit ($n_{iter} \to \infty$), it may be possible to achieve convergence of SGD to a local/global optima under certain conditions. It is important to notice that reducing the learning rate to 0 leads to convergence, but the point is not necessarily a local/global optima (first order condition may not be met).
 
-## 2.1.6. Model assumptions
+## 2.1.6. Prediction
+
+Prediction using a linear regression model is straight forward: for a model $Y = X\beta + \episilon$, where the sample estimate is given by $y = X \hat{\beta} + \hat{e}$, we obtain the predictions as:
+
+$$\hat{y}_{test} = X_{test}\hat{\beta}$$
+
+## 2.1.7. Bias and variance
+
+### 2.1.7.1. Bias of $\hat{\beta}$
+
+### 2.1.7.2. Variance of $\hat{\beta}$
+
+### 2.1.7.3. Bias of $\hat{y}$
+
+### 2.1.7.4. Variance of $\hat{y}$
+
+## 2.1.8. Special properties
+
+$$\hat{y} = X\hat{\beta} = X(X^TX)^{-1}X^Ty$$
+
+Let us define $H = X(X^TX)^{-1}X^T$, then we:
+
+$$\hat{y} = Hy; \hat{e} = y - \hat{y} = (I - H)y$$
+
+Clearly, H is a square matrix. Let us examine $H$ closely:
+
+$$H^T = (X(X^TX)^{-1}X^T)^T = (X^T)^T[(X^TX)^{-1}]^T X^T = X[(X^TX)^T]^{-1}X^T = X[X^T(X^T)^T]^{-1}X^T = X(X^TX)^{-1}X^T = H$$
+
+## 2.1.9. Model assumptions
 
 Let us recap the assumptions in this section:
 
