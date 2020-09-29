@@ -494,17 +494,7 @@ Prediction using a linear regression model is straight forward: for a model $Y =
 
 $$\hat{y}_{test} = X_{test}\hat{\beta}$$
 
-## 2.1.7. Bias and variance
-
-### 2.1.7.1. Bias of $\hat{\beta}$
-
-### 2.1.7.2. Variance of $\hat{\beta}$
-
-### 2.1.7.3. Bias of $\hat{y}$
-
-### 2.1.7.4. Variance of $\hat{y}$
-
-## 2.1.8. Special properties
+## 2.1.7. Special properties
 
 $$\hat{y} = X\hat{\beta} = X(X^TX)^{-1}X^Ty$$
 
@@ -512,17 +502,30 @@ Let us define the hat matrix as $H = X(X^TX)^{-1}X^T$, then we have $dim(H) = di
 
 Clearly, H is a square matrix. Let us examine $H$ closely:
 
-### 2.1.8.1. Properties of $H$
+### 2.1.7.1. Properties of $H$
 
-- $\hat{y} = Hy; \hat{e} = y - \hat{y} = (I - H)y \tag{2.1.8.1}$
+- $\hat{y} = Hy; \hat{e} = y - \hat{y} = (I - H)y \tag{2.1.7.1}$
 - $H^T = (X(X^TX)^{-1}X^T)^T = (X^T)^T[(X^TX)^{-1}]^T X^T = X[(X^TX)^T]^{-1}X^T = X[X^T(X^T)^T]^{-1}X^T = X(X^TX)^{-1}X^T = H$
-- From equation $2.1.8.1$ and the definition of $H$ we have: $X^T\hat{y} = X^THy = X^TX(X^TX)^{-1}X^Ty = X^Ty$, which is also evident from $X^T\hat{e} = 0$ derived using first order optimality condition
+- From equation $2.1.7.1$ and the definition of $H$ we have: $X^T\hat{y} = X^THy = X^TX(X^TX)^{-1}X^Ty = X^Ty$, which is also evident from $X^T\hat{e} = 0$ derived using first order optimality condition
 - $(I - H)^T = I^T - H^T = I - H$
 - $H^2 = HH = X(X^TX)^{-1}X^TX(X^TX)^{-1}X^T = X(X^TX)^{-1}X^T = H$
 - $(I-H)^2 = (I-H)(I-H) = I^2 - IH - HI + H^2 = I - 2H + H = I - H$
-- $HX = X(X^TX)^{-1}X^TX = X \tag{2.1.8.2}$
-- $(I-H)X = IX - HX = X - X = 0_{(p+1) \times (p+1)} \tag{2.1.8.3}$
-- $H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.8.4}$
+- $HX = X(X^TX)^{-1}X^TX = X \tag{2.1.7.2}$
+- $(I-H)X = IX - HX = X - X = 0_{(p+1) \times (p+1)} \tag{2.1.7.3}$
+- $H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.7.4}$
+
+### 2.1.7.2. Implications / interpretation of $H$
+
+
+## 2.1.8. Bias and variance
+
+### 2.1.8.1. Bias of $\hat{\beta}$
+
+### 2.1.8.2. Variance of $\hat{\beta}$
+
+### 2.1.8.3. Bias of $\hat{y}$
+
+### 2.1.8.4. Variance of $\hat{y}$
 
 ## 2.1.9. Model assumptions
 
