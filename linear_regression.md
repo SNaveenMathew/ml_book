@@ -498,7 +498,9 @@ $$\hat{y}_{test} = X_{test}\hat{\beta}$$
 
 $$\hat{y} = X\hat{\beta} = X(X^TX)^{-1}X^Ty$$
 
-Let us define the hat matrix as $H = X(X^TX)^{-1}X^T$, then we have $dim(H) = dim(X_{N_{train} \times (p + 1)}(X^TX)^{-1}_{(p + 1) \times (p + 1)}X^T_{(p + 1) \times N_{train}}) = N_{train} \times N_{train}$.
+Let us define the hat matrix as $H = X(X^TX)^{-1}X^T$, then we have
+
+$$dim(H) = dim(X_{N_{train} \times (p + 1)}(X^TX)^{-1}_{(p + 1) \times (p + 1)}X^T_{(p + 1) \times N_{train}}) = N_{train} \times N_{train}$$
 
 Clearly, H is a square matrix. Let us examine $H$ closely:
 
