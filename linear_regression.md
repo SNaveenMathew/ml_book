@@ -490,7 +490,7 @@ For a fixed learning rate stochastic gradient descent is not expected to converg
 
 ## 2.1.6. Prediction
 
-Prediction using a linear regression model is straight forward: for a model $Y = X\beta + \episilon$, where the sample estimate is given by $y = X \hat{\beta} + \hat{e}$, we obtain the predictions as:
+Prediction using a linear regression model is straight forward: for a model $Y = X\beta + \epsilon$, where the sample estimate is given by $y = X \hat{\beta} + \hat{e}$, we obtain the predictions as:
 
 $$\hat{y}_{test} = X_{test}\hat{\beta}$$
 
