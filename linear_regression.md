@@ -524,7 +524,23 @@ $$H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.7
 
 ### 2.1.8.1. Bias of $\hat{\beta}$
 
+Let us recall that for the model $Y = X\beta + \epsilon; \epsilon \sim N(0, \sigma^2)$ for which we estimate $\hat{\beta}$ using a sample $(X, y)$, we have the OLS/MLE estimator $\hat{\beta} = (X^TX)^{-1}X^Ty$. Substituting, we get:
+
+$$E[\hat\beta] = E[(X^TX)^{-1}X^T(X\beta + \epsilon)] = E[(X^TX)^{-1}X^TX\beta] + E[(X^TX)^{-1}X^T\epsilon] = \beta + (X^TX)^{-1}X^TE[\epsilon] = \beta$$
+
+Therefore, $E[\hat{\beta} - \beta] = 0$, which proves that the OLS/MLE solution for linear regression is unbiased.
+
 ### 2.1.8.2. Variance of $\hat{\beta}$
+
+Once again, we refer to the definition of the model and the estimate as shown in the beginning of section 2.1.8.1. We have:
+
+$$Var[\hat{\beta}] = E[(\hat{\beta} - \beta)(\hat{\beta} - \beta)^T] = E[(X^TX)^{-1}X^Tvar(y|X)var(y|X)^TX(X^TX)^{-1}] = (X^TX)^{-1}X^TE[\epsilon\epsilon^T]X(X^TX)^{-1} \tag{2.1.8.2.1}$$
+
+From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = E[\epsilon\epsilon^T] = Var[\epsilon] + (E[\epsilon])^2 = \sigma^2$. Substituting in $2.1.8.2.1$, we get:
+
+$$Var[\hat{\beta}] = (X^TX)^{-1}X^T\sigma^2IX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1} \tag{2.1.8.2.2}$$
+
+Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice most models are expected to extrapolate well outside the range of observed values in the sample. Multicollinearity is one of several factors that strongly affect the extrapolation capacity of a linear regression model.
 
 ### 2.1.8.3. Bias of $\hat{y}$
 
