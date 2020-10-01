@@ -526,7 +526,9 @@ $$H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.7
 
 Let us recall that for the model $Y = X\beta + \epsilon; \epsilon \sim N(0, \sigma^2)$ for which we estimate $\hat{\beta}$ using a sample $(X, y)$, we have the OLS/MLE estimator $\hat{\beta} = (X^TX)^{-1}X^Ty$. Substituting, we get:
 
-$$E[\hat\beta] = E[(X^TX)^{-1}X^T(X\beta + \epsilon)] = E[(X^TX)^{-1}X^TX\beta] + E[(X^TX)^{-1}X^T\epsilon] = \beta + (X^TX)^{-1}X^TE[\epsilon] = \beta$$
+$$\hat{\beta} - \beta = (X^TX)^{-1}X^T(X\beta + \epsilon) - \beta = (X^TX)^{-1}X^T\epsilon$$
+
+$$\implies E[\hat{\beta} - \beta] = (X^TX)^{-1}X^TE[\epsilon] = 0$$
 
 Therefore, $E[\hat{\beta} - \beta] = 0$, which proves that the OLS/MLE solution for linear regression is unbiased.
 
@@ -534,7 +536,7 @@ Therefore, $E[\hat{\beta} - \beta] = 0$, which proves that the OLS/MLE solution 
 
 Once again, we refer to the definition of the model and the estimate as shown in the beginning of section 2.1.8.1. We have:
 
-$$Var[\hat{\beta}] = E[(\hat{\beta} - \beta)(\hat{\beta} - \beta)^T] = E[(X^TX)^{-1}X^Tvar(y|X)var(y|X)^TX(X^TX)^{-1}] = (X^TX)^{-1}X^TE[\epsilon\epsilon^T]X(X^TX)^{-1} \tag{2.1.8.2.1}$$
+$$Var[\hat{\beta}] = E[(\hat{\beta} - \beta)(\hat{\beta} - \beta)^T] = (X^TX)^{-1}X^TE[\epsilon\epsilon^T]X(X^TX)^{-1} \tag{2.1.8.2.1}$$
 
 From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = E[\epsilon\epsilon^T] = Var[\epsilon] + (E[\epsilon])^2 = \sigma^2$. Substituting in $2.1.8.2.1$, we get:
 
