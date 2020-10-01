@@ -538,7 +538,7 @@ Once again, we refer to the definition of the model and the estimate as shown in
 
 $$Var[\hat{\beta}] = E[(\hat{\beta} - \beta)(\hat{\beta} - \beta)^T] = (X^TX)^{-1}X^TE[\epsilon\epsilon^T]X(X^TX)^{-1} \tag{2.1.8.2.1}$$
 
-From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = E[\epsilon\epsilon^T] = Var[\epsilon] + (E[\epsilon])^2 = \sigma^2$. Substituting in $2.1.8.2.1$, we get:
+From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = E[\epsilon\epsilon^T] = Var[\epsilon] + (E[\epsilon])^2 = \sigma^2I$. Substituting in $2.1.8.2.1$, we get:
 
 $$Var[\hat{\beta}] = (X^TX)^{-1}X^T\sigma^2IX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1} \tag{2.1.8.2.2}$$
 
