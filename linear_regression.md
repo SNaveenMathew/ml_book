@@ -362,7 +362,7 @@ $$\bigg[\frac{\partial^2 l}{\partial W\partial W^T}\bigg]_{W = \hat{W}} = 2 X^T 
 
 This is called the Hessian matrix. We observe that for the chosen data set (invertible $X^TX$) the Hessian is a positive (semi)-definite matrix at the optimal solution. This is the necessary second order condition for optimality. Interestingly if the Hessian at every weight $w$ is invertible, we can use the first and second order optimality conditions together to avoid choosing a learning rate. This is achieved using Newton's method.
 
-<span style="background-color: #F4ECF7">Definition:</span> A matrix $A$ is positive definite if for any vector z we have the following: $z^TAz > 0$. A matrix $A$ is positive semi-definite if for any vector z we have the following: $z^TAz \ge 0$
+<span style="background-color: #F4ECF7">Definition: A matrix $A$ is positive definite if for any vector z we have the following: $z^TAz > 0$. A matrix $A$ is positive semi-definite if for any vector z we have the following: $z^TAz \ge 0$</span>
 
 <span style="background-color: #F4ECF7">Proof:</span> $X^TX$ is positive semi-definite. Let $A = X^TX$. To prove: $z^TAz \ge 0 \forall z$
 
