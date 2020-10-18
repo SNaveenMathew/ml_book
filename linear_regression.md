@@ -530,7 +530,7 @@ $$H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.7
 
 ### 2.1.7.2. Implications / interpretation of $H$
 
-If we consider H as a 
+H is often called the [hat matrix](https://en.wikipedia.org/wiki/Projection_matrix). From the last two equations we understand that the hat matrix, as defined in Wikipedia, maps the vector of responses to the vector of predictions (fitted values).
 
 ## 2.1.8. Bias and variance
 
