@@ -525,8 +525,12 @@ Clearly, H is a square matrix. Let us examine $H$ closely:
 
 $$H\hat{e} = H(I-H)y = (HI - HH)y = (H - H)y = 0_{N_{train} \times 1} \tag{2.1.7.4}$$
 
+- $H\hat{y} = HX\hat{\beta} = X\hat{\beta} = \hat{y} \tag{2.1.7.5}$
+- From $2.1.7.5$ and $2.1.7.1$ we get $Hy = HH\hat{y} = H\hat{y} = \hat{y} \tag{2.1.7.6}$
+
 ### 2.1.7.2. Implications / interpretation of $H$
 
+If we consider H as a 
 
 ## 2.1.8. Bias and variance
 
