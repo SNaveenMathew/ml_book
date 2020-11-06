@@ -560,7 +560,11 @@ Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covaria
 
 $$E(\hat{y} - y) = E(X\hat{\beta}) - E(X\beta + \episilon) = X\beta - X\beta = 0$$
 
-Therefore, $\hat{y}$ is an unbiased estimator of $y$.
+For a test set $(X^{*}, y^{*})$
+
+$$E(\hat{y^{*}} - y^{*}) = E(X^{*}\hat{\beta}) - E(X^{*}\beta + \episilon) = X^{*}\beta - X^{*}\beta = 0$$
+
+Therefore, $\hat{y^{*}}$ is an unbiased estimator of $y^{*}$.
 
 ### 2.1.8.4. Variance of $\hat{y}$
 
