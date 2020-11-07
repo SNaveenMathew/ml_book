@@ -570,7 +570,7 @@ Therefore, $\hat{y^{*}}$ is an unbiased estimator of $y^{*}$.
 
 ### 2.1.8.4. Variance of $\hat{y}$
 
-We know from the definition of linear regression model that $Y|X ~ N(X\beta, \sigma^2); var(Y) = \sigma^2$. But what about the variance of the estimate $\hat{y}$?
+We know from the definition of linear regression model that $Y|X \sim N(X\beta, \sigma^2); var(Y) = \sigma^2$. But what about the variance of the estimate $\hat{y}$?
 
 $$var(\hat{y}) = E[(\hat{y}-y)^2] - (E[\hat{y} - y])^2$$
 
