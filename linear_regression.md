@@ -534,6 +534,8 @@ H is often called the [hat matrix](https://en.wikipedia.org/wiki/Projection_matr
 
 ## 2.1.8. Bias and variance
 
+In this section we represent the training set as $(X, y) \sim_{iid} (X, Y)$ and the test set as $(X^{*}, y^{*}) \sim_{iid} (X^{*}, Y^{*})$. We assume that the true model is $Y = X\beta + \epsilon$ for the training set and $Y^{*} = X^{*}\beta + \epsilon^{*}$ for the test set such that $\epsilon \sim_{iid} N(0, \sigma^2)$ and $\epsilon^{*} \sim_{iid} N(0, \sigma^2)$ such that $\epsilon \perp \epsilon^{*}$.
+
 ### 2.1.8.1. Bias of $\hat{\beta}$
 
 Let us recall that for the model $Y = X\beta + \epsilon; \epsilon \sim N(0, \sigma^2)$ for which we estimate $\hat{\beta}$ using a sample $(X, y)$, we have the OLS/MLE estimator $\hat{\beta} = (X^TX)^{-1}X^Ty$. Substituting, we get:
@@ -558,11 +560,11 @@ Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covaria
 
 ### 2.1.8.3. Bias of $\hat{y}$
 
-$$E(\hat{y} - y) = E(X\hat{\beta}) - E(X\beta + \episilon) = X\beta - X\beta = 0$$
+$$E(\hat{y} - y) = E(X\hat{\beta}) - E(X\beta + \epsilon) = X\beta - X\beta = 0$$
 
 For a test set $(X^{*}, y^{*})$
 
-$$E(\hat{y^{*}} - y^{*}) = E(X^{*}\hat{\beta}) - E(X^{*}\beta + \episilon) = X^{*}\beta - X^{*}\beta = 0$$
+$$E(\hat{y^{*}} - y^{*}) = E(X^{*}\hat{\beta}) - E(X^{*}\beta + \epsilon^{*}) = X^{*}\beta - X^{*}\beta = 0$$
 
 Therefore, $\hat{y^{*}}$ is an unbiased estimator of $y^{*}$.
 
