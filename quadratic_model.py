@@ -33,10 +33,6 @@ class ConstantTensorConstraint(keras.constraints.Constraint):
 	def get_config(self):
 		return {'t': self.t}
 
-def sigmoid(x):
-	x = np.exp(x)
-	return(x / (1 + x))
-
 # layer1 = BatchNormalization()
 layer2 = Dense(
 	input_dim = 1,
