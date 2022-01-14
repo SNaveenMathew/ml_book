@@ -1,8 +1,9 @@
-from quadratic_model import x1, y, model, train
+from quadratic_model import x1, y, get_model, train
 import numpy as np, pandas as pd, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pandas as pd
 
-
+model = get_model()
 model.get_weights()
+# loss ~ 0.0458
 # [array([[0.1920907 , 0.39586592]], dtype=float32), array([ 0.      , -1.316958], dtype=float32), array([[-549.6529 ],
 #        [ 427.67603]], dtype=float32), array([185.34625], dtype=float32)]
 model.set_weights([\
