@@ -37,9 +37,12 @@ f2_model = smf.ols(formula = 'f2 ~ x1 + x1_2', data = df).fit()
 f2_model.summary()
 # f2 =  0.0580 + 0.0573*x + 0.0190*x^2
 
-np.corrcoef(df['f1'], df['f2']) # not as correlated as the previous model
-np.corrcoef(df['residuals'], df['f1'])
-np.corrcoef(df['residuals'], df['f2'])
+np.corrcoef(df['f1'], df['f2'])[1, 0] # not as correlated as the previous model
+# -0.5861668506895052
+np.corrcoef(df['residuals'], df['f1'])[1, 0]
+# -0.014487890787798148
+np.corrcoef(df['residuals'], df['f2'])[1, 0]
+# 0.008791007726873076
 
 final_layer_model = smf.ols(formula = 'y ~ f1 + f2', data = df).fit()
 final_layer_model.summary()
