@@ -534,7 +534,7 @@ H is often called the [hat matrix](https://en.wikipedia.org/wiki/Projection_matr
 
 ## 2.1.8. Bias and variance
 
-In this section we represent the training set as $(X, y) \sim_{iid} (X, Y)$ and the test set as $(X^{*}, y^{*}) \sim_{iid} (X^{*}, Y^{*})$. We assume that the true model is $Y = X\beta + \epsilon$ for the training set and $Y^{*} = X^{*}\beta + \epsilon^{*}$ for the test set such that $\epsilon \sim_{iid} N(0, \sigma^2)$ and $\epsilon^{*} \sim_{iid} N(0, \sigma^2)$ such that $\epsilon \perp \epsilon^{*}$.
+In this section we represent the training set as $(X, y) \sim_{iid} (X, Y)$ and the test set as $(X^{\*}, y^{\*}) \sim_{iid} (X^{\*}, Y^{\*})$. We assume that the true model is $Y = X\beta + \epsilon$ for the training set and $Y^{\*} = X^{\*}\beta + \epsilon^{\*}$ for the test set such that $\epsilon \sim_{iid} N(0, \sigma^2)$ and $\epsilon^{\*} \sim_{iid} N(0, \sigma^2)$ such that $\epsilon \perp \epsilon^{\*}$.
 
 ### 2.1.8.1. Bias of $\hat{\beta}$
 
