@@ -576,7 +576,7 @@ $$var(\hat{y}) = var(X^{*} (X^TX)^{-1}X^Ty) = X^{*}(X^TX)^{-1}X^T var(y) (X^{*}(
 
 $$Bias(\hat{y^{*}})^2 + var(\hat{y^{*}} - \hat{y}) = var(\hat{y^{*}}) + var(\hat{y})$$
 
-$$\implies var(\hat(y^{*})) = \sigma^2(I + X^{*}(X^TX)^{-1}{X^{*}}^T)$$
+$$\implies var(\hat{y^{*}}) = \sigma^2(I + X^{*}(X^TX)^{-1}{X^{*}}^T)$$
 
 ## 2.1.9. Model assumptions
 
