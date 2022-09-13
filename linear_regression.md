@@ -562,7 +562,7 @@ Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covaria
 
 $$E(\hat{y} - y) = E(X\hat{\beta}) - E(X\beta + \epsilon) = X\beta - X\beta = 0$$
 
-For a test set $(X^{*}, y^{*})$
+For a test set $(X^{\*}, y^{\*})$
 
 $$E(\hat{y^{*}} - y^{*}) = E(X^{*}\hat{\beta}) - E(X^{*}\beta + \epsilon^{*}) = X^{*}\beta - X^{*}\beta = 0$$
 
