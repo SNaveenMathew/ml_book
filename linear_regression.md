@@ -558,7 +558,7 @@ $$Var[\hat{\beta}] = (X^TX)^{-1}X^T\sigma^2IX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1} 
 
 Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice most models are expected to extrapolate well outside the range of observed values in the sample. Multicollinearity is one of several factors that strongly affect the goodness of fit and extrapolation capacity of a linear regression model.
 
-### 2.1.8.3. Bias of $\hat{y}$
+### 2.1.8.3. Bias of $\hat{y^{*}}$
 
 $$E(\hat{y} - y) = E(X\hat{\beta}) - E(X\beta + \epsilon) = X\beta - X\beta = 0$$
 
@@ -570,7 +570,7 @@ Therefore, $\hat{y^{\*}}$ is an unbiased estimator of $y^{\*}$.
 
 ### 2.1.8.4. Variance of $\hat{y^{*}}$
 
-We know from the definition of linear regression model that $Y|X \sim N(X\beta, \sigma^2); var(Y) = \sigma^2$. But what about the variance of the estimate $\hat{y^{*}}$?
+We know from the definition of linear regression model that $Y\|X \sim N(X\beta, \sigma^2); var(Y) = \sigma^2$. But what about the variance of the estimate $\hat{y^{*}}$?
 
 $$var(\hat{y}) = var(X^{*} (X^TX)^{-1}X^Ty) = X^{*}(X^TX)^{-1}X^T var(y) (X^{*}(X^TX)^{-1}X^T)^T = \sigma^2 X^{*}(X^TX)^{-1}X^TX(X^TX)^{-1}{X^{*}}^T = \sigma^2 X^{*}(X^TX)^{-1}{X^{*}}^T$$
 
