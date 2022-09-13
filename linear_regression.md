@@ -566,7 +566,7 @@ For a test set $(X^{*}, y^{*})$
 
 $$E(\hat{y^{*}} - y^{*}) = E(X^{*}\hat{\beta}) - E(X^{*}\beta + \epsilon^{*}) = X^{*}\beta - X^{*}\beta = 0$$
 
-Therefore, $\hat{y^{*}}$ is an unbiased estimator of $y^{*}$.
+Therefore, $\hat{y^{\*}}$ is an unbiased estimator of $y^{\*}$.
 
 ### 2.1.8.4. Variance of $\hat{y^{*}}$
 
