@@ -87,7 +87,11 @@ def get_model(bias_constraint = True, batch_normalization = False, learning_rate
 	model.compile(loss = 'mean_squared_error', optimizer = optimizer)
 	return model
 
-def train(model, epochs = 5000000):
+def train(model, epochs = 5000000, save_image_interval = None, print_epoch_interval = None, use_gpu = False, bias_constraint = True):
+	if save_image_interval is not None:
+		pred_matrix = np.ones((y.shape[0], int(np.ceil(epochs/save_image_interval))))
+		idx = 0
+
 	for epoch in range(epochs):
 		# model.fit(x = x1, y = y, batch_size = 10000, callbacks=[reduce_lr])
 		model.fit(x = x1, y = y, batch_size = 10000)
