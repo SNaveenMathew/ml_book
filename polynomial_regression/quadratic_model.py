@@ -1,10 +1,11 @@
-import tensorflow.keras as keras, numpy as np, tensorflow as tf
+import tensorflow.keras as keras, numpy as np, tensorflow as tf, pandas as pd, pickle
 import keras.backend as K
 from keras.layers import BatchNormalization, Dense
 from keras import Sequential, Input
 from keras.optimizers import SGD, Adam
 from keras.callbacks import ReduceLROnPlateau
 from keras.initializers import GlorotNormal, HeNormal
+import matplotlib.pyplot as plt
 tf.random.set_seed(1)
 np.random.seed(1)
 x1 = np.random.randn(10000, )
