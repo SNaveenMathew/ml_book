@@ -14,7 +14,7 @@ model.set_weights([np.array([[-1.0866661 ,  0.85507196]], dtype=np.float32), np.
 pred_matrix = pickle.load(open("bias_unconstrained_pred_matrix.pkl", "rb"))
 
 # Plotting the evolution of y_pred_extended over epochs
-plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended)
+plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended, bias_constraint = False)
 
 # f1 = sigmoid(-1.0866661*x1 - 3.102202)
 # f2 = sigmoid(0.85507196*x1 - 2.7769487)
