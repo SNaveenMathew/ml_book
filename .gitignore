@@ -3,6 +3,9 @@
 .Rproj.user
 .Rhistory
 *.Rproj
+*.gif
+*/*.gif
+*/*/*.gif
 *.pkl
 */*.pkl
 */*/*.pkl
