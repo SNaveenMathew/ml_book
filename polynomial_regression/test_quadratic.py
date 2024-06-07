@@ -1,5 +1,7 @@
-from quadratic_model import x1, y, get_model, train
-import numpy as np, pandas as pd, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pandas as pd
+from quadratic_model import x1, y, get_model, train, x1_extended, y_extended
+import numpy as np, pandas as pd, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pickle
+from plot_predictions import plot_pred_matrix
+from model_utils import get_formula_rhs, get_summary_df, print_and_subset_summary
 
 model = get_model()
 model.get_weights()
