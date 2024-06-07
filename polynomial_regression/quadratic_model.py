@@ -94,6 +94,12 @@ def train(model, epochs = 5000000, save_image_interval = None, print_epoch_inter
 
 	for epoch in range(epochs):
 		# model.fit(x = x1, y = y, batch_size = 10000, callbacks=[reduce_lr])
+		if use_gpu:
+			with tf.device('/GPU:0'):
+				model.fit(x = x1, y = y, batch_size = 10000)
+		else:
+			model.fit(x = x1, y = y, batch_size = 10000)
+
 		if save_image_interval is not None:
 			if epoch % save_image_interval == 0:
 				y_pred_extended = model.predict(x1_extended).reshape(y.shape)
