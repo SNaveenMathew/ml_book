@@ -1,5 +1,7 @@
-from quadratic_model import x1, y, get_model, train
-import numpy as np, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pandas as pd
+from quadratic_model import x1, y, get_model, train, x1_extended, y_extended
+import numpy as np, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pandas as pd, pickle
+from plot_predictions import plot_pred_matrix
+from model_utils import get_formula_rhs, get_summary_df, print_and_subset_summary
 
 model = get_model(bias_constraint = False, learning_rate = 0.1 * np.sqrt(10))
 # model = train(model, epochs = 1000000)
@@ -26,51 +28,8 @@ f2 = layer_outs[0][0][:, 1]
 plt.scatter(x1, f2)
 plt.show()
 
-residuals = y-model.predict(x1).reshape(y.shape)
-df = pd.DataFrame({"x1": x1, "f2": f2, "f1": f1, "y": y, "residuals": residuals})
-df["x1_2"] = df["x1"]**2
-f1_model = smf.ols(formula = 'f1 ~ x1 + x1_2', data = df).fit()
-f1_model.summary()
-# f1 = 0.0425 -0.0625*x + 0.0246*x^2
-
-f2_model = smf.ols(formula = 'f2 ~ x1 + x1_2', data = df).fit()
-f2_model.summary()
-# f2 =  0.0580 + 0.0573*x + 0.0190*x^2
-
-np.corrcoef(df['f1'], df['f2'])[1, 0] # not as correlated as the previous model
-# -0.5861668506895052
-np.corrcoef(df['residuals'], df['f1'])[1, 0]
-# -0.014487890787798148
-np.corrcoef(df['residuals'], df['f2'])[1, 0]
-# 0.008791007726873076
-
-final_layer_model = smf.ols(formula = 'y ~ f1 + f2', data = df).fit()
-final_layer_model.summary()
-# y = -6.4749 + 51.5308*f1 + 91.1138*f2
-
-model.get_weights()[2:4]
-np.corrcoef(final_layer_model.resid, df['f1'])
-np.corrcoef(final_layer_model.resid, df['f2'])
-
-
-# Checking for higher order polynomials in f1, f2
-def get_formula_rhs(all_columns, exclude_columns = ['f1', 'f2']):
-	formula_columns = list(set(all_columns.tolist()) - set(['y', 'residuals'] + exclude_columns))
-	formula_rhs = " + ".join(formula_columns)
-	return formula_rhs
-
-def get_summary_df(formula, data):
-	model_tmp = smf.ols(formula, data = data).fit()
-	rmse = (model_tmp.resid**2).mean()
-	summary = model_tmp.summary()
-	df = pd.DataFrame(summary.tables[1])
-	df = df.iloc[1:, [0, 1, 4]]
-	df.columns = ['Variable', 'coef', 'p-value']
-	df['coef'] = df['coef'].apply(lambda x: float(str(x)))
-	df['p-value'] = df['p-value'].apply(lambda x: float(str(x)))
-	return df, rmse
-
-df = pd.DataFrame({"x1": x1, "f2": f2, "f1": f1, "y": y, "residuals": residuals})
+residuals = y_extended-model.predict(x1_extended).reshape(y_extended.shape)
+df = pd.DataFrame({"x1": x1_extended, "f2": f2, "f1": f1, "y": y_extended, "residuals": residuals})
 f1_rmse = [0] * 9
 f2_rmse = [0] * 9
 i_s = [i for i in range(1, 10)]
