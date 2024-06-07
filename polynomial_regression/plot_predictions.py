@@ -14,7 +14,7 @@ def update_plot(pred_matrix, argsort, x1_extended_, y, line2, ax, scat):
     return update
 
 
-def plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended):
+def plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended, bias_constraint = True):
     tmp_df = pd.DataFrame({"col": ["blue"] * pred_matrix.shape[0]})
     x1_min, x1_max = x1.min(), x1.max()
     argsort = np.argsort(x1_extended)
@@ -44,5 +44,10 @@ def plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended):
     
     update = update_plot(pred_matrix, argsort, x1_extended_, y, line2, ax, scat)
     ani = animation.FuncAnimation(fig = fig, func = update, frames = 100, interval = 100)
+    if bias_constraint:
+        ani.save(filename = "bias_constrained_preds.gif", writer = "pillow")
+    else:
+        ani.save(filename = "bias_unconstrained_preds.gif", writer = "pillow")
+    
     plt.show()
     return 
