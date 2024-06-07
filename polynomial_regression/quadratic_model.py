@@ -94,7 +94,31 @@ def train(model, epochs = 5000000, save_image_interval = None, print_epoch_inter
 
 	for epoch in range(epochs):
 		# model.fit(x = x1, y = y, batch_size = 10000, callbacks=[reduce_lr])
-		model.fit(x = x1, y = y, batch_size = 10000)
+		if save_image_interval is not None:
+			if epoch % save_image_interval == 0:
+				y_pred_extended = model.predict(x1_extended).reshape(y.shape)
+				pred_matrix[:, idx] = y_pred_extended
+				idx += 1
+				# tmp_df = pd.DataFrame({"x1": x1_extended, "y_pred": y_pred_extended, "y": y_extended, "color": colors})
+				# tmp_df = tmp_df.sort_values(['x1']).reset_index(drop = True)
+				# ax = tmp_df.plot.scatter(x='x1_extended', y='y_pred_extended', c='color', s=1)
+				# fig = ax.get_figure()
+				# fig = plt.figure()
+				# plt.scatter(x = tmp_df['x1'], y = tmp_df['y_pred'], color = tmp_df['color'], s = 1)
+				# plt.plot(tmp_df['x1'], tmp_df['y'])
+				# plt.ylim(min(tmp_df['y_pred'].min(), tmp_df['y'].min()), max(tmp_df['y_pred'].max(), tmp_df['y'].max()))
+				# fig.savefig("epoch_" + str(epoch + 1) + ".png")
+				# plt.close(fig)
+
+		if print_epoch_interval is not None:
+			if epoch % print_epoch_interval == 0:
+				print(epoch)
+
+	if save_image_interval is not None:
+		if bias_constraint:
+			pickle.dump(pred_matrix, open("bias_constrained_pred_matrix.pkl", "wb"))
+		else:
+			pickle.dump(pred_matrix, open("bias_unconstrained_pred_matrix.pkl", "wb"))
 
 	return model
 
