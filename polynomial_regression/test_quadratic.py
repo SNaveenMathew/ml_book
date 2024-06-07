@@ -4,18 +4,26 @@ from plot_predictions import plot_pred_matrix
 from model_utils import get_formula_rhs, get_summary_df, print_and_subset_summary
 
 model = get_model()
-model.get_weights()
-# loss ~ 0.0458
-# [array([[0.1920907 , 0.39586592]], dtype=float32), array([ 0.      , -1.316958], dtype=float32), array([[-549.6529 ],
-#        [ 427.67603]], dtype=float32), array([185.34625], dtype=float32)]
+# model.get_weights()
 model.set_weights([\
-	np.array([[0.1920907 , 0.39586592]], dtype=np.float32), np.array([ 0.      , -1.316958], dtype=np.float32), np.array([[-549.6529 ],\
-        [ 427.67603]], dtype=np.float32), np.array([185.34625], dtype=np.float32)
+	np.array([[0.18998857, 0.39265335]], dtype=np.float32), np.array([ 0.      , -1.316958], dtype=np.float32), np.array([[-559.892 ],\
+        [ 434.2152]], dtype=np.float32), np.array([185.34625], dtype=np.float32)
 ])
+# loss ~ 0.0445
+# [array([[0.18998857, 0.39265335]], dtype=float32), array([ 0.      , -1.316958], dtype=float32), array([[-559.892 ],
+# [ 434.2152]], dtype=float32), array([189.08543], dtype=float32)]
 # If you are not satisfied with this solution:
-# model = train(model, epochs = 5000000) # Takes a long time to train
+# model = train(model, epochs = 5000000, save_image_interval = 50000, print_epoch_interval = 50000, use_gpu = True) # Takes a long time to train
+pred_matrix = pickle.load(open("bias_constrained_pred_matrix.pkl", "rb"))
+
+# Plotting the evolution of y_pred_extended over epochs
+plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended)
+
+# f1 = sigmoid(-1.0866661*x1 - 3.102202)
+# f2 = sigmoid(0.85507196*x1 - 2.7769487)
+
 inp = model.input
-outputs = [layer.output for layer in model.layers] 
+outputs = [layer.output for layer in model.layers]
 functors = [K.function([inp], [out]) for out in outputs]
 layer_outs = [func([x1]) for func in functors]
 
@@ -27,7 +35,8 @@ f2 = layer_outs[0][0][:, 1]
 plt.scatter(x1, f2)
 plt.show()
 
-df = pd.DataFrame({"x1": x1, "f2": f2, "f1": f1, "y": y, "residuals": residuals})
+residuals = y_extended-model.predict(x1_extended).reshape(y_extended.shape)
+df = pd.DataFrame({"x1": x1_extended, "f2": f2, "f1": f1, "y": y_extended, "residuals": residuals})
 f1_rmse = [0] * 9
 f2_rmse = [0] * 9
 i_s = [i for i in range(1, 10)]
@@ -53,95 +62,103 @@ plt.show()
 plt.scatter(i_s, f2_rmse)
 plt.show()
 
+# Choose a suitable elbow curve and put values here
+f1_pow = 1
+f2_pow = 2
+for i in range(2, max(f1_pow, f2_pow) + 1):
+	df["x1_" + str(i)] = df["x1"]**i
 
-residuals = y-model.predict(x1).reshape(y.shape)
-model.get_weights()[0:2]
-df = pd.DataFrame({"x1": x1, "f2": f2, "f1": f1, "y": y, "redisuals": residuals})
-df["x1_2"] = df["x1"]**2
-linear_term_model = smf.ols(formula = 'f1 ~ x1', data = df).fit()
-linear_term_model.summary()
-# ==============================================================================
-#                  coef    std err          t      P>|t|      [0.025      0.975]
-# ------------------------------------------------------------------------------
-# Intercept      0.5000   3.53e-06   1.42e+05      0.000       0.500       0.500
-# x1             0.0476   3.54e-06   1.35e+04      0.000       0.048       0.048
-# ==============================================================================
+f1_formula = " + ".join(["x1_" + str(i) for i in range(2, f1_pow + 1)])
+f1_formula = 'f1 ~ x1 + ' + f1_formula if f1_formula != '' else 'f1 ~ x1'
+f1_model = smf.ols(formula = f1_formula, data = df).fit()
+f1_model_df = get_summary_df(f1_formula, df)
+f1_model_df = print_and_subset_summary(f1_model_df, set_variable_index = True)
+f1_model.summary()
+# f1 = 0.5000 + 0.0235*x
 
-# Theoretical
-model.get_weights()[0][0][0] * np.array([0.19, 0.25]) # d/dx (sigmoid(x)) in the neighborhood of x = 0 \in (0.19 0.25)
-# array([0.03649723, 0.04802268])
+f2_formula = " + ".join(["x1_" + str(i) for i in range(2, f2_pow + 1)])
+f2_formula = 'f2 ~ x1 + ' + f2_formula if f2_formula != '' else 'f2 ~ x1'
+f2_model = smf.ols(formula = f2_formula, data = df).fit()
+f2_model_df = get_summary_df(f2_formula, df)
+f2_model_df = print_and_subset_summary(f2_model_df, set_variable_index = True)
+f2_model.summary()
+# f2 =  0.02116 + 0.0327*x + 0.0017*x^2
 
-model.get_weights()[0:2]
-quadratic_term_model = smf.ols(formula = 'f2 ~ x1 + x1_2', data = df).fit()
-quadratic_term_model.summary()
-# ==============================================================================
-#                  coef    std err          t      P>|t|      [0.025      0.975]
-# ------------------------------------------------------------------------------
-# Intercept      0.2116   6.71e-06   3.15e+04      0.000       0.212       0.212
-# x1             0.0658    5.5e-06    1.2e+04      0.000       0.066       0.066
-# x1_2           0.0070   3.87e-06   1796.986      0.000       0.007       0.007
-# ==============================================================================
+print(np.corrcoef(df['f1'], df['f2'])[1, 0]) # not as correlated as the previous model
+# 0.9890336214505975
+print(np.corrcoef(df['residuals'], df['f1'])[1, 0])
+# -0.028142472036833815
+print(np.corrcoef(df['residuals'], df['f2'])[1, 0])
+# 0.09091332427367725
 
-# Theoretical
-model.get_weights()[0][0][1]**2 * 0.0455 # d/dx (sigmoid(x)) at x = log(2 - sqrt(3)) ~ 0.0455
-# 0.007130297010436493
-
-
-df = df.sort_values(["x1"])
-df["df1"] = df["f1"] - pd.Series([np.nan] + df["f1"].iloc[:-1].tolist())
-df["dx1"] = df["x1"] - pd.Series([np.nan] + df["x1"].iloc[:-1].tolist())
-df["df1_dx1"] = df["df1"] / df["dx1"]
-plt.scatter(df["x1"], df["df1_dx1"])
-plt.show()
-
-df["df2"] = df["f2"] - pd.Series([np.nan] + df["f2"].iloc[:-1].tolist())
-df["df2_dx1"] = df["df2"] / df["dx1"]
-plt.scatter(df["x1"], df["df2_dx1"])
-plt.show()
-
-df["d2f2"] = df["df2"] - pd.Series([np.nan] + df["df2"].iloc[:-1].tolist())
-df["d2f2_dx12"] = df["d2f2"] / df["dx1"]
-plt.scatter(df["x1"], df["d2f2_dx12"])
-plt.show()
-
-df["d2f2_dx12"].median()
-# 0.09727161309447503
-
-df["d2f2_dx12"].mean()
-# 0.11184993246848307
-
-tmp = df["d2f2_dx12"].abs()
-tmp[tmp < 1].plot.hist(bins = 100)
-plt.show()
-
+# Final model approximation of y:
 final_layer_model = smf.ols(formula = 'y ~ f1 + f2', data = df).fit()
+final_layer_model_df = get_summary_df('y ~ f1 + f2', df)
+final_layer_model_df = print_and_subset_summary(final_layer_model_df, set_variable_index = True)
 final_layer_model.summary()
-# ==============================================================================
-#                  coef    std err          t      P>|t|      [0.025      0.975]
-# ------------------------------------------------------------------------------
-# Intercept    185.8187      0.105   1769.029      0.000     185.613     186.025
-# f1          -551.0261      0.303  -1820.782      0.000    -551.619    -550.433
-# f2           428.6562      0.215   1990.837      0.000     428.234     429.078
-# ==============================================================================
-model.get_weights()[2:4]
-# [array([[-549.6529 ],
-#        [ 427.67603]], dtype=float32), array([185.34625], dtype=float32)]
+# y = 797.5177 - 2329.4654*f1 + 1740.3984*f2
+print(np.corrcoef(final_layer_model.resid, df['f1']))
+# [[ 1.0000000e+00 -4.0642508e-15]
+#  [-4.0642508e-15  1.0000000e+00]]
+print(np.corrcoef(final_layer_model.resid, df['f2']))
+# [[ 1.00000000e+00 -4.34293746e-15]
+#  [-4.34293746e-15  1.00000000e+00]]
 
+model_wts = model.get_weights()
+use_lm_wts = True
 
-residuals_model = smf.ols(formula = 'residuals ~ f1 + f2', data = df).fit()
-residuals_model.summary() # Intercept, f1 and f2 all are insignificant
-np.corrcoef(residuals, f1)[1, 0]
-# -0.00243
-np.corrcoef(residuals, f2)[1, 0]
-# 0.00436
-np.corrcoef(f1, f2)[1, 0] # Highly correlated, variance inflation may be a concern for the model
-# 0.9889
+if use_lm_wts:
+	final_y_hat_coefs = final_layer_model_df['coef']['f1']*f1_model_df['coef']
+	for var in f2_model_df.index:
+		try:
+			final_y_hat_coefs[var] += final_layer_model_df['coef']['f2']*f2_model_df['coef'][var]
+		except:
+			final_y_hat_coefs[var] = final_layer_model_df['coef']['f2']*f2_model_df['coef'][var]
 
-final_layer_model.params[2] * quadratic_term_model.params[2]
-# 2.979394429793285
+	final_y_hat_coefs['Intercept'] += final_layer_model_df['coef']['Intercept']
+else:
+	final_y_hat_coefs = model_wts[2][0][0]*f1_model_df['coef']
+	for var in f2_model_df.index:
+		try:
+			final_y_hat_coefs[var] += model_wts[2][1][0]*f2_model_df['coef'][var]
+		except:
+			final_y_hat_coefs[var] = model_wts[2][1][0]*f2_model_df['coef'][var]
 
-final_layer_model.params[2] * quadratic_term_model.params[1] + final_layer_model.params[1] * linear_term_model.params[1]
-# 2.0014364856788696
+	final_y_hat_coefs['Intercept'] += model_wts[3][0]
 
-final_layer_model.params[0] + final_layer_model.params[2] * quadratic_term_model.params[0] + final_layer_model.params[1] * linear_term_model.params[0]
-# 1.0205434934664481
+print(final_y_hat_coefs)
+# With final_layer_model
+# Variable
+# Intercept    1.053301
+# x1           2.168591
+# x1_2         2.958677
+
+# With tensorflow-keras trained model weights
+# Variable
+# Intercept   -2.719824
+# x1           1.041375
+# x1_2         0.738166
+
+# Keeping only the quadratic term:
+f1_quadratic_formula = 'f1 ~ x1 + x1_2'
+f1_quadratic_model_df = get_summary_df(f1_quadratic_formula, df)
+f1_quadratic_model_df = print_and_subset_summary(f1_quadratic_model_df)
+# f1 = 0.500000 + 0.023500*x1 - 0.000006*x1_2
+
+f2_quadratic_formula = 'f2 ~ x1 + x1_2'
+f2_quadratic_model_df = get_summary_df(f2_quadratic_formula, df)
+f2_quadratic_model_df = print_and_subset_summary(f2_quadratic_model_df)
+# f2 = 0.2116 + 0.0327*x1 - 0.0017*x1_2
+
+final_layer_model.summary()
+# y = 797.5177 - 2329.4654*f1 + 1740.3984*f2
+# Final model approximation of y:
+
+final_y_hat_coefs = final_layer_model_df['coef']['f1']*f1_quadratic_model_df['coef'] + final_layer_model_df['coef']['f2']*f2_quadratic_model_df['coef']
+final_y_hat_coefs['Intercept'] += final_layer_model_df['coef']['Intercept']
+print(final_y_hat_coefs)
+# Variable
+# Intercept    1.053301
+# x1           2.168591
+# x1_2         2.971853
+# Name: coef, dtype: float64
