@@ -9,8 +9,14 @@ import matplotlib.pyplot as plt
 tf.random.set_seed(1)
 np.random.seed(1)
 x1 = np.random.randn(10000, )
+x1_min, x1_max = x1.min(), x1.max()
+x1_extended = 2 * x1
+x1_extended_in_x1_range = (x1_extended >= x1_min) & (x1_extended <= x1_max)
+colors = pd.Series(['red'] * len(x1))
+colors[x1_extended_in_x1_range] = 'blue'
 y = 1 + 2*x1 + 3*x1**2
-biases = K.constant([0., np.log(2 - np.sqrt(3))]) # From https://www.wolframalpha.com/input/?i=maximize+d%5E2%2Fdx%5E2%28sigmoid%28x%29%29
+y_extended = 1 + 2*x1_extended + 3*x1_extended**2
+biases = K.constant([0., np.log(2 - np.sqrt(3))]) # From https://www.wolframalpha.com/input/?i=maximize+d%5E2%2Fdx%5E2%28sigmoid%28x%29%2
 
 class ConstantTensorInitializer(keras.initializers.Initializer):
 	def __init__(self, t):
