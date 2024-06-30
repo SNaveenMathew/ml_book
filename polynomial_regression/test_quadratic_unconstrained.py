@@ -4,13 +4,14 @@ from plot_predictions import plot_pred_matrix
 from model_utils import get_formula_rhs, get_summary_df, print_and_subset_summary
 
 model = get_model(bias_constraint = False, learning_rate = 0.1 * np.sqrt(10))
-# model.get_weights()
+print(model.get_weights())
 # [array([[-1.0866661 ,  0.85507196]], dtype=float32), array([-3.102202 , -2.7769487], dtype=float32), array([[51.564045],
 #        [91.12118 ]], dtype=float32), array([-6.4819527], dtype=float32)]
 model.set_weights([np.array([[-1.0866661 ,  0.85507196]], dtype=np.float32), np.array([-3.102202 , -2.7769487], dtype=np.float32), np.array([[51.564045],
        [91.12118]], dtype=np.float32), np.array([-6.4819527], dtype=np.float32)])
 # loss ~ 0.0118
 # model = train(model, epochs = 1000000, save_image_interval = 10000, print_epoch_interval = 10000, use_gpu = True, bias_constraint = False)
+# pickle.dump(model, open("unconstrained_model.pkl", "wb"))
 pred_matrix = pickle.load(open("bias_unconstrained_pred_matrix.pkl", "rb"))
 
 # Plotting the evolution of y_pred_extended over epochs
@@ -22,20 +23,22 @@ plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended, bias_constraint = 
 inp = model.input
 outputs = [layer.output for layer in model.layers]
 functors = [K.function([inp], [out]) for out in outputs]
-layer_outs = [func([x1]) for func in functors]
+layer_outs = [func([x1_extended]) for func in functors]
 
 f1 = layer_outs[0][0][:, 0]
-plt.scatter(x1, f1)
+plt.scatter(x1_extended, f1)
 plt.show()
 
 f2 = layer_outs[0][0][:, 1]
-plt.scatter(x1, f2)
+plt.scatter(x1_extended, f2)
 plt.show()
 
 residuals = y_extended-model.predict(x1_extended).reshape(y_extended.shape)
 df = pd.DataFrame({"x1": x1_extended, "f2": f2, "f1": f1, "y": y_extended, "residuals": residuals})
-f1_rmse = [0] * 9
-f2_rmse = [0] * 9
+f1_rmse = [0] * 10
+f2_rmse = [0] * 10
+f1_rmse[0] = ((df['f1'] - df['f1'].mean())**2).mean()
+f2_rmse[0] = ((df['f2'] - df['f2'].mean())**2).mean()
 i_s = [i for i in range(1, 10)]
 for i in i_s:
 	if i > 1:
@@ -53,6 +56,7 @@ for i in i_s:
 	f1_rmse[i-1] = f1_rmse_i
 	f2_rmse[i-1] = f2_rmse_i
 
+i_s = [0] + i_s
 plt.scatter(i_s, f1_rmse)
 plt.show()
 
@@ -61,7 +65,7 @@ plt.show()
 
 # Choose a suitable elbow curve and put values here
 f1_pow = 3
-f2_pow = 2
+f2_pow = 3
 for i in range(2, max(f1_pow, f2_pow) + 1):
 	df["x1_" + str(i)] = df["x1"]**i
 
@@ -165,3 +169,10 @@ print(final_y_hat_coefs)
 # Intercept    1.866928
 # x1           2.035571
 # x1_2         2.788546
+
+df['y_pred'] = df['y'] - df['residuals']
+df['data_type'] = 'in_range'
+df['data_type'][(df['x1'] < x1.min()) | (df['x1'] > x1.max())] = 'out_of_range'
+df['MSE'] = df['residuals']**2
+print(df['MSE'].mean())
+print(df.groupby(['data_type'])['MSE'].mean())
