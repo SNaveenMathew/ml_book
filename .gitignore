@@ -12,4 +12,6 @@
 __pycache__/*
 */__pycache__/*
 */*/__pycache__/*
+polynomial_regression/*.txt
+polynomial_regression/*.png
 pass
