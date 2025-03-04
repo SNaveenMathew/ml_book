@@ -1,10 +1,22 @@
-import tensorflow.keras as keras, numpy as np, tensorflow as tf, pandas as pd, pickle
+import numpy as np
+# Fixes for TensorFlow 2.12.0 using numpy>=1.2.0
+np.object = np.object_
+np.bool = np.bool_
+np.int = np.int_
+import tensorflow.keras as keras
+import tensorflow as tf
+import pandas as pd
+import pickle
 import keras.backend as K
-from keras.layers import BatchNormalization, Dense
-from keras import Sequential, Input
-from keras.optimizers import SGD, Adam
+from keras.layers import BatchNormalization
+from keras.layers import Dense
+from keras import Sequential
+from keras import Input
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import Adam
 from keras.callbacks import ReduceLROnPlateau
-from keras.initializers import GlorotNormal, HeNormal
+from keras.initializers import GlorotNormal
+from keras.initializers import HeNormal
 import matplotlib.pyplot as plt
 tf.random.set_seed(1)
 np.random.seed(1)
@@ -87,7 +99,7 @@ def get_model(bias_constraint = True, batch_normalization = False, learning_rate
 	model.compile(loss = 'mean_squared_error', optimizer = optimizer)
 	return model
 
-def train(model, epochs = 5000000, save_image_interval = None, print_epoch_interval = None, use_gpu = False, bias_constraint = True):
+def train(model, epochs = 5000000, callbacks = None, validation_data = None, save_image_interval = None, print_epoch_interval = None, use_gpu = False, bias_constraint = True):
 	if save_image_interval is not None:
 		pred_matrix = np.ones((y.shape[0], int(np.ceil(epochs/save_image_interval))))
 		idx = 0
@@ -96,9 +108,15 @@ def train(model, epochs = 5000000, save_image_interval = None, print_epoch_inter
 		# model.fit(x = x1, y = y, batch_size = 10000, callbacks=[reduce_lr])
 		if use_gpu:
 			with tf.device('/GPU:0'):
-				model.fit(x = x1, y = y, batch_size = 10000)
+				if validation_data is not None and callbacks is not None:
+					model.fit(x = x1, y = y, batch_size = 10000, validation_data = validation_data, callbacks = callbacks)
+				else:
+					model.fit(x = x1, y = y, batch_size = 10000)
 		else:
-			model.fit(x = x1, y = y, batch_size = 10000)
+			if validation_data is not None and callbacks is not None:
+				model.fit(x = x1, y = y, batch_size = 10000, validation_data = validation_data, callbacks = callbacks)
+			else:
+				model.fit(x = x1, y = y, batch_size = 10000)
 
 		if save_image_interval is not None:
 			if epoch % save_image_interval == 0:

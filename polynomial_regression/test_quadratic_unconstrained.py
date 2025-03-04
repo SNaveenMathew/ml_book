@@ -1,17 +1,40 @@
-from quadratic_model import x1, y, get_model, train, x1_extended, y_extended
-import numpy as np, statsmodels.formula.api as smf, matplotlib.pyplot as plt, keras.backend as K, pandas as pd, pickle
+from quadratic_model import x1
+from quadratic_model import y
+from quadratic_model import get_model
+from quadratic_model import train
+from quadratic_model import x1_extended
+from quadratic_model import y_extended
+import numpy as np
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+import keras.backend as K
+import pandas as pd
+import pickle
 from plot_predictions import plot_pred_matrix
-from model_utils import get_formula_rhs, get_summary_df, print_and_subset_summary
+from model_utils import get_formula_rhs
+from model_utils import get_summary_df
+from model_utils import print_and_subset_summary
+import tensorflow as tf
+import datetime
 
+log_dir = "logs/fit/unconstrained_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 model = get_model(bias_constraint = False, learning_rate = 0.1 * np.sqrt(10))
-print(model.get_weights())
-# [array([[-1.0866661 ,  0.85507196]], dtype=float32), array([-3.102202 , -2.7769487], dtype=float32), array([[51.564045],
-#        [91.12118 ]], dtype=float32), array([-6.4819527], dtype=float32)]
-model.set_weights([np.array([[-1.0866661 ,  0.85507196]], dtype=np.float32), np.array([-3.102202 , -2.7769487], dtype=np.float32), np.array([[51.564045],
-       [91.12118]], dtype=np.float32), np.array([-6.4819527], dtype=np.float32)])
-# loss ~ 0.0118
-# model = train(model, epochs = 1000000, save_image_interval = 10000, print_epoch_interval = 10000, use_gpu = True, bias_constraint = False)
-# pickle.dump(model, open("unconstrained_model.pkl", "wb"))
+# Comment start #
+# print(model.get_weights())
+# # [array([[-1.0866661 ,  0.85507196]], dtype=float32), array([-3.102202 , -2.7769487], dtype=float32), array([[51.564045],
+# #        [91.12118 ]], dtype=float32), array([-6.4819527], dtype=float32)]
+# model.set_weights([np.array([[-1.0866661 ,  0.85507196]], dtype=np.float32), np.array([-3.102202 , -2.7769487], dtype=np.float32), np.array([[51.564045],
+#        [91.12118]], dtype=np.float32), np.array([-6.4819527], dtype=np.float32)])
+# # loss ~ 0.0118
+# Comment end #
+
+# If you are not satisfied with this solution:
+# Comment start #
+# model = train(model, epochs = 1000000, save_image_interval = 10000, print_epoch_interval = 10000, use_gpu = True, bias_constraint = False) # Takes a long time to train
+model = train(model, epochs = 1000000, save_image_interval = 10000, print_epoch_interval = 10000, use_gpu = True, bias_constraint = False, validation_data = (x1_extended, y_extended), callbacks = [tensorboard_callback]) # Take even longer to train with extra load - validation performance and logging
+pickle.dump(model, open("unconstrained_model.pkl", "wb"))
+# Comment end #
 pred_matrix = pickle.load(open("bias_unconstrained_pred_matrix.pkl", "rb"))
 
 # Plotting the evolution of y_pred_extended over epochs
