@@ -3,4 +3,16 @@
 .Rproj.user
 .Rhistory
 *.Rproj
+*.gif
+*/*.gif
+*/*/*.gif
+*.pkl
+*/*.pkl
+*/*/*.pkl
+__pycache__/*
+*/__pycache__/*
+*/*/__pycache__/*
+polynomial_regression/*.txt
+polynomial_regression/*.png
 pass
+**/logs/*
