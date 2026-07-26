@@ -312,7 +312,7 @@ $$\bigg|\bigg|Xg_t\bigg|\bigg|_2^2 \le \frac{L}{2} \bigg|\bigg|g_t\bigg|\bigg|_2
 
 $$ \implies l(w(t+1)) = l(w(t)) - \alpha(1-\frac{\alpha L}{2})\bigg|\bigg|g_t\bigg|\bigg|_2^2 \tag{2.1.4.1.1.2}$$
 
-For a step size $0 < \alpha < 2/L$, $1-\frac{\alpha L}{2} > 0; \alpha(1-\frac{\alpha L}{2}) > 0$. Therefore, $l(w(t+1)) < l(w(t))$ with the loss decreasing at each step at least by $c\bigg|\bigg|g_t\bigg|\bigg|_2^2$. Telescoping over $t = 0, ..., T−1$ and using $l(w(T)) \ge 0$, we get:
+For a step size $0 < \alpha < 2/L$, $1-\frac{\alpha L}{2} > 0$ and $\alpha(1-\frac{\alpha L}{2}) > 0$. Therefore, $l(w(t+1)) < l(w(t))$ with the loss decreasing at each step at least by $c\|\|g_t\|\|_2^2$. Telescoping over $t = 0, ..., T−1$ and using $l(w(T)) \ge 0$, we get:
 
 $$c\sum_{t=0}^{T-1}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \le l(w(0)) \forall T>0 \implies \sum_{t=0}^{T-1}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \le \infty \implies \lim_{t \to \infty}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \to 0 \tag{2.1.4.1.1.3}$$
 
