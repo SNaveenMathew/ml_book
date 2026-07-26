@@ -294,7 +294,7 @@ Sequentially transforming the above equation, we get:
 
 $$\implies l(w(t + 1)) = l(w(t)) - 4 \alpha \bigg|\bigg|X^T\bigg(y - Xw(t)\bigg)\bigg|\bigg|_2^2 \le l(w(t))$$
 
-Therefore, for a sufficiently small $\alpha$ we observe that $l(w)$ is a non-increasing function. Also, $l(w)$ is lower bounded by 0 because it is a 2-norm. Therefore, gradient descent theoretically converges to at least a local minima for OLS linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the covariance matrix will be discused in section <>.
+Therefore, for a sufficiently small $\alpha$ we observe that $l(w)$ is a non-increasing function. Also, $l(w)$ is lower bounded by 0 because it is a 2-norm. Therefore, gradient descent theoretically converges to at least a local minima for OLS linear regression. However, this is true only under the assumption that $X^TX$ is invertible. The effects of non-invertibility of the Gram/covariance matrix will be discused in section <>.
 
 **Additional note:** We observe that $\frac{\partial l}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
 
@@ -346,7 +346,7 @@ $$\begin{eqnarray}
 = -\alpha(1-\alpha)\bigg\lVert X(w(1)-w(2)) \bigg\rVert_2^2 \tag{2.1.4.3.4}
 \end{eqnarray}$$
 
-We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefore, the resulting term is always non-positive. From normal equations it is known that the solution is unique for an invertible covariance matrix. Therefore, for $w(1) \neq w(2)$ such that $w(1) \in R^{(p+1)\times 1}, w(2) \in R^{(p+1)\times 1}$ we have $l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) \le 0$ where $w(3)$ is a convex combination of $w(1), w(2)$, and equality is attained only when $w(1) = w(2)$. Therefore, the OLS linear regression loss function is convex (For $z(3) \in (z(1), z(2))$ such that $w(3) = \alpha w(1) + (1-\alpha)w(2), \alpha \in (0,1)$, if we have $f(w(3)) < \alpha f(w(1)) + (1-\alpha)f(w(2))$ then $f$ is a convex function)
+We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefore, the resulting term is always non-positive. From normal equations it is known that the solution is unique for an invertible Gram/covariance matrix. Therefore, for $w(1) \neq w(2)$ such that $w(1) \in R^{(p+1)\times 1}, w(2) \in R^{(p+1)\times 1}$ we have $l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) \le 0$ where $w(3)$ is a convex combination of $w(1), w(2)$, and equality is attained only when $w(1) = w(2)$. Therefore, the OLS linear regression loss function is convex (For $z(3) \in (z(1), z(2))$ such that $w(3) = \alpha w(1) + (1-\alpha)w(2), \alpha \in (0,1)$, if we have $f(w(3)) < \alpha f(w(1)) + (1-\alpha)f(w(2))$ then $f$ is a convex function)
 
 Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OLS linear regression estimation on a data set with invertible Gram/covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
 
@@ -378,7 +378,7 @@ Adding a step size parameter to satisfy Wolfe's condition ([refer this](https://
 
 $$w(t+1) = w(t) - \gamma \bigg(H(w(t))\bigg)^{-1}J(w(t)); \gamma \in (0, 1]$$
 
-We observe that the convergence is independent of the scale of $X$ (inverse Hessian or inverse covariance removes the dependence), but depends on the scale of $y$ (through the Jacobian). Therefore, Newton's method tends to converge to a reasonable solution in finite number of steps without manual choice of learning rate. However, it is important to note that Newton's method, despite being an iterative method, introduces all issues that were present in the analytical solution using normal equations.
+We observe that the convergence is independent of the scale of $X$ (inverse Hessian or inverse Gram/covariance removes the dependence), but depends on the scale of $y$ (through the Jacobian). Therefore, Newton's method tends to converge to a reasonable solution in finite number of steps without manual choice of learning rate. However, it is important to note that Newton's method, despite being an iterative method, introduces all issues that were present in the analytical solution using normal equations.
 
 [C++ code for solving linear regression using Newton's method](data/linreg_Newton.cpp) **Bias alert: writing this just to prove that I can write C++ code for Newton's method**
 
@@ -404,7 +404,7 @@ H^{-1}(w)_j^{(i)} =
 \end{cases}
 \end{equation}$$
 
-Assuming all the independent variables have variance, Newton's update ($\gamma = 1$) given by: $w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$ is equivalent to taking scaled steps individually along each of the weight axes. This is similar to profile likelihood approach for parameter estimation, where the parameters that are not important are profiled out. Specifically, this resembles a scenario in profile likelihood where the parameters are independent - similar to mean and variance of a normal distribution. This suggests that the loss function can be projected along each of the weight axes and minimization can be done along each weight axis independently without considering the effects of change in another weight. The overall solution is obtained by concatenating the optimal solution along each individual weight axis. In the ideal scenario described above where the covariance matrix is a diagonal matrix, coordinate descent will converge after a single sweep of projected optimization along each of weight axes.
+Assuming all the independent variables have variance, Newton's update ($\gamma = 1$) given by: $w(t+1) = w(t) - \bigg(H(w(t))\bigg)^{-1}J(w(t))$ is equivalent to taking scaled steps individually along each of the weight axes. This is similar to profile likelihood approach for parameter estimation, where the parameters that are not important are profiled out. Specifically, this resembles a scenario in profile likelihood where the parameters are independent - similar to mean and variance of a normal distribution. This suggests that the loss function can be projected along each of the weight axes and minimization can be done along each weight axis independently without considering the effects of change in another weight. The overall solution is obtained by concatenating the optimal solution along each individual weight axis. In the ideal scenario described above where the Gram/covariance matrix is a diagonal matrix, coordinate descent will converge after a single sweep of projected optimization along each of weight axes.
 
 <pre id="coordinateDescent" style="display:hidden;">
     \begin{algorithm}
@@ -556,7 +556,7 @@ From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = 
 
 $$Var[\hat{\beta}] = (X^TX)^{-1}X^T\sigma^2IX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1} \tag{2.1.8.2.2}$$
 
-Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice most models are expected to extrapolate well outside the range of observed values in the sample. Multicollinearity is one of several factors that strongly affect the goodness of fit and extrapolation capacity of a linear regression model.
+Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the Gram/covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice most models are expected to extrapolate well outside the range of observed values in the sample. Multicollinearity is one of several factors that strongly affect the goodness of fit and extrapolation capacity of a linear regression model.
 
 ### 2.1.8.3. Bias of $\hat{y^{*}}$
 
