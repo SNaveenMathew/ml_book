@@ -257,7 +257,7 @@ Here $\alpha$ is called the learning rate. It determines how quickly (number of 
 
 ### 2.1.4.1. Convergence of gradient descent for linear regression
 
-For this section let us assume that the covariance matrix is invertible. In other words $(X^TX)^{-1}$ exists.
+For this section let us assume that the Gram matrix is invertible. In other words $(X^TX)^{-1}$ exists.
 
 $$l(w(t)) = \bigg(y - Xw(t)\bigg)^T\bigg(y - Xw(t)\bigg)$$
 
@@ -306,7 +306,7 @@ From the above analysis we understand that pre-computing the residues and reusin
 
 ### 2.1.4.3. Nature of OLS regression loss function
 
-Let us assume that the covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation $2.1.2.1.1.3$ is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
+Let us assume that the Gram matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation $2.1.2.1.1.3$ is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
 
 $$l(w) = (y - Xw)^T (y - Xw) = y^Ty - y^T Xw - (Xw)^Ty + (Xw)^T Xw \tag{2.1.4.3.1}$$
 
@@ -348,7 +348,7 @@ $$\begin{eqnarray}
 
 We know that $\alpha(1-\alpha) \in (0, 0.25) \forall \alpha \in (0,1)$. Therefore, the resulting term is always non-positive. From normal equations it is known that the solution is unique for an invertible covariance matrix. Therefore, for $w(1) \neq w(2)$ such that $w(1) \in R^{(p+1)\times 1}, w(2) \in R^{(p+1)\times 1}$ we have $l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) \le 0$ where $w(3)$ is a convex combination of $w(1), w(2)$, and equality is attained only when $w(1) = w(2)$. Therefore, the OLS linear regression loss function is convex (For $z(3) \in (z(1), z(2))$ such that $w(3) = \alpha w(1) + (1-\alpha)w(2), \alpha \in (0,1)$, if we have $f(w(3)) < \alpha f(w(1)) + (1-\alpha)f(w(2))$ then $f$ is a convex function)
 
-Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OLS linear regression estimation on a data set with invertible covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
+Combining results across sections 2.1.2.1, 2.1.4.1 and 2.1.4.3: Consider OLS linear regression estimation on a data set with invertible Gram/covariance matrix. We know from normal equations that the estimated weight vector is unique. For such a case we know two results: 1) the loss function decreases as long as the gradient with respect to weights is non-zero, 2) the loss function is convex with respect to the weights. Combining these results we conclude that for the given data set gradient descent will asymptotically converge to global optima for a suitably chosen small learning rate $\alpha$. The first order optimality condition (weights are unconstrained) will be met at the global optima: $\bigg[\frac{\partial l}{\partial w}\bigg]_{w=\hat{W}} = \vec{0}$.
 
 ### 2.1.5. Issues with gradient descent
 
@@ -384,7 +384,7 @@ We observe that the convergence is independent of the scale of $X$ (inverse Hess
 
 ### 2.1.5.2. Extensions: Coordinate descent
 
-Let us assume that the design matrix is orthogonal. Therefore, the covariance matrix will be a diagonal matrix.
+Let us assume that the design matrix is orthogonal. Therefore, the Gram/covariance matrix will be a diagonal matrix.
 
 $$
 \begin{equation}
@@ -585,7 +585,7 @@ Let us recap the assumptions in this section:
 1. The model is linear: variables may be transfored to incorporate non-linear effects, but the model is linear with respect to the coefficients. Example: $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2$ is a linear model with independent variables $(X_1, X_1^2)$
 2. The error is *normally distributed* with *zero* mean and *constant variance* that is independent of $X$: this statement often causes misinterpretation. One common misinterpretations is that the independent variables should be normally distributed (mentioned in "The story of normality of ... independent variables in linear regression" section of [introduction](introduction.md))
     a. No heteroskedasticity: variance of the error is independent of X and is constant throughout. A weaker form is: $\hat{\sigma}^2$ is approximately the same over the range of independent variables $X$
-3. The sample covariance matrix is invertible. In other words, the independent variables don't exhibit high levels of multicollinearity
+3. The sample Gram/covariance matrix is invertible. In other words, the independent variables don't exhibit high levels of multicollinearity
 4. No 'autocorrelation'; the errors are independent
     a. A weaker form is: 'lagged' residue terms are not strongly correlated
 
