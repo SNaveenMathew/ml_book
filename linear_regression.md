@@ -298,6 +298,26 @@ Therefore, for a sufficiently small $\alpha$ we observe that $l(w)$ is a non-inc
 
 **Additional note:** We observe that $\frac{\partial l}{\partial w} = -2X^T(y-Xw)$, which is proportional to A. Therefore, the loss stops decreasing when the 2-norm of the gradient tends to zero. By default this is the first order condition for normal equations at global optima. However, this condition alone does not guarantee the convergence of gradient descent to global optima.
 
+#### 2.1.4.1.1. Exact derivation suggested by Claude Sonnet
+
+This proof was suggested by Claude Sonnet 5 + max + thinking. I read the proof and adopted after understanding it.
+
+Let $g_t = [\partial l/\partial w]_{w = w(t)}$. Then:
+
+$$l(w(t + 1)) = l(w(t)) - \alpha \bigg|\bigg|g_t\bigg|\bigg|_2^2 + \alpha^2 \bigg|\bigg|Xg_t\bigg|\bigg|_2^2 \tag{2.1.4.1.1.1}$$
+
+Rayleigh quotient is defined as $R(A,x) = \frac{x^TAx}{x^Tx}$. For any positive semi-definite matrix $A$ and any vector $x$, we have: $0 \le R(A,x) \le \lambda_{max}(A)$. Let $L = 2\lambda_{max}X^TX$, then
+
+$$\bigg|\bigg|Xg_t\bigg|\bigg|_2^2 \le \frac{L}{2} \bigg|\bigg|g_t\bigg|\bigg|_2^2 $$
+
+$$ \implies l(w(t+1)) = l(w(t)) - \alpha(1-\frac{\alpha L}{2})\bigg|\bigg|g_t\bigg|\bigg|_2^2 \tag{2.1.4.1.1.2}$$
+
+For a step size $0 < \alpha < 2/L$, $1-\frac{\alpha L}{2} > 0; \alpha(1-\frac{\alpha L}{2}) > 0$. Therefore, $l(w(t+1)) < l(w(t))$ with the loss decreasing at each step at least by $c\bigg|\bigg|g_t\bigg|\bigg|_2^2$. Telescoping over $t = 0, ..., T−1$ and using $l(w(T)) \ge 0$, we get:
+
+$$c\sum_{t=0}^{T-1}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \le l(w(0)) \forall T>0 \implies \sum_{t=0}^{T-1}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \le \infty \implies \lim_{t \to \infty}\bigg|\bigg|g_t\bigg|\bigg|_2^2 \to 0 \tag{2.1.4.1.1.3}$$
+
+$$lim_{t \to \infty}w(t)-\hat{W} = \lim_{t \to \infty}\frac{1}{2}(X^TX)^{-1}X^Tg_t =0 \implies \lim_{t \to \infty}w(t) = \hat{W} \tag{2.1.4.1.1.4}$$
+
 ### 2.1.4.2. Writing a solver for linear regression using gradient descent
 
 From the above analysis we understand that pre-computing the residues and reusing them for calculation of gradient and loss can reduce the amount of computation. The total computational complexity per iteration is $O(4N_{train}(p+1) + 6(p+1))$ (not the most optimal because explicit computation of transpose can be avoided by writing a function to directly compute $X^Te$). For a small number of iterations this is a tremendous improvement over the normal equations approach!
