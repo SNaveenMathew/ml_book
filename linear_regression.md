@@ -323,7 +323,7 @@ $$l(w(2)) = y^Ty + w(2)^TX^TXw(2) - 2w(2)^TX^Ty$$
 $$l(w(3)) = y^Ty + \bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^TX^TX\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg) - 2\bigg(\alpha w(1) + (1 - \alpha)w(2)\bigg)^TX^Ty$$
 
 $$\begin{eqnarray}
-\implies l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) = y^Ty +\alpha^2 w(1)^T X^TXw(1) - 2 \alpha w(1)^TX^Ty - 2(1-\alpha)w(2)^Ty \nonumber \\
+\implies l(w(3)) - (\alpha l(w(1)) + (1-\alpha) l(w_2)) = y^Ty +\alpha^2 w(1)^T X^TXw(1) - 2 \alpha w(1)^TX^Ty - 2(1-\alpha)w(2)^TX^Ty \nonumber \\
 + (1-\alpha)^2 w(2)^T X^TXw(2) +
 \alpha(1-\alpha) w(2)^TX^TXw(1) + \alpha(1-\alpha)w(1)^TX^TXw(2) \nonumber \\ -\alpha\bigg( y^Ty  + w(1)^TX^TXw(1) - 2w(1)^TX^Ty \bigg) - (1 - \alpha) \bigg( y^Ty + w(2)^TX^TXw(2) - 2w(2)^TX^Ty \bigg) \tag{2.1.4.3.2}
 \end{eqnarray}$$
