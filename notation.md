@@ -18,6 +18,8 @@ Notation:
 - $N_{train}$: Number of samples in training set
 - var: Variance/covariance operator on a series or matrix
 - sd: Standard deviation operator on a series
+- E: Expectation operator on a series
+- $X^TX$: Gram matrix (or covariance matrix if X is centered) of feature matrix X
 
 Abbreviations:
 
