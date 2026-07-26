@@ -20,6 +20,7 @@ Notation:
 - sd: Standard deviation operator on a series
 - E: Expectation operator on a series
 - $X^TX$: Gram matrix (or covariance matrix if X is centered) of feature matrix X
+- O: Big O notation (order of computational complexity)
 
 Abbreviations:
 
