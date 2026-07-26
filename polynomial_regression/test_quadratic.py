@@ -18,7 +18,7 @@ import tensorflow as tf
 import datetime
 
 log_dir = "logs/fit/constrained_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=5)
 model = get_model()
 # Comment start #
 # print(model.get_weights())
@@ -37,7 +37,8 @@ model = get_model()
 model = train(model, epochs = 5000000, save_image_interval = 50000, print_epoch_interval = 50000, use_gpu = True, validation_data = (x1_extended, y_extended), callbacks = [tensorboard_callback]) # Take even longer to train with extra load - validation performance and logging
 pickle.dump(model, open("constrained_model.pkl", "wb"))
 # Comment end #
-pred_matrix = pickle.load(open("bias_constrained_pred_matrix.pkl", "rb"))
+# pred_matrix = pickle.load(open("bias_constrained_pred_matrix.pkl", "rb"))
+pred_matrix = np.fromfile("bias_constrained_pred_matrix.dat")
 
 # Plotting the evolution of y_pred_extended over epochs
 plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended)

@@ -140,9 +140,11 @@ def train(model, epochs = 5000000, callbacks = None, validation_data = None, sav
 
 	if save_image_interval is not None:
 		if bias_constraint:
-			pickle.dump(pred_matrix, open("bias_constrained_pred_matrix.pkl", "wb"))
+			# pickle.dump(pred_matrix, open("bias_constrained_pred_matrix.pkl", "wb"))
+			pred_matrix.tofile("bias_constrained_pred_matrix.dat")
 		else:
-			pickle.dump(pred_matrix, open("bias_unconstrained_pred_matrix.pkl", "wb"))
+			# pickle.dump(pred_matrix, open("bias_unconstrained_pred_matrix.pkl", "wb"))
+			pred_matrix.tofile("bias_unconstrained_pred_matrix.dat")
 
 	return model
 

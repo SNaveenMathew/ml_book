@@ -35,7 +35,8 @@ model = get_model(bias_constraint = False, learning_rate = 0.1 * np.sqrt(10))
 model = train(model, epochs = 1000000, save_image_interval = 10000, print_epoch_interval = 10000, use_gpu = True, bias_constraint = False, validation_data = (x1_extended, y_extended), callbacks = [tensorboard_callback]) # Take even longer to train with extra load - validation performance and logging
 pickle.dump(model, open("unconstrained_model.pkl", "wb"))
 # Comment end #
-pred_matrix = pickle.load(open("bias_unconstrained_pred_matrix.pkl", "rb"))
+# pred_matrix = pickle.load(open("bias_unconstrained_pred_matrix.pkl", "rb"))
+pred_matrix = np.fromfile("bias_unconstrained_pred_matrix.dat")
 
 # Plotting the evolution of y_pred_extended over epochs
 plot_pred_matrix(pred_matrix, x1, y, x1_extended, y_extended, bias_constraint = False)
