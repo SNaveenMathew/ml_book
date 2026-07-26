@@ -4,7 +4,7 @@ Terminology:
 
 - Features: Independent variables used for predictive modeling
 - Outcome: Dependent variable
-- Feature matrix: Matrix of independent variables with samples along columns and features along rows
+- Feature matrix: Matrix of independent variables with samples along rows and features along columns
 - Example: One sample (row) from feature matrix
 
 Notation:
