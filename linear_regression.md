@@ -257,7 +257,7 @@ Here $\alpha$ is called the learning rate. It determines how quickly (number of 
 
 ### 2.1.4.1. Convergence of gradient descent for linear regression
 
-For this section let us assume that the Gram matrix is invertible. In other words $(X^TX)^{-1}$ exists.
+For this section let us assume that the Gram/covariance matrix is invertible. In other words $(X^TX)^{-1}$ exists.
 
 $$l(w(t)) = \bigg(y - Xw(t)\bigg)^T\bigg(y - Xw(t)\bigg)$$
 
@@ -306,7 +306,7 @@ From the above analysis we understand that pre-computing the residues and reusin
 
 ### 2.1.4.3. Nature of OLS regression loss function
 
-Let us assume that the Gram matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation $2.1.2.1.1.3$ is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
+Let us assume that the Gram/covariance matrix is invertible. From undergrad optimization courses we understand that convexity is an important property for a minimization problem. Let us try to understand whether the loss function is convex. For this section let us consider a linear regression model $Y = XW + \epsilon$ that is estimate using $\hat{y} = X\hat{W} + \hat{e}$. For simplicity let us use the result from equation $2.1.2.1.1.3$ is valid for multiple linear regression - therefore, the regression line will always pass through $(\bar{X}, \bar{y})$ for any instantaneous value of $w$. Also, for a given dataset $[(X^{(i)}, y^{(i)})]$, the current value of loss is a function of $w$ (instantaneous value, not the estimate).
 
 $$l(w) = (y - Xw)^T (y - Xw) = y^Ty - y^T Xw - (Xw)^Ty + (Xw)^T Xw \tag{2.1.4.3.1}$$
 
