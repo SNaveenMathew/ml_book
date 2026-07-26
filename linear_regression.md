@@ -572,11 +572,11 @@ Therefore, $\hat{y^{\*}}$ is an unbiased estimator of $y^{\*}$.
 
 We know from the definition of linear regression model that $Y\|X \sim N(X\beta, \sigma^2); var(Y) = \sigma^2$. But what about the variance of the estimate $\hat{y^{*}}$?
 
-$$var(\hat{y}) = var(X^{*} (X^TX)^{-1}X^Ty) = X^{*}(X^TX)^{-1}X^T var(y) (X^{*}(X^TX)^{-1}X^T)^T = \sigma^2 X^{*}(X^TX)^{-1}X^TX(X^TX)^{-1}{X^{*}}^T = \sigma^2 X^{*}(X^TX)^{-1}{X^{*}}^T$$
+$$var(\hat{y^{*}}) = var(X^{*} (X^TX)^{-1}X^Ty) = X^{*}(X^TX)^{-1}X^T var(y) (X^{*}(X^TX)^{-1}X^T)^T = \sigma^2 X^{*}(X^TX)^{-1}X^TX(X^TX)^{-1}{X^{*}}^T = \sigma^2 X^{*}(X^TX)^{-1}{X^{*}}^T$$
 
 $$(Bias(\hat{y^{*}}))^2 + var(\hat{y^{*}} - \hat{y}) = var(\hat{y^{*}}) + var(\hat{y})$$
 
-$$\implies var(\hat{y^{*}}) = \sigma^2(I + X^{*}(X^TX)^{-1}{X^{*}}^T)$$
+$$\implies var(\hat{y^{*}} - y^{*}) = var(\hat{y^{*}}) + var(y^{*}) = \sigma^2(I + X^{*}(X^TX)^{-1}{X^{*}}^T)$$
 
 ## 2.1.9. Model assumptions
 
