@@ -376,7 +376,7 @@ Learning rate is a hyperparameter in linear regression solved using gradient des
 
 ### 2.1.5.1. Extensions: Newton's method
 
-For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$, the necessary second order condition is $[\partial^2 f/\partial w^2]_{w=\hat{w}}$ $\ge 0$ (strict > is sufficient, but not necessary for minimality). For the loss function in equation $2.1.2.1.1.b$ we know that $\[\frac{\partial^2 f}{\partial w^2}\]_{w=\hat{w}} > 0$. Differentiating equation $2.1.2.1.1.b$ with respect to $W^T$ we get:
+For a function $f$ of $w \in R^{1}$ that is minimized at $\hat{w}$, the necessary second order condition is $[\partial (\partial f/\partial w)/\partial w]_{w=\hat{W}}$ $\ge 0$ (strict > is sufficient, but not necessary for minimality). For the loss function in equation $2.1.2.1.1.b$ we know that $\[\frac{\partial^2 f}{\partial w^2}\]_{w=\hat{w}} > 0$. Differentiating equation $2.1.2.1.1.b$ with respect to $W^T$ we get:
 
 $$\bigg[\frac{\partial^2 l}{\partial W\partial W^T}\bigg]_{W = \hat{W}} = 2 X^T X$$
 
