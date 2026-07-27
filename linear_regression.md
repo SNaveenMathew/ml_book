@@ -280,7 +280,7 @@ In equation $2.1.4.1.1$ we observe that the second and third term are transpose 
 
 $$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)} \tag{2.1.4.1.2}$$
 
-Substituting equation $2.1.2.1.1.c$ in equation $2.1.4.1.2$ we get:
+Substituting $\bigg[\frac{\partial l}{\partial w}\bigg]_{w = w(t)} = -2X^T\bigg(y - Xw(t)\bigg)$ - the general form of the derivative from equation $2.1.2.1.1.b/c$, before it is evaluated at $w = \hat{W}$ and set to zero - substitting into equation $2.1.4.1.2$ we get:
 
 $$l(w(t + 1)) = l(w(t)) + 2\alpha \bigg(y - Xw(t)\bigg)^T X \bigg(-2X^T\bigg(y - Xw(t)\bigg) \bigg)$$
 
@@ -576,7 +576,7 @@ From the model definition we have $E[\epsilon] = 0$, therefore $E[\epsilon^2] = 
 
 $$Var[\hat{\beta}] = (X^TX)^{-1}X^T\sigma^2IX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1} \tag{2.1.8.2.2}$$
 
-Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the Gram/covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice most models are expected to extrapolate well outside the range of observed values in the sample. Multicollinearity is one of several factors that strongly affect the goodness of fit and extrapolation capacity of a linear regression model.
+Equation $2.1.8.2.2$ strongly suggests the need for invertibility of the Gram/covariance matrix of the predictors. In presence of multicollinearity the estimates can vary significantly with small changes in the sample. This is not desirable for a regression model that is expected to be stable and robust in order to make predictions on $X_{test}$ examples that were not seen in the training sample. In practice, though most models are expected to extrapolate well outside the range of observed values in the sample, several factors such as multicollinearity strongly affect the goodness of fit and the ability of the linear regression model to extrapolate.
 
 ### 2.1.8.3. Bias of $\hat{y^{*}}$
 
