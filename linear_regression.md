@@ -310,7 +310,7 @@ Rayleigh quotient is defined as $R(A,x) = \frac{x^TAx}{x^Tx}$. For any positive 
 
 $$\bigg|\bigg|Xg_t\bigg|\bigg|_2^2 \le \frac{L}{2} \bigg|\bigg|g_t\bigg|\bigg|_2^2 $$
 
-$$ \implies l(w(t+1)) = l(w(t)) - \alpha(1-\frac{\alpha L}{2})\bigg|\bigg|g_t\bigg|\bigg|_2^2 \tag{2.1.4.1.1.2}$$
+$$ \implies l(w(t+1)) = l(w(t)) - \alpha\bigg(1-\frac{\alpha L}{2}\bigg)\bigg|\bigg|g_t\bigg|\bigg|_2^2 \tag{2.1.4.1.1.2}$$
 
 For a step size $0 < \alpha < 2/L$, $1-\frac{\alpha L}{2} > 0$ and $\alpha(1-\frac{\alpha L}{2}) > 0$. Therefore, $l(w(t+1)) < l(w(t))$ with the loss decreasing at each step at least by $c\|\|g_t\|\|_2^2$. Telescoping over $t = 0, ..., T−1$ and using $l(w(T)) \ge 0$, we get:
 
