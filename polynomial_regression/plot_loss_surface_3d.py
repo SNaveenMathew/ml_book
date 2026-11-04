@@ -5,6 +5,7 @@ Run from this directory with:
 """
 
 import argparse
+import itertools
 from pathlib import Path
 
 import matplotlib.tri as mtri
@@ -39,8 +40,7 @@ def parse_args():
     parser.add_argument(
         "--pair",
         type=parse_pair,
-        default=(0, 1),
-        help="Weight-index pair to plot (default: 0,1)",
+        help="Generate only this pair (default: generate all 21 pairs)",
     )
     parser.add_argument(
         "--context",
@@ -49,9 +49,13 @@ def parse_args():
         help="Fixed values for all other weights (default: %(default)s)",
     )
     parser.add_argument(
+        "--output-dir",
+        default="loss_weight_landscapes/3d",
+        help="Directory for generated HTML plots (default: %(default)s)",
+    )
+    parser.add_argument(
         "--output",
-        default="loss_weight_landscapes/loss_surface_3d.html",
-        help="Output HTML path (default: %(default)s)",
+        help="Output HTML path when generating a single pair with --pair",
     )
     parser.add_argument("--sample-size", type=int, default=3072)
     parser.add_argument("--grid-size", type=int, default=21)
@@ -68,19 +72,13 @@ def parse_args():
         parser.error("--refinement-tolerance and --range-factor must be positive")
     if args.display_grid < 20:
         parser.error("--display-grid must be at least 20")
+    if args.output and args.pair is None:
+        parser.error("--output requires --pair; use --output-dir for all pairs")
     return args
 
 
-def main():
-    args = parse_args()
-    if args.context == "constrained":
-        background = CONSTRAINED_WEIGHTS.copy()
-    elif args.context == "unconstrained":
-        background = UNCONSTRAINED_WEIGHTS.copy()
-    else:
-        background = (CONSTRAINED_WEIGHTS + UNCONSTRAINED_WEIGHTS) / 2.0
-
-    i, j = args.pair
+def make_pair_figure(args, pair, background, datasets):
+    i, j = pair
     x_grid = make_axis_grid(
         CONSTRAINED_WEIGHTS[i],
         UNCONSTRAINED_WEIGHTS[i],
@@ -97,14 +95,9 @@ def main():
         0.0,
         background[j],
     )
-    data = make_data(args.sample_size)
-    datasets = (
-        (data["training"][0], data["training"][1]),
-        (data["extended"][0], data["extended"][1]),
-    )
     triangulation, train_losses, extended_losses = make_adaptive_surfaces(
         background,
-        args.pair,
+        pair,
         x_grid,
         y_grid,
         datasets,
@@ -239,14 +232,53 @@ def main():
         ],
         margin=dict(l=0, r=0, t=90, b=0),
     )
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.write_html(output_path, include_plotlyjs=True, full_html=True)
-    print(
-        "Wrote interactive loss surface to {} ({} adaptive samples).".format(
-            output_path.resolve(), len(triangulation.x)
-        )
+    return fig, len(triangulation.x)
+
+
+def main():
+    args = parse_args()
+    if args.context == "constrained":
+        background = CONSTRAINED_WEIGHTS.copy()
+    elif args.context == "unconstrained":
+        background = UNCONSTRAINED_WEIGHTS.copy()
+    else:
+        background = (CONSTRAINED_WEIGHTS + UNCONSTRAINED_WEIGHTS) / 2.0
+
+    data = make_data(args.sample_size)
+    datasets = (
+        (data["training"][0], data["training"][1]),
+        (data["extended"][0], data["extended"][1]),
     )
+    pairs = [args.pair] if args.pair is not None else list(
+        itertools.combinations(range(len(WEIGHT_NAMES)), 2)
+    )
+    output_dir = Path(args.output_dir)
+    for pair_index, pair in enumerate(pairs, start=1):
+        i, j = pair
+        print(
+            "Generating pair {}/{}: {} vs {}".format(
+                pair_index, len(pairs), WEIGHT_NAMES[i], WEIGHT_NAMES[j]
+            ),
+            flush=True,
+        )
+        fig, sample_count = make_pair_figure(args, pair, background, datasets)
+        if args.output:
+            output_path = Path(args.output)
+        else:
+            output_path = output_dir / "loss_surface_3d_{}_vs_{}.html".format(
+                WEIGHT_NAMES[i], WEIGHT_NAMES[j]
+            )
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        fig.write_html(output_path, include_plotlyjs="directory", full_html=True)
+        print(
+            "Wrote {} vs {} to {} ({} adaptive samples).".format(
+                WEIGHT_NAMES[i],
+                WEIGHT_NAMES[j],
+                output_path.resolve(),
+                sample_count,
+            ),
+            flush=True,
+        )
 
 
 if __name__ == "__main__":
