@@ -11,6 +11,7 @@ from pathlib import Path
 import matplotlib.tri as mtri
 import numpy as np
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 from loss_over_weight_grid import (
     CONSTRAINED_WEIGHTS,
@@ -21,6 +22,89 @@ from loss_over_weight_grid import (
     make_axis_grid,
     make_data,
 )
+
+CAMERA_SYNC_SCRIPT = r"""
+(function () {
+    const graph = document.getElementById('{plot_id}');
+    let activeSourceScene = null;
+    let pendingSourceScene = null;
+    let frameHandle = null;
+
+    function sceneFromEvent(eventData) {
+        const keys = Object.keys(eventData);
+        if (keys.some(function (key) {
+            return key === 'scene.camera' || key.indexOf('scene.camera.') === 0;
+        })) {
+            return 'scene';
+        }
+        if (keys.some(function (key) {
+            return key === 'scene2.camera' || key.indexOf('scene2.camera.') === 0;
+        })) {
+            return 'scene2';
+        }
+        return null;
+    }
+
+    function syncScene(sourceName) {
+        const targetName = sourceName === 'scene' ? 'scene2' : 'scene';
+        const source = graph._fullLayout[sourceName]._scene;
+        const target = graph._fullLayout[targetName]._scene;
+        const camera = source.getCamera();
+        const matrix = Array.from(source.camera.view.computedMatrix);
+
+        graph.layout[sourceName].camera = camera;
+        graph.layout[targetName].camera = JSON.parse(JSON.stringify(camera));
+        target.camera.delay = 0;
+        target.camera.view.setMatrix(target.camera.view.lastT(), matrix);
+        target.camera.view.recalcMatrix(target.camera.view.lastT());
+        target.glplot.redraw();
+    }
+
+    function flushPendingCamera() {
+        frameHandle = null;
+        if (!pendingSourceScene) {
+            return;
+        }
+        const sourceName = pendingSourceScene;
+        pendingSourceScene = null;
+        syncScene(sourceName);
+    }
+
+    function synchronizeCamera(eventData, isFinal) {
+        const sceneName = sceneFromEvent(eventData);
+        if (!sceneName) {
+            return;
+        }
+        activeSourceScene = activeSourceScene || sceneName;
+        if (activeSourceScene && sceneName !== activeSourceScene) {
+            return;
+        }
+
+        if (isFinal) {
+            if (frameHandle !== null) {
+                cancelAnimationFrame(frameHandle);
+                frameHandle = null;
+            }
+            pendingSourceScene = null;
+            syncScene(sceneName);
+            activeSourceScene = null;
+            return;
+        }
+
+        pendingSourceScene = sceneName;
+        if (frameHandle === null) {
+            frameHandle = requestAnimationFrame(flushPendingCamera);
+        }
+    }
+
+    graph.on('plotly_relayouting', function (eventData) {
+        synchronizeCamera(eventData, false);
+    });
+    graph.on('plotly_relayout', function (eventData) {
+        synchronizeCamera(eventData, true);
+    });
+}());
+"""
 
 
 def parse_pair(value):
@@ -116,23 +200,31 @@ def make_pair_figure(args, pair, background, datasets):
         display_grid = interpolator(display_x_mesh, display_y_mesh)
         display_grids.append(np.asarray(display_grid.filled(np.nan)))
 
-    titles = ("Training data", "Extended data (x scaled by 3)")
-    fig = go.Figure()
+    titles = ("Training loss", "Validation loss (x scaled by 3)")
+    fig = make_subplots(
+        rows=1,
+        cols=2,
+        specs=[[{"type": "surface"}, {"type": "surface"}]],
+        subplot_titles=titles,
+        horizontal_spacing=0.06,
+    )
     finite_surfaces = [surface[np.isfinite(surface)] for surface in display_grids]
     color_min = min(float(np.min(surface)) for surface in finite_surfaces)
     color_max = max(float(np.max(surface)) for surface in finite_surfaces)
-    for index, (surface, title) in enumerate(zip(display_grids, titles)):
+    loss_min = min(float(np.min(surface)) for surface in finite_surfaces)
+    loss_max = max(float(np.max(surface)) for surface in finite_surfaces)
+    for index, (surface, title) in enumerate(zip(display_grids, titles), start=1):
         fig.add_trace(
             go.Surface(
                 x=display_x,
                 y=display_y,
                 z=surface,
                 name=title,
-                visible=index == 0,
                 colorscale="Viridis",
                 cmin=color_min,
                 cmax=color_max,
-                colorbar=dict(title="log10(MSE)"),
+                showscale=index == 1,
+                colorbar=dict(title="log10(MSE)") if index == 1 else None,
                 contours=dict(
                     z=dict(
                         show=True,
@@ -146,12 +238,14 @@ def make_pair_figure(args, pair, background, datasets):
                     "{}<br>{}: %{{x:.5g}}<br>{}: %{{y:.5g}}"
                     "<br>log10(MSE): %{{z:.5g}}<extra></extra>"
                 ).format(title, WEIGHT_NAMES[i], WEIGHT_NAMES[j]),
-            )
+            ),
+            row=1,
+            col=index,
         )
 
     reference_weights = (CONSTRAINED_WEIGHTS, UNCONSTRAINED_WEIGHTS)
     reference_names = ("Constrained pair values", "Unconstrained pair values")
-    for data_index, (dataset, title) in enumerate(zip(datasets, titles)):
+    for data_index, (dataset, title) in enumerate(zip(datasets, titles), start=1):
         reference_losses = []
         for values in reference_weights:
             point = background.copy()
@@ -175,8 +269,7 @@ def make_pair_figure(args, pair, background, datasets):
                 z=reference_losses,
                 mode="markers",
                 name="Reference pair values",
-                visible=data_index == 0,
-                showlegend=data_index == 0,
+                showlegend=False,
                 marker=dict(
                     size=7, color=("#ff365e", "#36d9ff"), symbol="diamond"
                 ),
@@ -185,14 +278,16 @@ def make_pair_figure(args, pair, background, datasets):
                     "%{{text}}<br>{}: %{{x:.5g}}<br>{}: %{{y:.5g}}"
                     "<br>log10(MSE): %{{z:.5g}}<extra></extra>"
                 ).format(WEIGHT_NAMES[i], WEIGHT_NAMES[j]),
-            )
+            ),
+            row=1,
+            col=data_index,
         )
 
     fig.update_layout(
         title=dict(
             text=(
                 "Loss landscape: {} vs {}<br>"
-                "<sup>{} background; rotate with the mouse, scroll to zoom</sup>"
+                "<sup>{} background; rotate either plot to rotate both, scroll to zoom</sup>"
             ).format(WEIGHT_NAMES[i], WEIGHT_NAMES[j], args.context),
             x=0.5,
         ),
@@ -202,35 +297,21 @@ def make_pair_figure(args, pair, background, datasets):
             bgcolor="#050505",
             xaxis_title=WEIGHT_NAMES[i],
             yaxis_title=WEIGHT_NAMES[j],
-            zaxis_title="log10(MSE)",
+            zaxis=dict(title="log10(MSE)", range=[loss_min, loss_max]),
             dragmode="orbit",
             camera=dict(eye=dict(x=1.65, y=1.65, z=1.2)),
+            aspectmode="cube",
         ),
-        updatemenus=[
-            dict(
-                type="buttons",
-                direction="right",
-                x=0.0,
-                y=1.08,
-                buttons=[
-                    dict(
-                        label=title,
-                        method="update",
-                        args=[
-                            {
-                                "visible": (
-                                    [trace_index == 0, trace_index == 1]
-                                    + [trace_index == 0, trace_index == 1] * 2
-                                )
-                            },
-                            {"scene.zaxis.title": "log10(MSE)"},
-                        ],
-                    )
-                    for trace_index, title in enumerate(titles)
-                ],
-            )
-        ],
-        margin=dict(l=0, r=0, t=90, b=0),
+        scene2=dict(
+            bgcolor="#050505",
+            xaxis_title=WEIGHT_NAMES[i],
+            yaxis_title=WEIGHT_NAMES[j],
+            zaxis=dict(title="log10(MSE)", range=[loss_min, loss_max]),
+            dragmode="orbit",
+            camera=dict(eye=dict(x=1.65, y=1.65, z=1.2)),
+            aspectmode="cube",
+        ),
+        margin=dict(l=0, r=0, t=105, b=0),
     )
     return fig, len(triangulation.x)
 
@@ -269,7 +350,12 @@ def main():
                 WEIGHT_NAMES[i], WEIGHT_NAMES[j]
             )
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        fig.write_html(output_path, include_plotlyjs="directory", full_html=True)
+        fig.write_html(
+            output_path,
+            include_plotlyjs="directory",
+            full_html=True,
+            post_script=CAMERA_SYNC_SCRIPT,
+        )
         print(
             "Wrote {} vs {} to {} ({} adaptive samples).".format(
                 WEIGHT_NAMES[i],
